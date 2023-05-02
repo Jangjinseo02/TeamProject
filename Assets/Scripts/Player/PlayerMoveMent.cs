@@ -1,0 +1,243 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMoveMent : MonoBehaviour
+{
+    int maxHealth = 100;
+    public float hp = 100f;
+    public float oxygen = 100f;
+
+    Vector2 afpos;
+    Vector3 dirvec;
+
+    Rigidbody2D rigid;
+
+    float jumpTime = 0;
+
+    public bool isDead = false;
+    public bool isDrop = false;
+    bool isJump = false;
+    bool isDamaged = false;
+
+
+
+    [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float jumpPower = 5f;
+    [SerializeField] private float dropPower = 5f;
+    [SerializeField] private VirtualJoystick virtualJoystick;
+
+    Animator anim;
+
+    private void Awake()
+    {
+        UIManager.Instance.UpdateHpText(hp);
+        UIManager.Instance.UpdateOxygenText(oxygen);
+    }
+
+    void Start()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+
+        StartCoroutine(BreatheRoutine());
+        StartCoroutine(RecoveryRoutine());
+    }
+
+    private void FixedUpdate()
+    {
+        if (isDead)
+            return;
+
+        RaycastHit2D rayhitDown = Physics2D.Raycast(transform.position + (Vector3.down * 0.5f), Vector2.down, 0.1f, LayerMask.GetMask("Block"));
+
+        if ((!rayhitDown || rayhitDown.collider.tag == "Monster") && !isJump)
+        {
+            isDrop = true;
+            rigid.velocity = new Vector3(rigid.velocity.x, 0, 0);
+            transform.position = transform.position + Vector3.down * dropPower * Time.deltaTime;
+            anim.SetBool("isDrop", true);
+            return;
+        }
+        else if (rayhitDown)
+        {
+            isDrop = false;
+            rigid.velocity = Vector3.zero;
+            anim.SetBool("isDrop", false);
+            anim.SetBool("isDown", true);
+            Invoke("DownOff", 0.2f);
+        }
+
+        if (isDamaged)
+            return;
+
+        Move();
+    }
+
+    void DownOff()
+    {
+        anim.SetBool("isDown", false);
+    }
+
+    private void Move()
+    {
+        //Vector2 horizontal = new Vector2(InputManager.Instance.dirVec.x, 0);
+        dirvec = new Vector2(virtualJoystick.Horizontal, virtualJoystick.Vertical).normalized;
+        InputManager.Instance.DragEnter(dirvec);
+        Vector2 horizontal = new Vector2(virtualJoystick.Horizontal, 0);
+
+        if(horizontal.x != 0)
+        {
+            anim.SetBool("isWalk", true);
+        }
+        else
+        {
+            anim.SetBool("isWalk", false);
+        }
+
+        if (horizontal.x > 0)
+        {
+            gameObject.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if (horizontal.x < 0)
+        {
+            gameObject.GetComponent<SpriteRenderer>().flipX = false;
+        }
+
+       
+        rigid.velocity = horizontal * moveSpeed;
+
+        RaycastHit2D rayhit = Physics2D.Raycast(transform.position, horizontal, 0.8f, LayerMask.GetMask("Block"));
+        if (rayhit && rayhit.collider.tag == "Block" && !isJump)
+        {
+            RaycastHit2D uprayhit = Physics2D.Raycast(transform.position + Vector3.up, horizontal, 0.8f, LayerMask.GetMask("Block"));
+            jumpTime += Time.deltaTime; //점프 시간 측정
+
+            if ((!uprayhit || uprayhit.collider.tag == "Monster") && jumpTime >= 0.4f) //점프 위치가 빈 경우, 그리고 점프 위치 블록이 몬스터인 경우
+            {
+                anim.SetTrigger("isJump");
+                afpos = horizontal;
+                Jump();
+                jumpTime = 0;
+            }
+            else if (uprayhit && uprayhit.collider.tag != "Monster") //몬스터의 경우 측정되야함, 즉 리셋 하지 않음
+            {
+                jumpTime = 0;
+            }
+        }
+
+    }
+
+    void Jump()
+    {
+        StartCoroutine(JumpRoutine());
+    }
+
+    IEnumerator JumpRoutine()
+    {
+        isJump = true;
+        rigid.AddForce(Vector2.up * jumpPower * 5, ForceMode2D.Impulse);
+        //rigid.velocity = new Vector2(0, jumpPower * 5);
+        yield return new WaitForSeconds(0.1f);
+        rigid.velocity = afpos * moveSpeed;
+        isJump = false;
+    }
+
+
+    public void Breathe(int stageLevel)
+    {
+        oxygen -= 1f + (stageLevel * 0.2f);
+
+        UIManager.Instance.UpdateOxygenText(oxygen);
+
+        if (oxygen <= 0)
+        {
+            oxygen = 0;
+            UIManager.Instance.UpdateOxygenText(oxygen);
+            OnDamaged(maxHealth);
+        }
+    }
+
+    IEnumerator BreatheRoutine()
+    {
+        while (!isDead)
+        {
+            Breathe(GameManager.Instance.stageLevel);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+    }
+
+    public void RealeseAir()
+    {
+        oxygen -= 20 + GameManager.Instance.stageLevel * 0.5f;
+    }
+
+    public void OnDamaged(int damage)
+    {
+        hp -= damage;
+
+        UIManager.Instance.UpdateHpText(hp);
+
+        if (hp <= 0)
+        {
+            hp = 0;
+            UIManager.Instance.UpdateHpText(hp);
+            isDead = true;
+            anim.SetTrigger("Die");
+        }
+    }
+
+    IEnumerator DamageRoutine(GameObject block)
+    {
+        isDamaged = true;
+        anim.SetBool("OnDamage", true);
+        rigid.velocity = Vector2.zero;
+        this.GetComponent<CapsuleCollider2D>().enabled = false;
+        OnDamaged(block.GetComponent<Block>().attackDamage);
+        yield return new WaitForSeconds(0.5f);
+        this.GetComponent<CapsuleCollider2D>().enabled = true;
+        isDamaged = false;
+        anim.SetBool("OnDamage", false);
+    }
+
+    void Recovery()
+    {
+        if (hp < maxHealth)
+        {
+            hp += 1;
+            UIManager.Instance.UpdateHpText(hp);
+        }
+    }
+
+    IEnumerator RecoveryRoutine()
+    {
+        while (!isDead)
+        {
+            Recovery();
+            yield return new WaitForSeconds(10f + (GameManager.Instance.stageLevel * 0.5f));
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Block" && !isDamaged && !isDead)
+        {
+            StartCoroutine(DamageRoutine(collision.gameObject));
+        }
+
+        if (collision.gameObject.tag == "Item" && !isDead)
+        {
+            IItem item = collision.GetComponent<IItem>();
+            if (item != null)
+            {
+                item.Use(gameObject);
+            }
+        }
+    }
+}

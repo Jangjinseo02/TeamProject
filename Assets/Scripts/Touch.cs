@@ -13,11 +13,13 @@ public class Touch : MonoBehaviour
 
             if (rayhit.collider != null)
             {
-                foreach (Block block in rayhit.collider.GetComponent<Block>().group)
-                {
-                    //block.group.GroupUnbalance();
-                    block.OnDamaged(10);
-                }
+                rayhit.collider.gameObject.SetActive(false);
+
+                //foreach (Block block in rayhit.collider.GetComponent<Block>().group)
+                //{
+                //    //block.group.GroupUnbalance();
+                //    block.OnDamaged(10);
+                //}
             }
         }
 
