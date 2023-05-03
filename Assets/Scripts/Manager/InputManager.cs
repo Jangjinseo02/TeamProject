@@ -54,7 +54,7 @@ public class InputManager : SingleTon<InputManager>
         if (dirVec == Vector3.zero)
         {
             RaycastHit2D rayhit = Physics2D.Raycast(player.transform.position, Vector3.down, 0.6f, LayerMask.GetMask("Block"));
-            Block block = rayhit.collider != null ? rayhit.collider.GetComponent<Block>() : null;
+            Block block = rayhit.collider != null && rayhit.collider.tag != "Item" ? rayhit.collider.GetComponent<Block>() : null;
 
             //Block firstMember = null;
             if (block != null)

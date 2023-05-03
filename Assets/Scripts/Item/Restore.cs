@@ -2,14 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Restore : MonoBehaviour, IItem
+public class Restore : Item, IItem
 {
-
-    public void Set(GameObject target) 
-    {
-        gameObject.transform.position = target.gameObject.transform.position;
-        gameObject.SetActive(true);
-    }
     public void Use(GameObject target)
     {
         PlayerMoveMent player = target.GetComponent<PlayerMoveMent>();
@@ -20,8 +14,11 @@ public class Restore : MonoBehaviour, IItem
             if (player.oxygen >= 100)
                 player.oxygen = 100;
 
+            //ObjectManager.Instance.ReturnBlock(this.gameObject);
             UIManager.Instance.SettingAirImage();
-            Destroy(gameObject);
+            if (group != null)
+                group.blockManager.RemovePos(this);
+            gameObject.SetActive(false);
             //gameObject (false);
         }
     }
@@ -30,7 +27,8 @@ public class Restore : MonoBehaviour, IItem
     {
         if (collision.gameObject.tag == "Block")
         {
-            Destroy(gameObject);
+            ObjectManager.Instance.ReturnBlock(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

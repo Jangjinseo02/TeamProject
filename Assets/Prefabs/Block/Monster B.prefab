@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4655589977108075534}
   - component: {fileID: 4655589977108075535}
   - component: {fileID: 4655589977108075520}
-  - component: {fileID: 4655589977108075521}
+  - component: {fileID: -7845312153989032508}
   m_Layer: 6
   m_Name: Monster B
   m_TagString: Monster
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4655589977108075521
+--- !u!114 &-7845312153989032508
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4655589977108075532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7b5caabe1fc6c446b9a1b909ba376a0, type: 3}
+  m_Script: {fileID: 11500000, guid: d719d634e15c8534f974bcadbe836f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blockState: 1

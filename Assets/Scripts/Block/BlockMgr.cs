@@ -498,6 +498,13 @@ public class BlockMgr : MonoBehaviour
 
         gameObject.SetActive(false);
     }
+    public void SettingBlockList(int blockType, int row, int col)
+    {
+        blocks[row, col] = ObjectManager.Instance.GetBlock(blockType);
+        SetBlock(row, col);
+        blocks[row, col].SetActive(true);
+        Search(blocks[row, col].GetComponent<Block>());
+    }
 
     void SetBlock(int row, int col)
     {

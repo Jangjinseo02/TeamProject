@@ -4,6 +4,5 @@ using UnityEngine;
 
 public interface IItem
 {
-    public void Set(GameObject target);
     public void Use(GameObject target);
 }

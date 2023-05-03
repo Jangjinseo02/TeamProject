@@ -436,7 +436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148145881}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: 70, z: 0}
+  m_LocalPosition: {x: 3, y: 60, z: 0}
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -484,7 +484,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2e187a85bc0325547b30dce26a4d410f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2984051471f1b0e4ebe12552644262c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3148,6 +3148,8 @@ MonoBehaviour:
   - {fileID: 4655589977108075532, guid: a0bf571ac3c3f2e48a572956899b08e5, type: 3}
   - {fileID: 4790212109685898278, guid: fee1756ce0a180b4aa2f171d3f2389b6, type: 3}
   - {fileID: 1061484460712064656, guid: 30c6274b1b5a8204c8d8df4f93a06cd4, type: 3}
+  - {fileID: 6923413918772647938, guid: 84be7357897ad264497212d93bb34b28, type: 3}
+  - {fileID: 3295285543806842681, guid: 01348b4823f33874595d62efbf298768, type: 3}
   blockPool: {fileID: 359864828}
 --- !u!4 &2078872345
 Transform:

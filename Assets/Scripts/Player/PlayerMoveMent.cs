@@ -113,14 +113,14 @@ public class PlayerMoveMent : MonoBehaviour
             RaycastHit2D uprayhit = Physics2D.Raycast(transform.position + Vector3.up, horizontal, 0.8f, LayerMask.GetMask("Block"));
             jumpTime += Time.deltaTime; //점프 시간 측정
 
-            if ((!uprayhit || uprayhit.collider.tag == "Monster") && jumpTime >= 0.4f) //점프 위치가 빈 경우, 그리고 점프 위치 블록이 몬스터인 경우
+            if ((!uprayhit || uprayhit.collider.tag == "Monster" || uprayhit.collider.tag == "Item") && jumpTime >= 0.4f) //점프 위치가 빈 경우, 그리고 점프 위치 블록이 몬스터인 경우
             {
                 anim.SetTrigger("isJump");
                 afpos = horizontal;
                 Jump();
                 jumpTime = 0;
             }
-            else if (uprayhit && uprayhit.collider.tag != "Monster") //몬스터의 경우 측정되야함, 즉 리셋 하지 않음
+            else if (uprayhit && uprayhit.collider.tag != "Monster" && uprayhit.collider.tag != "Item") //몬스터의 경우 측정되야함, 즉 리셋 하지 않음
             {
                 jumpTime = 0;
             }

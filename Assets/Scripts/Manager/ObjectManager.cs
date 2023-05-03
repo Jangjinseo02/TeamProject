@@ -13,6 +13,7 @@ public class ObjectManager : SingleTon<ObjectManager>
     int nomalBlock = 2000;
     int specBlock = 300;
     int monsterCount = 50;
+    int itemCount = 5;
 
     private void Awake()
     {
@@ -29,30 +30,27 @@ public class ObjectManager : SingleTon<ObjectManager>
             if (j < 1)
             {
                 for (int i = 0; i < clearBlock; i++)
-                {
                     CreateBlock(j);
-                }
             }
             else if (j < 5)
             {
                 for (int i = 0; i < nomalBlock; i++)
-                {
                     CreateBlock(j);
-                }
             }
             else if (j < 8)
             {
                 for (int i = 0; i < specBlock; i++)
-                {
                     CreateBlock(j);
-                }
             }
-            else if (j >= 8)
+            else if (j < 12)
             {
                 for (int i = 0; i < monsterCount; i++)
-                {
                     CreateBlock(j);
-                }
+            }
+            else if (j >= 12)
+            {
+                for (int i = 0; i < itemCount; i++)
+                    CreateBlock(j);
             }
         }
     }
