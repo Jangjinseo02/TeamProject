@@ -107,6 +107,10 @@ public class Block : MonoBehaviour
     SpriteRenderer sprite;
     [SerializeField] Sprite[] sprites;
 
+    private void OnEnable()
+    {
+        pos = transform.localPosition;
+    }
     private void OnDisable()
     {
         //ObjectManager.Instance.ReturnBlock(this.gameObject);
@@ -119,19 +123,6 @@ public class Block : MonoBehaviour
 
     private void Start()
     {
-        pos = transform.localPosition;
-        if(type < 5 && type != 0)
-        {
-            if(GameManager.Instance.stageLevel < 1)
-                sprite.sprite = sprites[0];
-            else if (GameManager.Instance.stageLevel < 2)
-                sprite.sprite = sprites[1];
-            else if (GameManager.Instance.stageLevel < 3)
-                sprite.sprite = sprites[2];
-            else if (GameManager.Instance.stageLevel >= 3)
-                sprite.sprite = sprites[3];
-
-        }
     }
 
     public int attackDamage
@@ -259,6 +250,8 @@ public class Block : MonoBehaviour
     {
         //this.row = row;
         this.col = col;
+        if (type < 5 && type != 0)
+            sprite.sprite = sprites[GameManager.Instance.ran];
     }
 
     //ClearBlock Method

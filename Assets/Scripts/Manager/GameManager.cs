@@ -10,9 +10,16 @@ public class GameManager : SingleTon<GameManager>
     [SerializeField] GameObject backGround;
     Vector2 blockMgrPos;
 
+    [SerializeField] SpriteRenderer backGroundObject;
+    [SerializeField] Sprite[] backGroundSprites;
+    public int ran = 0;
+    int curRan = -1;
+
     BoxCollider2D boxCollider;
     public int stageLevel = 0;
     int curLevel = 0;
+
+    
 
     private void Awake()
     {
@@ -33,6 +40,7 @@ public class GameManager : SingleTon<GameManager>
 
     public void SetBlockStage()
     {
+        StageSetting();
         blockMgrPos.x = 0;
         blockMgrPos.y -= 100;
         blockMgrs[curLevel].gameObject.transform.position = blockMgrPos;
@@ -48,6 +56,22 @@ public class GameManager : SingleTon<GameManager>
 
         stageLevel += 1;
         curLevel = stageLevel % 2;
+    }
+
+    public void StageSetting()
+    {
+        RanValue();
+
+        backGroundObject.sprite = backGroundSprites[ran];
+    }
+
+    void RanValue()
+    {
+        ran = Random.Range(0, 4);
+        if (ran == curRan)
+            RanValue();
+        else
+            curRan = ran;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
