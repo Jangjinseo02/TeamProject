@@ -14,6 +14,7 @@ public enum BTNType
     Easy_Mode,
     Hard_Mode,
     Infinite_Mode,
+    Title,
 }
 
 public class BTN : MonoBehaviour
@@ -51,6 +52,10 @@ public class BTN : MonoBehaviour
             case BTNType.Hard_Mode:
                 break;
             case BTNType.Infinite_Mode:
+                break;
+            case BTNType.Title:
+                SceneManager.LoadScene("TitleScene");
+                Time.timeScale = 1;
                 break;
         }
     }
