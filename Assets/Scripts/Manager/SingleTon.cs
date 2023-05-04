@@ -13,7 +13,6 @@ public class SingleTon<T> : MonoBehaviour where T : MonoBehaviour
             {
                 instance = (T)FindObjectOfType(typeof(T));
             }
-            DontDestroyOnLoad(instance.gameObject);
 
             return instance;
         }
