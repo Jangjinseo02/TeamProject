@@ -94,7 +94,6 @@ public class Block : MonoBehaviour
     protected float health = 10;
     public Group group;
     public bool isCheck = false;
-    bool isMove = false;
     public Vector3 afVec;
     public Vector3 pos;
     //public int row;

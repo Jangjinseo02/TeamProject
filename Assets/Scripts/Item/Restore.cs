@@ -15,7 +15,7 @@ public class Restore : Item, IItem
                 player.oxygen = 100;
 
             //ObjectManager.Instance.ReturnBlock(this.gameObject);
-            UIManager.Instance.SettingAirImage();
+            UIManager.Instance.SettingAirImage(1); // type == 1 +air
             if (group != null)
                 group.blockManager.RemovePos(this);
             gameObject.SetActive(false);

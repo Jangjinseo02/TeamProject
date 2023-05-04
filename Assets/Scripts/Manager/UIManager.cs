@@ -7,6 +7,9 @@ public class UIManager : SingleTon<UIManager>
 {
     [SerializeField] Image selectBackGround;
     [SerializeField] Image airImage;
+    [SerializeField] Sprite[] speechBubbleSprites;
+    [SerializeField] Transform speechBubblePos;
+
     [SerializeField] Text hpText;
     [SerializeField] Text oxygenText;
 
@@ -38,11 +41,20 @@ public class UIManager : SingleTon<UIManager>
         oxygenText.text = ((int)oxygen).ToString() + "/100";
     }
 
-    public void SettingAirImage()
+    public void SettingAirImage(int type)
     {
+        airImage.sprite = speechBubbleSprites[type]; // type == 0 +air, type == 1 -air
+
+        if (type == 0)
+            airImage.rectTransform.pivot = new Vector2(1, 0);
+        else if (type == 1)
+            airImage.rectTransform.pivot = new Vector2(0, 0);
+       
+        
+
         Vector2 pos;
-        pos.x = GameManager.Instance.player.transform.position.x + 0.5f;
-        pos.y = GameManager.Instance.player.transform.position.y + 0.5f;
+        pos.x = speechBubblePos.position.x;
+        pos.y = speechBubblePos.position.y;
 
         airImage.transform.position = pos;
 

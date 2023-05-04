@@ -171,6 +171,7 @@ public class PlayerMoveMent : MonoBehaviour
     public void RealeseAir()
     {
         oxygen -= 20 + GameManager.Instance.stageLevel * 0.5f;
+        UIManager.Instance.SettingAirImage(0); // type == 0 -air ;
     }
 
     public void OnDamaged(int damage)
