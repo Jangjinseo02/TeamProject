@@ -62,7 +62,6 @@ public class InputManager : SingleTon<InputManager>
                 HardBlock hard = block.GetComponent<HardBlock>();
                 ClearBlock clear = block.GetComponent<ClearBlock>();
 
-                Debug.Log("Attack");
                 playeranim.SetTrigger("downAttack");
 
                 if (hard)
@@ -72,7 +71,6 @@ public class InputManager : SingleTon<InputManager>
                     {
                         //if (block.type == 0 && firstMember == null) //type == 0 : ClearBlock
                         //    firstMember = member;
-                        Debug.Log("Member Attack");
                         member.OnDamaged(10);
                     }
 

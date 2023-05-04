@@ -39,7 +39,7 @@ public class Slim : Block
         anim.SetTrigger("IsDead");
         yield return new WaitForSeconds(1f);
         //GameObject dropItem = Instantiate(dropPrefab);
-        group.blockManager.SettingBlockList(13, this.row, this.col);
+        group.blockManager.SettingBlockList(12, this.row, this.col);
         gameObject.SetActive(false);
     }
 

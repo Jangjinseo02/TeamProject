@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockState: 1
-  type: 12
+  type: 11
   gravity: 3
   isCheck: 0
   afVec: {x: 0, y: 0, z: 0}

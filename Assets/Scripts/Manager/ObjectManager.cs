@@ -42,12 +42,12 @@ public class ObjectManager : SingleTon<ObjectManager>
                 for (int i = 0; i < specBlock; i++)
                     CreateBlock(j);
             }
-            else if (j < 12)
+            else if (j < 11)
             {
                 for (int i = 0; i < monsterCount; i++)
                     CreateBlock(j);
             }
-            else if (j >= 12)
+            else if (j >= 11)
             {
                 for (int i = 0; i < itemCount; i++)
                     CreateBlock(j);

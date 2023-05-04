@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlockMgr : MonoBehaviour
 {
     enum BlocksType { ClearBlock, BlockB, BlockC, BlockD, BlockF, HardBlock, MeteorBlcok, GlassBlock }
-    enum MonsterType { Slim = 8, MonsterB, MonsterC, MonsterD }
+    enum MonsterType { Slim = 8, MonsterB, MonsterC }
 
     GameObject[,] blocks;
     HashSet<GameObject> removeBlocks = new HashSet<GameObject>();
@@ -89,7 +89,6 @@ public class BlockMgr : MonoBehaviour
             {
                 if (member.shaking && !member.dropping)
                 {
-                    Debug.Log("왜 들어옴?");
                     foreach (Block block in member.group)
                     {
                         block.ShakeEnd();
@@ -152,7 +151,7 @@ public class BlockMgr : MonoBehaviour
                 else if (!(i > 94 && i < numRow) && MonsterCount > 0 && afMonsterRoW >= 29 && spawnMonster)
                 {
                     //몬스터 스폰
-                    int ran = Random.Range((int)MonsterType.MonsterB, (int)(MonsterType.MonsterD + 1));
+                    int ran = Random.Range((int)MonsterType.MonsterB, (int)(MonsterType.MonsterC + 1));
                     blocks[i, j] = ObjectManager.Instance.GetBlock(ran);
                     MonsterCount -= 1;
                     afMonsterRoW = 0;
@@ -305,9 +304,15 @@ public class BlockMgr : MonoBehaviour
     public void Search(Block block)
     {
        
-
         List<Block> block_s = new List<Block>();
         Queue<Block> queue = new Queue<Block>();
+
+        //운석 블록의 경우 그룹 내에 혼자 존재
+        if (block.type == (int)BlocksType.MeteorBlcok)
+        {
+            block.GetComponent<MeteorBlock>().OnlyOne();
+            return;
+        }
 
         queue.Enqueue(block);
 
@@ -383,6 +388,12 @@ public class BlockMgr : MonoBehaviour
         Block rightBlock = rightblockObj != null ? rightblockObj.GetComponent<Block>() : null;
         Block leftBlock = leftblockObj != null ? leftblockObj.GetComponent<Block>() : null;
         Block underBlock = underblockObj != null ? underblockObj.GetComponent<Block>() : null;
+
+        //운석 블록 양옆 충돌 금지
+        if (leftBlock != null && leftBlock.GetComponent<MeteorBlock>())
+            leftBlock = null;
+        if (rightBlock != null && rightBlock.GetComponent<MeteorBlock>())
+            rightBlock = null;
 
         //아래 블록이 체크되지 않음
         if (underBlock /*&& !underBlock.group.unbalance*/ || (rightBlock != null && block.group != rightBlock.group && block.type == rightBlock.type /*&& !rightBlock.group.unbalance*/)
@@ -498,12 +509,14 @@ public class BlockMgr : MonoBehaviour
 
         gameObject.SetActive(false);
     }
-    public void SettingBlockList(int blockType, int row, int col)
+    public GameObject SettingBlockList(int blockType, int row, int col)
     {
         blocks[row, col] = ObjectManager.Instance.GetBlock(blockType);
         SetBlock(row, col);
         blocks[row, col].SetActive(true);
         Search(blocks[row, col].GetComponent<Block>());
+
+        return blocks[row, col];
     }
 
     void SetBlock(int row, int col)

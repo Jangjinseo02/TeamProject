@@ -41,7 +41,9 @@ public class Group
     //여기서 재귀 부분 문제가 발생하는 것 같음. 
     public void GroupUnbalance()
     {
-        Debug.Log("GroupUnbalance");
+        if (this.unbalance)
+            return;
+
         foreach (Block block in blocks)
         {
             //아래 블록
@@ -267,7 +269,6 @@ public class Block : MonoBehaviour
         if (health <= 0)
         {
             //type = -1;
-            Debug.Log("OnDamaged");
             group.blockManager.RemovePos(this);
             gameObject.SetActive(false);
         }

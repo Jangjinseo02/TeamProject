@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockState: 1
-  type: 13
+  type: 12
   gravity: 3
   isCheck: 0
   afVec: {x: 0, y: 0, z: 0}
@@ -124,3 +124,6 @@ MonoBehaviour:
   col: 0
   itemObject:
   - {fileID: 3295285543806842681, guid: 01348b4823f33874595d62efbf298768, type: 3}
+  ItemSprites:
+  - {fileID: -1815385192, guid: 22444c913a8162d4693c8961014a4d2a, type: 3}
+  - {fileID: 336536421, guid: 22444c913a8162d4693c8961014a4d2a, type: 3}

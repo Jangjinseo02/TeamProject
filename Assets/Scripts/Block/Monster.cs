@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Monster : Block
 {
-
+    public enum Type { Monster_A, Monster_B }
+    public Type monsterType;
     public virtual void Setting()
     {
 
@@ -36,7 +37,8 @@ public class Monster : Block
         yield return new WaitForSeconds(1f);
         //GameObject dropItem = ObjectManager.Instance.GetBlock(12);
         //dropItem.GetComponent<IItem>().Set(gameObject);
-        group.blockManager.SettingBlockList(12, this.row, this.col);
+        GameObject item = group.blockManager.SettingBlockList(11, this.row, this.col);
+        item.GetComponent<UseItem>().SpriteSetting((int)monsterType);
         gameObject.SetActive(false);
     }
 }
