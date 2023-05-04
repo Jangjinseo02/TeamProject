@@ -7,6 +7,12 @@ public class Slim : Block
     [SerializeField] GameObject dropPrefab;
 
     Animator anim;
+    bool isDeadRoutine;
+
+    private void OnEnable()
+    {
+        isDeadRoutine = false;
+    }
 
     private void Awake()
     {
@@ -15,6 +21,9 @@ public class Slim : Block
 
     public override void OnDamaged(int damage)
     {
+        if (isDeadRoutine)
+            return;
+
         health -= damage;
 
         if (health <= 0)
@@ -26,6 +35,7 @@ public class Slim : Block
 
     IEnumerator DeadRoutine()
     {
+        isDeadRoutine = true;
         anim.SetTrigger("IsDead");
         yield return new WaitForSeconds(1f);
         //GameObject dropItem = Instantiate(dropPrefab);

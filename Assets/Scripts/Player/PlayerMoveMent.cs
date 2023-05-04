@@ -51,27 +51,50 @@ public class PlayerMoveMent : MonoBehaviour
 
         RaycastHit2D rayhitDown = Physics2D.Raycast(transform.position + (Vector3.down * 0.5f), Vector2.down, 0.1f, LayerMask.GetMask("Block"));
 
-        if ((!rayhitDown || rayhitDown.collider.tag == "Monster") && !isJump)
+        if (!rayhitDown && !isJump)
         {
-            isDrop = true;
-            rigid.velocity = new Vector3(rigid.velocity.x, 0, 0);
-            transform.position = transform.position + Vector3.down * dropPower * Time.deltaTime;
-            anim.SetBool("isDrop", true);
+            DropOn();
             return;
         }
         else if (rayhitDown)
         {
-            isDrop = false;
-            rigid.velocity = Vector3.zero;
-            anim.SetBool("isDrop", false);
-            anim.SetBool("isDown", true);
-            Invoke("DownOff", 0.2f);
+            if (isDrop && rayhitDown.collider.tag == "Monster") //drop 상태에서 monster를 밟는 경우
+            {
+                DropOn();
+                rayhitDown.collider.GetComponent<Block>().OnDamaged(100);
+                return;
+            }
+            else if (rayhitDown.collider.tag == "Monster") //걷다가 아래가 빈 공간 없이 바로 몬스터 머리를 밟는 경우 << isDrop이 true가 아닌 상태에서 위 if문이 실행되어 문제가 있다.
+            {
+                DropOn();
+                return;
+            }
+            else
+                DropOff();
         }
 
         if (isDamaged)
             return;
 
         Move();
+    }
+
+    void DropOn()
+    {
+        isDrop = true;
+        rigid.velocity = new Vector3(rigid.velocity.x, 0, 0);
+        transform.position = transform.position + Vector3.down * dropPower * Time.deltaTime;
+        anim.SetBool("isDrop", true);
+
+    }
+
+    void DropOff()
+    {
+        isDrop = false;
+        rigid.velocity = Vector3.zero;
+        anim.SetBool("isDrop", false);
+        anim.SetBool("isDown", true);
+        Invoke("DownOff", 0.2f);
     }
 
     void DownOff()

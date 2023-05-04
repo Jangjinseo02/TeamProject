@@ -160,7 +160,7 @@ public class BlockMgr : MonoBehaviour
                 else
                 {
                     //나머지 공간은 random 기본 블록 스폰, 특수 블록 스폰
-                    float blockRan = Random.Range(1.0f, 100f);
+                    float blockRan = Random.Range(0f, 100f);
 
                     if (i < 95 && blockRan <= 0.5f)
                     {

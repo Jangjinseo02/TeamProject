@@ -21,4 +21,14 @@ public class CameraMove : MonoBehaviour
         this.transform.position = new Vector3(transform.position.x, player.transform.position.y, -10);
         
     }
+
+    public void CheckGlassBlock(GameObject target)
+    {
+        Vector2 screenPoint = Camera.main.WorldToViewportPoint(target.transform.position);
+
+        bool onScreen = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+
+        if (onScreen)
+            target.GetComponent<GlassBlock>().OnDamaged(100);
+    }
 }
