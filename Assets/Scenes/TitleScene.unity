@@ -178,6 +178,7 @@ MonoBehaviour:
   Option_pannel: {fileID: 0}
   Main_UI: {fileID: 2100616450}
   Second_UI: {fileID: 1009418334}
+  Give_UP: {fileID: 0}
   currentType: 7
 --- !u!114 &210559976
 MonoBehaviour:
@@ -328,6 +329,7 @@ MonoBehaviour:
   Option_pannel: {fileID: 0}
   Main_UI: {fileID: 2100616450}
   Second_UI: {fileID: 1009418334}
+  Give_UP: {fileID: 0}
   currentType: 6
 --- !u!114 &268515073
 MonoBehaviour:
@@ -699,6 +701,7 @@ MonoBehaviour:
   Option_pannel: {fileID: 0}
   Main_UI: {fileID: 2100616450}
   Second_UI: {fileID: 1009418334}
+  Give_UP: {fileID: 0}
   currentType: 0
 --- !u!114 &925342372
 MonoBehaviour:
@@ -853,7 +856,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2e187a85bc0325547b30dce26a4d410f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 374888152776bfc49afc68b22e351a10, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -934,7 +937,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2e187a85bc0325547b30dce26a4d410f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 374888152776bfc49afc68b22e351a10, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1113,6 +1116,7 @@ MonoBehaviour:
   Option_pannel: {fileID: 0}
   Main_UI: {fileID: 2100616450}
   Second_UI: {fileID: 1009418334}
+  Give_UP: {fileID: 0}
   currentType: 8
 --- !u!114 &1564246364
 MonoBehaviour:
@@ -1263,6 +1267,7 @@ MonoBehaviour:
   Option_pannel: {fileID: 892731054}
   Main_UI: {fileID: 0}
   Second_UI: {fileID: 0}
+  Give_UP: {fileID: 0}
   currentType: 2
 --- !u!114 &1570995409
 MonoBehaviour:
@@ -1413,6 +1418,7 @@ MonoBehaviour:
   Option_pannel: {fileID: 0}
   Main_UI: {fileID: 0}
   Second_UI: {fileID: 0}
+  Give_UP: {fileID: 0}
   currentType: 1
 --- !u!114 &1595957456
 MonoBehaviour:
@@ -1563,6 +1569,7 @@ MonoBehaviour:
   Option_pannel: {fileID: 892731054}
   Main_UI: {fileID: 2100616450}
   Second_UI: {fileID: 0}
+  Give_UP: {fileID: 0}
   currentType: 3
 --- !u!114 &1604061694
 MonoBehaviour:
@@ -1873,6 +1880,7 @@ MonoBehaviour:
   Option_pannel: {fileID: 0}
   Main_UI: {fileID: 2100616450}
   Second_UI: {fileID: 1009418334}
+  Give_UP: {fileID: 0}
   currentType: 4
 --- !u!114 &2094901598
 MonoBehaviour:

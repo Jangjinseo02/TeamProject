@@ -15,6 +15,9 @@ public enum BTNType
     Hard_Mode,
     Infinite_Mode,
     Title,
+    Title_Option_panel,
+    Yes,
+    No,
 }
 
 public class BTN : MonoBehaviour
@@ -22,6 +25,7 @@ public class BTN : MonoBehaviour
     public GameObject Option_pannel;
     public GameObject Main_UI;
     public GameObject Second_UI;
+    public GameObject Give_UP;
     public BTNType currentType;
     public void OnBtnClick()
     {
@@ -56,6 +60,19 @@ public class BTN : MonoBehaviour
             case BTNType.Title:
                 SceneManager.LoadScene("TitleScene");
                 Time.timeScale = 1;
+                break;
+            case BTNType.Title_Option_panel:
+                Give_UP.SetActive(true);
+                Time.timeScale = 0;
+                break;
+            case BTNType.Yes:
+                Give_UP.SetActive(false);
+                SceneManager.LoadScene("TitleScene");
+                Time.timeScale = 1;
+                break;
+            case BTNType.No:
+                Give_UP.SetActive(false);
+                Time.timeScale = 0;
                 break;
         }
     }
