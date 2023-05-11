@@ -5,17 +5,29 @@ using UnityEngine.UI;
 
 public class UIManager : SingleTon<UIManager>
 {
+    PlayerMoveMent player;
+
     [SerializeField] Image selectBackGround;
     [SerializeField] Image airImage;
     [SerializeField] Sprite[] speechBubbleSprites;
     [SerializeField] Transform speechBubblePos;
 
+    [SerializeField] Image resultScreen;
+
     [SerializeField] Text hpText;
     [SerializeField] Text oxygenText;
+    [SerializeField] Text depthText;
+
+    private void Awake()
+    {
+        player = GameManager.Instance.player.GetComponent<PlayerMoveMent>();
+    }
 
     private void LateUpdate()
     {
-        
+        UpdateHpText(player.hp);
+        UpdateOxygenText(player.oxygen);
+        UpdateDepthText(player.transform.position.y * (-1));
     }
 
 
@@ -31,6 +43,13 @@ public class UIManager : SingleTon<UIManager>
         selectBackGround.gameObject.SetActive(false);
     }
 
+    public void ResultScreenPopup()
+    {
+        Text depth = resultScreen.GetComponentInChildren<Text>();
+        depth.text = depthText.text;
+        resultScreen.gameObject.SetActive(true);
+    }
+
     public void UpdateHpText(float hp)
     {
         
@@ -39,6 +58,11 @@ public class UIManager : SingleTon<UIManager>
     public void UpdateOxygenText(float oxygen)
     {
         oxygenText.text = ((int)oxygen).ToString() + "/100";
+    }
+
+    public void UpdateDepthText(float yPos)
+    {
+        depthText.text = ((int)yPos).ToString() + "/" + GameManager.Instance.clearDepth.ToString();
     }
 
     public void SettingAirImage(int type)

@@ -19,7 +19,12 @@ public class GameManager : SingleTon<GameManager>
     public int stageLevel = 0;
     int curLevel = 0;
 
-    
+    //레벨 목표 깊이
+    public enum Level { Easy, Nomal, Hard };
+    Level level = Level.Easy;
+    [SerializeField] int[] depth;
+    public int clearDepth = 0;
+
 
     private void Awake()
     {
@@ -28,6 +33,20 @@ public class GameManager : SingleTon<GameManager>
 
     void Start()
     {
+        //목표 깊이 설정
+        switch (level)
+        {
+            case Level.Easy:
+                clearDepth = depth[(int)Level.Easy];
+                break;
+            case Level.Nomal:
+                clearDepth = depth[(int)Level.Nomal];
+                break;
+            case Level.Hard:
+                clearDepth = depth[(int)Level.Hard];
+                break;
+        }
+
         stageLevel = 0;
         blockMgrPos = Vector2.zero;
     }
@@ -73,6 +92,15 @@ public class GameManager : SingleTon<GameManager>
         else
             curRan = ran;
     }
+
+    //플레이어가 죽음
+    public void PlayerDead()
+    {
+        //결과창으로 이동
+        Time.timeScale = 0;
+        UIManager.Instance.ResultScreenPopup();
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

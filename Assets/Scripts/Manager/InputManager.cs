@@ -37,13 +37,12 @@ public class InputManager : SingleTon<InputManager>
 
     public void Attack()
     {
-        Debug.Log("AttackReady");
-        if (player.isDead)
+        //player.isDamaged Ãß°¡
+        if (player.isDead || player.isDamaged)
             return;
 
         if (!isAttack && !player.isDrop)
         {
-            Debug.Log("Attack");
             isAttack = true;
             StartCoroutine(AttackRoutine());
         }

@@ -21,9 +21,21 @@ public class HardBlock : Block
         if (health <= 0)
         {
             //type = -1;
-            Debug.Log("OnDamaged");
             isDestory = true;
             group.blockManager.RemovePos(this);
+
+            //Ãß°¡
+            foreach (Block member in this.group)
+            {
+                if (this == member)
+                    continue;
+                member.RemoveGroup(group.blockManager);
+                member.group.GroupUnbalance();
+            }
+
+            Block upBlock = group.blockManager.UpBlock(row, col);
+            if (upBlock != null && upBlock.type != this.type)
+                upBlock.group.GroupUnbalance();
             gameObject.SetActive(false);
         }
     }

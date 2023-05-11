@@ -15,6 +15,11 @@ public class BlockMgr : MonoBehaviour
     [SerializeField] private int numRow;
     [SerializeField] private int numCol;
 
+    [SerializeField] float allPers;
+    [SerializeField] float glassPers;
+    [SerializeField] float meteorPers;
+    [SerializeField] float hardPers;
+
     List<Block> unbalanceBlockList = new List<Block>();
     HashSet<Group> balanceBlockList = new HashSet<Group>();
 
@@ -159,17 +164,17 @@ public class BlockMgr : MonoBehaviour
                 else
                 {
                     //나머지 공간은 random 기본 블록 스폰, 특수 블록 스폰
-                    float blockRan = Random.Range(0f, 100f);
+                    float blockRan = Random.Range(0f, allPers);
 
-                    if (i < 95 && blockRan <= 0.5f)
+                    if (i < 95 && blockRan <= glassPers) //0.5f
                     {
                         blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.GlassBlock);
                     }
-                    else if (i < 95 && blockRan <= 1.5f)
+                    else if (i < 95 && blockRan <= glassPers + meteorPers) //1.5f
                     {
                         blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.MeteorBlcok);
                     }
-                    else if(i < 95 && blockRan < 4f)
+                    else if(i < 95 && blockRan < glassPers + meteorPers + hardPers) //4f
                     {
                         blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.HardBlock);
                     }

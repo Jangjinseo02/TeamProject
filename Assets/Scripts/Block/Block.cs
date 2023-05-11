@@ -244,7 +244,7 @@ public class Block : MonoBehaviour
         }
         sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 255);
 
-        this.OnDamaged(10);
+        this.OnDamaged(100);
     }
 
     public void Setting(int row, int col/*, int type*/)
@@ -253,6 +253,13 @@ public class Block : MonoBehaviour
         this.col = col;
         if (type < 5 && type != 0)
             sprite.sprite = sprites[GameManager.Instance.ran];
+    }
+
+    public void RemoveGroup(BlockMgr blockMgr)
+    {
+        group = null;
+        group = new Group(blockMgr);
+        group.blockManager.Search(this);
     }
 
     //ClearBlock Method

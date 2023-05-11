@@ -16,9 +16,10 @@ public class PlayerMoveMent : MonoBehaviour
     float jumpTime = 0;
 
     public bool isDead = false;
+    public bool isDamaged = false;
     public bool isDrop = false;
     bool isJump = false;
-    bool isDamaged = false;
+    
 
 
 
@@ -31,8 +32,8 @@ public class PlayerMoveMent : MonoBehaviour
 
     private void Awake()
     {
-        UIManager.Instance.UpdateHpText(hp);
-        UIManager.Instance.UpdateOxygenText(oxygen);
+       // UIManager.Instance.UpdateHpText(hp);
+       // UIManager.Instance.UpdateOxygenText(oxygen);
     }
 
     void Start()
@@ -47,7 +48,11 @@ public class PlayerMoveMent : MonoBehaviour
     private void FixedUpdate()
     {
         if (isDead)
+        {
+            rigid.velocity = Vector2.zero;
+            GameManager.Instance.PlayerDead();
             return;
+        }
 
         RaycastHit2D rayhitDown = Physics2D.Raycast(transform.position + (Vector3.down * 0.5f), Vector2.down, 0.1f, LayerMask.GetMask("Block"));
 
@@ -171,19 +176,19 @@ public class PlayerMoveMent : MonoBehaviour
     {
         oxygen -= 1f + (stageLevel * 0.2f);
 
-        UIManager.Instance.UpdateOxygenText(oxygen);
+        //UIManager.Instance.UpdateOxygenText(oxygen);
 
         if (oxygen <= 0)
         {
             oxygen = 0;
-            UIManager.Instance.UpdateOxygenText(oxygen);
+            //UIManager.Instance.UpdateOxygenText(oxygen);
             OnDamaged(maxHealth);
         }
     }
 
     IEnumerator BreatheRoutine()
     {
-        while (!isDead)
+        while (!isDead && !isDamaged)
         {
             Breathe(GameManager.Instance.stageLevel);
             yield return new WaitForSeconds(0.5f);
@@ -199,14 +204,19 @@ public class PlayerMoveMent : MonoBehaviour
 
     public void OnDamaged(int damage)
     {
+        anim.SetTrigger("OnDamaged");
+        anim.SetBool("OnDamage", true);
+        rigid.velocity = Vector2.zero;
+        this.GetComponent<CapsuleCollider2D>().enabled = false;
+
         hp -= damage;
 
-        UIManager.Instance.UpdateHpText(hp);
+        //UIManager.Instance.UpdateHpText(hp);
 
         if (hp <= 0)
         {
             hp = 0;
-            UIManager.Instance.UpdateHpText(hp);
+            //UIManager.Instance.UpdateHpText(hp);
             isDead = true;
             anim.SetTrigger("Die");
         }
@@ -215,14 +225,71 @@ public class PlayerMoveMent : MonoBehaviour
     IEnumerator DamageRoutine(GameObject block)
     {
         isDamaged = true;
-        anim.SetBool("OnDamage", true);
-        rigid.velocity = Vector2.zero;
-        this.GetComponent<CapsuleCollider2D>().enabled = false;
+
+        ClearOverBlock();
+        StopCoroutine(BreatheRoutine());
         OnDamaged(block.GetComponent<Block>().attackDamage);
-        yield return new WaitForSeconds(0.5f);
-        this.GetComponent<CapsuleCollider2D>().enabled = true;
-        isDamaged = false;
+
+        yield return new WaitForSeconds(3.5f);
+
         anim.SetBool("OnDamage", false);
+        this.GetComponent<CapsuleCollider2D>().enabled = true;
+
+        yield return new WaitForSeconds(0.5f);
+        isDamaged = false;
+        StartCoroutine(BreatheRoutine());
+    }
+
+    void ClearOverBlock()
+    {
+        RaycastHit2D[] rayhits = Physics2D.RaycastAll(transform.position, Vector2.up, 100, LayerMask.GetMask("Block"));
+        RaycastHit2D[] leftrayhits = Physics2D.RaycastAll(transform.position + Vector3.left, Vector2.up, 100, LayerMask.GetMask("Block"));
+        RaycastHit2D[] rightrayhits = Physics2D.RaycastAll(transform.position + Vector3.right, Vector2.up, 100, LayerMask.GetMask("Block"));
+
+        if (rayhits != null)
+        {
+            for (int i = 0; i < rayhits.Length; i++)
+            {
+                Block block = rayhits[i].collider.GetComponent<Block>();
+
+                block.OnDamaged(100);
+
+                foreach (Block member in block.group)
+                {
+                    member.RemoveGroup(block.group.blockManager);
+                    //member.group.GroupUnbalance();
+                }
+            }
+        }
+        if (leftrayhits != null)
+        {
+            for (int i = 0; i < leftrayhits.Length; i++)
+            {
+
+                Block leftBlock = leftrayhits[i].collider.GetComponent<Block>();
+
+                leftBlock.OnDamaged(100);
+                foreach (Block member in leftBlock.group)
+                {
+                    member.RemoveGroup(leftBlock.group.blockManager);
+                    member.group.GroupUnbalance();
+                }
+            }
+        }
+        if (rightrayhits != null)
+        {
+            for (int i = 0; i < rightrayhits.Length; i++)
+            {
+                Block rightBlock = rightrayhits[i].collider.GetComponent<Block>();
+
+                rightBlock.OnDamaged(100);
+                foreach (Block member in rightBlock.group)
+                {
+                    member.RemoveGroup(rightBlock.group.blockManager);
+                    member.group.GroupUnbalance();
+                }
+            }
+        }
     }
 
     void Recovery()
@@ -230,7 +297,7 @@ public class PlayerMoveMent : MonoBehaviour
         if (hp < maxHealth)
         {
             hp += 1;
-            UIManager.Instance.UpdateHpText(hp);
+           // UIManager.Instance.UpdateHpText(hp);
         }
     }
 
