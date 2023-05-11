@@ -7,13 +7,23 @@ public class UIManager : SingleTon<UIManager>
 {
     PlayerMoveMent player;
 
+    [Header("---------------------Screen")]
     [SerializeField] Image selectBackGround;
-    [SerializeField] Image airImage;
-    [SerializeField] Sprite[] speechBubbleSprites;
-    [SerializeField] Transform speechBubblePos;
-
     [SerializeField] Image resultScreen;
 
+    [Header("---------------------AirSpeechBubble")]
+    [SerializeField] Image airSpeechBubbleImage;
+    [SerializeField] Sprite[] speechBubbleSprites;
+
+    [Header("---------------------CountSpeechBubble")]
+    [SerializeField] Image countSpeechBubbleImage;
+    [SerializeField] Image countImage;
+    [SerializeField] Sprite[] countSprites;
+
+    [Header("---------------------SpeechBubblePos")]
+    [SerializeField] Transform speechBubblePos;
+
+    [Header("---------------------OtherText")]
     [SerializeField] Text hpText;
     [SerializeField] Text oxygenText;
     [SerializeField] Text depthText;
@@ -25,6 +35,23 @@ public class UIManager : SingleTon<UIManager>
 
     private void LateUpdate()
     {
+        if (airSpeechBubbleImage.gameObject.activeInHierarchy)
+        {
+            Vector2 pos;
+            pos.x = speechBubblePos.position.x;
+            pos.y = speechBubblePos.position.y;
+
+            airSpeechBubbleImage.transform.position = pos;
+        }
+        if (countSpeechBubbleImage.gameObject.activeInHierarchy)
+        {
+            Vector2 pos;
+            pos.x = speechBubblePos.position.x;
+            pos.y = speechBubblePos.position.y;
+
+            countSpeechBubbleImage.transform.position = pos;
+        }
+
         UpdateHpText(player.hp);
         UpdateOxygenText(player.oxygen);
         UpdateDepthText(player.transform.position.y * (-1));
@@ -67,12 +94,12 @@ public class UIManager : SingleTon<UIManager>
 
     public void SettingAirImage(int type)
     {
-        airImage.sprite = speechBubbleSprites[type]; // type == 0 +air, type == 1 -air
+        airSpeechBubbleImage.sprite = speechBubbleSprites[type]; // type == 0 +air, type == 1 -air
 
         if (type == 0)
-            airImage.rectTransform.pivot = new Vector2(1, 0);
+            airSpeechBubbleImage.rectTransform.pivot = new Vector2(1, 0);
         else if (type == 1)
-            airImage.rectTransform.pivot = new Vector2(0, 0);
+            airSpeechBubbleImage.rectTransform.pivot = new Vector2(0, 0);
        
         
 
@@ -80,15 +107,30 @@ public class UIManager : SingleTon<UIManager>
         pos.x = speechBubblePos.position.x;
         pos.y = speechBubblePos.position.y;
 
-        airImage.transform.position = pos;
+        airSpeechBubbleImage.transform.position = pos;
 
         StartCoroutine(ImageClear());
     }
 
     IEnumerator ImageClear()
     {
-        airImage.gameObject.SetActive(true);
+        airSpeechBubbleImage.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        airImage.gameObject.SetActive(false);
+        airSpeechBubbleImage.gameObject.SetActive(false);
+    }
+
+    public void SettingCountSpeechBubble(float oxygen)
+    {
+        int value = Mathf.FloorToInt(oxygen) - 1;
+        countImage.sprite = countSprites[value];
+        countImage.SetNativeSize();
+
+        countImage.gameObject.SetActive(true);
+        countSpeechBubbleImage.gameObject.SetActive(true);
+    }
+
+    public void ClearCountSpeechBubble()
+    {
+        countSpeechBubbleImage.gameObject.SetActive(false);
     }
 }

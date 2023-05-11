@@ -96,8 +96,8 @@ public class GameManager : SingleTon<GameManager>
     //플레이어가 죽음
     public void PlayerDead()
     {
-        //결과창으로 이동
         Time.timeScale = 0;
+        //결과창으로 이동
         UIManager.Instance.ResultScreenPopup();
     }
 

@@ -19,8 +19,7 @@ public class PlayerMoveMent : MonoBehaviour
     public bool isDamaged = false;
     public bool isDrop = false;
     bool isJump = false;
-    
-
+    bool closeDeath = false;
 
 
     [SerializeField] private float moveSpeed = 1f;
@@ -50,11 +49,12 @@ public class PlayerMoveMent : MonoBehaviour
         if (isDead)
         {
             rigid.velocity = Vector2.zero;
+            UIManager.Instance.ClearCountSpeechBubble();
             GameManager.Instance.PlayerDead();
             return;
         }
 
-        RaycastHit2D rayhitDown = Physics2D.Raycast(transform.position + (Vector3.down * 0.5f), Vector2.down, 0.1f, LayerMask.GetMask("Block"));
+        RaycastHit2D rayhitDown = Physics2D.Raycast(transform.position + (Vector3.down * 0.51f), Vector2.down, 0.1f, LayerMask.GetMask("Block"));
 
         if (!rayhitDown && !isJump)
         {
@@ -182,7 +182,42 @@ public class PlayerMoveMent : MonoBehaviour
         {
             oxygen = 0;
             //UIManager.Instance.UpdateOxygenText(oxygen);
+            //   UIManager.Instance.UpdateOxygenText(oxygen);
+            if (closeDeath)
+            {
+                closeDeath = false;
+                SoundManager.Instance.SfxAllStop();
+            }
             OnDamaged(maxHealth);
+        }
+        else if (oxygen <= 30)
+        {
+            //10이하
+            if (oxygen <= 10)
+            {
+                Debug.Log("Oxygen <= 10");
+                UIManager.Instance.SettingCountSpeechBubble(oxygen);
+            }
+            else
+            {
+                UIManager.Instance.ClearCountSpeechBubble();
+            }
+
+            if (closeDeath)
+                return;
+            closeDeath = true;
+            //스프라이트 교체
+            anim.SetLayerWeight(1, 1);
+
+            //사운드 출력
+            SoundManager.Instance.SfxPlay(SoundManager.Sfx.CloseDeath);
+        }
+        else
+        {
+            closeDeath = false;
+            anim.SetLayerWeight(1, 0);
+            SoundManager.Instance.SfxAllStop();
+            UIManager.Instance.ClearCountSpeechBubble();
         }
     }
 
