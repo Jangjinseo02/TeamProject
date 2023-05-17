@@ -292,7 +292,7 @@ public class PlayerMoveMent : MonoBehaviour
                 foreach (Block member in block.group)
                 {
                     member.RemoveGroup(block.group.blockManager);
-                    //member.group.GroupUnbalance();
+                    //member.group.CheckGroupUnbalance();
                 }
             }
         }
@@ -307,7 +307,7 @@ public class PlayerMoveMent : MonoBehaviour
                 foreach (Block member in leftBlock.group)
                 {
                     member.RemoveGroup(leftBlock.group.blockManager);
-                    member.group.GroupUnbalance();
+                    member.group.CheckGroupUnbalance();
                 }
             }
         }
@@ -321,7 +321,7 @@ public class PlayerMoveMent : MonoBehaviour
                 foreach (Block member in rightBlock.group)
                 {
                     member.RemoveGroup(rightBlock.group.blockManager);
-                    member.group.GroupUnbalance();
+                    member.group.CheckGroupUnbalance();
                 }
             }
         }

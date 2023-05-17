@@ -64,16 +64,25 @@ public class InputManager : SingleTon<InputManager>
                 playeranim.SetTrigger("downAttack");
 
                 if (hard)
+                {
                     hard.OnDamaged(10);
+                    GameManager.Instance.GetScore(GameManager.BreakType.Single);
+                }
                 else
+                    if (block.group != null)
                     foreach (Block member in block.group)
                     {
                         //if (block.type == 0 && firstMember == null) //type == 0 : ClearBlock
                         //    firstMember = member;
                         member.OnDamaged(10);
+                        if (block.group.Count >= 4)
+                            GameManager.Instance.GetScore(GameManager.BreakType.Multi);
+                        else
+                            GameManager.Instance.GetScore(GameManager.BreakType.Single);
                     }
 
-                
+
+
 
                 if (hard)
                     if (hard.isDestroy())
@@ -104,13 +113,23 @@ public class InputManager : SingleTon<InputManager>
                     playeranim.SetTrigger("downAttack");
 
                 if (hard)
+                {
                     hard.OnDamaged(10);
+                    GameManager.Instance.GetScore(GameManager.BreakType.Single);
+                }
                 else
+                    if (block.group != null)
                     foreach (Block member in block.group)
                     {
+                        //if (block.type == 0 && firstMember == null) //type == 0 : ClearBlock
+                        //    firstMember = member;
                         member.OnDamaged(10);
+                        if (block.group.Count >= 4)
+                            GameManager.Instance.GetScore(GameManager.BreakType.Multi);
+                        else
+                            GameManager.Instance.GetScore(GameManager.BreakType.Single);
                     }
-                
+
 
                 if (hard)
                     if (hard.isDestroy())

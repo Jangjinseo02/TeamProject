@@ -10,7 +10,7 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
-        pos.x = player.transform.position.x - 3.03f;
+        pos.x = player.transform.position.x;
         pos.y = player.transform.position.y;
 
         this.transform.position = pos;

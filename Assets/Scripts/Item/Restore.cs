@@ -6,21 +6,34 @@ public class Restore : Item, IItem
 {
     public void Use(GameObject target)
     {
+        if (isUse)
+            return;
+
         PlayerMoveMent player = target.GetComponent<PlayerMoveMent>();
 
         if (player != null)
         {
-            player.oxygen += 20f;
-            if (player.oxygen >= 100)
-                player.oxygen = 100;
+            OxygenRestore(player);
 
-            //ObjectManager.Instance.ReturnBlock(this.gameObject);
             UIManager.Instance.SettingAirImage(1); // type == 1 +air
+
             if (group != null)
                 group.blockManager.RemovePos(this);
+
             gameObject.SetActive(false);
-            //gameObject (false);
         }
+    }
+    void OxygenRestore(PlayerMoveMent player)
+    {
+        if (isUse)
+            return;
+
+        UsingItem();
+
+        GameManager.Instance.GetScore(GameManager.BreakType.AirCore);
+        player.oxygen += 20f;
+        if (player.oxygen >= 100)
+            player.oxygen = 100;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

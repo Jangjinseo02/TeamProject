@@ -37,48 +37,52 @@ public class Group
         block.group = this;
         return blocks.Add(block);
     }
+    public void CheckGroupUnbalance()
+    {
+        HashSet<Group> historyGroup = new HashSet<Group>();
+        HashSet<Group> resultGroup = new HashSet<Group>();
+
+        GroupUnbalance(historyGroup, resultGroup);
+
+        blockManager.CheckUnbalanceList(resultGroup);
+    }
 
     //여기서 재귀 부분 문제가 발생하는 것 같음. 
-    public void GroupUnbalance()
+    public void GroupUnbalance(HashSet<Group> history, HashSet<Group> result)
     {
         if (this.unbalance)
             return;
+
+        history.Add(this);
 
         foreach (Block block in blocks)
         {
             //아래 블록
             Block underBlock = blockManager.UnderBlock(block.row, block.col);
 
-            if (underBlock != null)
+            if (underBlock != null && underBlock.group != this)
             {
-                if (underBlock.group == this)
-                {
+                if (underBlock.group.unbalance)
                     continue;
-                }
-                else
-                {
-                    
-                    if (underBlock.group.unbalance)
-                        continue;
-                
-                    this.unbalance = false;
-                    return;
-                }
+
+                this.unbalance = false;
+                return;
             }
         }
         
         this.unbalance = true;
-        blockManager.CheckUnbalanceList(this);
+        result.Add(this);
+        //blockManager.CheckUnbalanceList(this);
 
         foreach (Block block in blocks)
         {
             Block upBlock = blockManager.UpBlock(block.row, block.col);
-            if (upBlock != null)
+            if (upBlock != null && !history.Contains(upBlock.group))
             {
-                if (upBlock.group == this || upBlock.group.unbalance)
+                if (upBlock.group.unbalance)
                     continue;
 
-                upBlock.group.GroupUnbalance();
+                upBlock.group.GroupUnbalance(history, result);
             }
         }
     }

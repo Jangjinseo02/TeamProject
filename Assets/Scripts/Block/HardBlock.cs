@@ -16,11 +16,9 @@ public class HardBlock : Block
     public override void OnDamaged(int damage)
     {
         health -= damage;
-        Debug.Log("Hit");
 
         if (health <= 0)
         {
-            //type = -1;
             isDestory = true;
             group.blockManager.RemovePos(this);
 
@@ -30,12 +28,9 @@ public class HardBlock : Block
                 if (this == member)
                     continue;
                 member.RemoveGroup(group.blockManager);
-                member.group.GroupUnbalance();
+                member.group.CheckGroupUnbalance();
             }
 
-            Block upBlock = group.blockManager.UpBlock(row, col);
-            if (upBlock != null && upBlock.type != this.type)
-                upBlock.group.GroupUnbalance();
             gameObject.SetActive(false);
         }
     }

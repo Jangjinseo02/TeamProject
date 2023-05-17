@@ -425,7 +425,7 @@ public class BlockMgr : MonoBehaviour
 
         Block upBlock = UpBlock(block.row, block.col);
         if (upBlock != null)
-            upBlock.group.GroupUnbalance();
+            upBlock.group.CheckGroupUnbalance();
     }
 
 
@@ -457,17 +457,19 @@ public class BlockMgr : MonoBehaviour
         return blocks[row, col];
     }
 
-    public void CheckUnbalanceList(Group group)
+    public void CheckUnbalanceList(HashSet<Group> group)
     {
-        foreach (Block member in group)
+        foreach (Group memberGroup in group)
         {
-            if (!unbalanceBlockList.Contains(member))
+            foreach (Block member in memberGroup)
             {
-                unbalanceBlockList.Add(member);
-                //member.ShakeStart(); //여기서 shake를 시작 시키고 shakeNext메서드를 이용해서 매 프레임 동일한 shake를 만들도록 만든다. 또한 그룹으로 편입된 블록들에 대해서도 더 편하게
-                //움직임을 만들 수 있다.
+                if (!unbalanceBlockList.Contains(member))
+                {
+                    unbalanceBlockList.Add(member);
+                    //member.ShakeStart(); //여기서 shake를 시작 시키고 shakeNext메서드를 이용해서 매 프레임 동일한 shake를 만들도록 만든다. 또한 그룹으로 편입된 블록들에 대해서도 더 편하게
+                    //움직임을 만들 수 있다.
+                }
             }
-
         }
 
         unbalanceBlockList.Sort(delegate (Block a, Block b)
@@ -518,8 +520,8 @@ public class BlockMgr : MonoBehaviour
     {
         blocks[row, col] = ObjectManager.Instance.GetBlock(blockType);
         SetBlock(row, col);
-        blocks[row, col].SetActive(true);
         Search(blocks[row, col].GetComponent<Block>());
+        blocks[row, col].SetActive(true);
 
         return blocks[row, col];
     }

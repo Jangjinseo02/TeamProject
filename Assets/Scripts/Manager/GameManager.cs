@@ -6,10 +6,17 @@ public class GameManager : SingleTon<GameManager>
 {
     public GameObject player;
 
+    public enum BreakType { Single, Multi, AirCore, ClearLevel }
+    [Header("---------------------Score")]
+    [SerializeField] int score;
+    [SerializeField] int airCount;
+
+    [Header("---------------------GameObject")]
     [SerializeField] BlockMgr[] blockMgrs;
     [SerializeField] GameObject backGround;
     Vector2 blockMgrPos;
 
+    [Header("---------------------BackGround")]
     [SerializeField] SpriteRenderer backGroundObject;
     [SerializeField] Sprite[] backGroundSprites;
     public int ran = 0;
@@ -20,8 +27,10 @@ public class GameManager : SingleTon<GameManager>
     int curLevel = 0;
 
     //·¹º§ ¸ñÇ¥ ±íÀÌ
+    
     public enum Level { Easy, Nomal, Hard };
     Level level = Level.Easy;
+    [Header("---------------------Level")]
     [SerializeField] int[] depth;
     public int clearDepth = 0;
 
@@ -33,6 +42,9 @@ public class GameManager : SingleTon<GameManager>
 
     void Start()
     {
+        if (DataManager.Instance != null)
+            level = (GameManager.Level)DataManager.Instance.ReturnLevel();
+
         //¸ñÇ¥ ±íÀÌ ¼³Á¤
         switch (level)
         {
@@ -73,7 +85,8 @@ public class GameManager : SingleTon<GameManager>
         blockMgrs[curLevel].Disable();
         UIManager.Instance.SelectBackGroundPopup();
 
-        stageLevel += 1;
+        GetScore(BreakType.ClearLevel); //stagelevel++ and addscore
+
         curLevel = stageLevel % 2;
     }
 
@@ -101,7 +114,26 @@ public class GameManager : SingleTon<GameManager>
         UIManager.Instance.ResultScreenPopup();
     }
 
-
+    public void GetScore(BreakType breakType)
+    {
+        switch (breakType)
+        {
+            case BreakType.Single:
+                score += 10;
+                break;
+            case BreakType.Multi:
+                score += 30;
+                break;
+            case BreakType.AirCore:
+                airCount += 1;
+                score += airCount * 100;
+                break;
+            case BreakType.ClearLevel:
+                stageLevel += 1;
+                score += stageLevel * 1000;
+                break;
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")

@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Item : Block
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool isUse = false;
+
+    private void OnEnable()
     {
-        
+        if (group != null)
+            this.group.CheckGroupUnbalance();
+
+        isUse = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UsingItem()
     {
-        
+        if (!gameObject.activeInHierarchy)
+            return;
+        isUse = true;
     }
 }

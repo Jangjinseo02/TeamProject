@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UseItem : Block, IItem
+public class UseItem : Item, IItem
 {
     [SerializeField] GameObject[] itemObject;
     GameObject item;
@@ -22,9 +22,12 @@ public class UseItem : Block, IItem
 
     public void Use(GameObject target)
     {
+        if (isUse)
+            return;
+
         item = itemObject[Random.Range(0, itemObject.Length)];
         item.GetComponent<IItem>().Use(target);
-        //ObjectManager.Instance.ReturnBlock(this.gameObject);
+        
         if (group != null)
             group.blockManager.RemovePos(this);
         gameObject.SetActive(false);
