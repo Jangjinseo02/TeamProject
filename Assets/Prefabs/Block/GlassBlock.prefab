@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5162076192791352740}
   m_Layer: 6
   m_Name: GlassBlock
-  m_TagString: Block
+  m_TagString: Glass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   blockState: 1
   type: 7
   gravity: 3
+  health: 10
   isCheck: 0
   afVec: {x: 0, y: 0, z: 0}
   pos: {x: 0, y: 0, z: 0}

@@ -18,21 +18,6 @@ public class GlassBlock : Block
     {
         Debug.Log(mainCamera);
         Debug.Log(checkCamera);
-        StartCoroutine(CheckRoutine());
-    }
-
-    void CheckMe()
-    {
-        checkCamera.CheckGlassBlock(this.gameObject);
-    }
-
-    IEnumerator CheckRoutine()
-    {
-        while (true)
-        {
-            CheckMe();
-            yield return new WaitForSeconds(1f);
-        }
     }
 
     public override void OnDamaged(int damage)
@@ -41,7 +26,6 @@ public class GlassBlock : Block
 
         if (health <= 0)
         {
-            StopCoroutine(CheckRoutine());
             StartCoroutine(DamageRoutine());
         }
     }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BlockMgr : MonoBehaviour
 {
-    enum BlocksType { ClearBlock, BlockB, BlockC, BlockD, BlockF, HardBlock, MeteorBlcok, GlassBlock }
-    enum MonsterType { Slim = 8, MonsterB, MonsterC }
+    public enum BlocksType { ClearBlock, BlockB, BlockC, BlockD, BlockF, HardBlock, MeteorBlcok, GlassBlock }
+    public enum MonsterType { Slim = 8, MonsterB, MonsterC }
 
     GameObject[,] blocks;
     HashSet<GameObject> removeBlocks = new HashSet<GameObject>();
@@ -218,6 +218,7 @@ public class BlockMgr : MonoBehaviour
                 if (blocks[i, j].GetComponent<Block>().type == (int)MonsterType.Slim)
                 {
                     float ran = Random.Range(0, 101);
+                    int type = (int)BlocksType.HardBlock;
 
                     if (ran <= curValue[0])
                     {
@@ -229,7 +230,7 @@ public class BlockMgr : MonoBehaviour
                         //한개
                         Debug.Log(i.ToString() + " , " + j.ToString() + ": 1개 " + curValue[1].ToString());
                         int ranDir = Random.Range(0, 4);
-                        CheckBlock(ranDir, i, j);
+                        CheckBlock(ranDir, i, j, type);
                     }
                     else if (ran > curValue[0] + curValue[1] && ran <= curValue[0] + curValue[1] + curValue[2])
                     {
@@ -238,7 +239,7 @@ public class BlockMgr : MonoBehaviour
                         for(int k = 0; k < 2; k++)
                         {
                             int ranDir = Random.Range(0, 4);
-                            CheckBlock(ranDir, i, j);
+                            CheckBlock(ranDir, i, j, type);
                         }
                     }
                     else if (ran > curValue[0] + curValue[1] + curValue[2] && ran <= curValue[0] + curValue[1] + curValue[2] + curValue[3])
@@ -248,7 +249,7 @@ public class BlockMgr : MonoBehaviour
                         for (int k = 0; k < 3; k++)
                         {
                             int ranDir = Random.Range(0, 4);
-                            CheckBlock(ranDir, i, j);
+                            CheckBlock(ranDir, i, j, type);
                         }
                     }
                     else if (ran > curValue[0] + curValue[1] + curValue[2] + curValue[3] && ran <= curValue[0] + curValue[1] + curValue[2] + curValue[3] + curValue[4])
@@ -258,7 +259,7 @@ public class BlockMgr : MonoBehaviour
                         for (int k = 0; k < 4; k++)
                         {
                             int ranDir = Random.Range(0, 4);
-                            CheckBlock(ranDir, i, j);
+                            CheckBlock(ranDir, i, j, type);
                         }
                     }
                 }
@@ -266,40 +267,39 @@ public class BlockMgr : MonoBehaviour
         }
     }
 
-    void CheckBlock(int ranDir, int i, int j)
+    public void CheckBlock(int ranDir, int i, int j, int type)
     {
         if (ranDir == 0)
-            ChangeBlock(BlockCheck(i - 1, j), i - 1, j);
+            ChangeBlock(BlockCheck(i - 1, j), i - 1, j, type);
         else if (ranDir == 1)
-            ChangeBlock(BlockCheck(i + 1, j), i + 1, j);
+            ChangeBlock(BlockCheck(i + 1, j), i + 1, j, type);
         else if (ranDir == 2)
-            ChangeBlock(BlockCheck(i, j - 1), i, j - 1);
+            ChangeBlock(BlockCheck(i, j - 1), i, j - 1, type);
+        else if (ranDir == 3)
+            ChangeBlock(BlockCheck(i, j + 1), i, j + 1, type);
         else
-            ChangeBlock(BlockCheck(i, j + 1), i, j + 1);
+            ChangeBlock(BlockCheck(i, j), i, j, type);
     }
 
-    void ChangeBlock(GameObject block, int row, int col)
+    void ChangeBlock(GameObject block, int row, int col, int type)
     {
-        block.gameObject.transform.parent = blockPool.transform;
-        //blocks[row, col].gameObject.transform.parent = blockPool.transform;
-        ObjectManager.Instance.ReturnBlock(block);
-        blocks[row, col] = ObjectManager.Instance.GetBlock((int)BlocksType.HardBlock);
-        SetBlock(row, col);
+        if (block == null)
+            return;
 
-        //blocks[row, col].transform.parent = this.transform;
-        //blocks[row, col].transform.localPosition = new Vector3(col, row, 0);
-        //Block newblock = blocks[row, col].GetComponent<Block>();
-        //types[row, col] = newblock.type;
-        //block.group = new Group(this);
-        //block.Setting(i, j);
+        block.gameObject.transform.parent = blockPool.transform;
+        ObjectManager.Instance.ReturnBlock(block);
+        blocks[row, col] = ObjectManager.Instance.GetBlock(type);
+        SetBlock(row, col);
     }
 
-    void AllGrouping()
+    public void AllGrouping()
     {
         for (int i = 0; i < numRow; i++)
         {
             for (int j = 0; j < numCol; j++)
             {
+                if (blocks[i, j] == null)
+                    continue;
                 Search(blocks[i, j].GetComponent<Block>());
                 blocks[i, j].SetActive(true); //나중에 가장 마지막에 true로 바꾸기
             }
@@ -451,6 +451,8 @@ public class BlockMgr : MonoBehaviour
 
     GameObject BlockCheck(int row, int col)
     {
+        if (row >= numRow || row < 0 || col < 0 || col >= numCol)
+            return null;
         if (blocks[row, col] == null)
             return null;
 

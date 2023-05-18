@@ -64,10 +64,7 @@ public class InputManager : SingleTon<InputManager>
                 playeranim.SetTrigger("downAttack");
 
                 if (hard)
-                {
                     hard.OnDamaged(10);
-                    GameManager.Instance.GetScore(GameManager.BreakType.Single);
-                }
                 else
                     if (block.group != null)
                     foreach (Block member in block.group)
@@ -86,7 +83,10 @@ public class InputManager : SingleTon<InputManager>
 
                 if (hard)
                     if (hard.isDestroy())
+                    {
                         player.RealeseAir();
+                        GameManager.Instance.GetScore(GameManager.BreakType.Single);
+                    }
                 if (clear)
                     block.StageClear();
                 //if (firstMember != null)
@@ -113,10 +113,7 @@ public class InputManager : SingleTon<InputManager>
                     playeranim.SetTrigger("downAttack");
 
                 if (hard)
-                {
                     hard.OnDamaged(10);
-                    GameManager.Instance.GetScore(GameManager.BreakType.Single);
-                }
                 else
                     if (block.group != null)
                     foreach (Block member in block.group)
@@ -133,7 +130,10 @@ public class InputManager : SingleTon<InputManager>
 
                 if (hard)
                     if (hard.isDestroy())
+                    {
                         player.RealeseAir();
+                        GameManager.Instance.GetScore(GameManager.BreakType.Single);
+                    }  
                 if (clear)
                     block.StageClear();
             }

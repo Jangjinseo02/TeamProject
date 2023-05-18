@@ -97,13 +97,11 @@ public class Block : MonoBehaviour
     public int type;
     public float gravity = 5f;
 
-    protected float health = 10;
+    public float health = 10;
     public Group group;
     public bool isCheck = false;
     public Vector3 afVec;
     public Vector3 pos;
-    //public int row;
-    //public int col;
 
     IEnumerator drop;
     IEnumerator shake;
@@ -125,12 +123,7 @@ public class Block : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
-
-    private void Start()
-    {
-    }
-
-    public int attackDamage
+    public virtual int attackDamage
     {
         get { return 35 + (GameManager.Instance.stageLevel * 2); }
     }

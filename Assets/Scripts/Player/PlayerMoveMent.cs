@@ -28,11 +28,13 @@ public class PlayerMoveMent : MonoBehaviour
     [SerializeField] private VirtualJoystick virtualJoystick;
 
     Animator anim;
+    BoxCollider2D boxCol;
+    CapsuleCollider2D capCol;
 
     private void Awake()
     {
-       // UIManager.Instance.UpdateHpText(hp);
-       // UIManager.Instance.UpdateOxygenText(oxygen);
+        boxCol = GetComponent<BoxCollider2D>();
+        capCol = GetComponent<CapsuleCollider2D>();
     }
 
     void Start()
@@ -239,39 +241,37 @@ public class PlayerMoveMent : MonoBehaviour
 
     public void OnDamaged(int damage)
     {
-        anim.SetTrigger("OnDamaged");
-        anim.SetBool("OnDamage", true);
-        rigid.velocity = Vector2.zero;
-        this.GetComponent<CapsuleCollider2D>().enabled = false;
-
+        StartCoroutine(DamageRoutine());
         hp -= damage;
-
-        //UIManager.Instance.UpdateHpText(hp);
 
         if (hp <= 0)
         {
             hp = 0;
-            //UIManager.Instance.UpdateHpText(hp);
             isDead = true;
             anim.SetTrigger("Die");
         }
     }
 
-    IEnumerator DamageRoutine(GameObject block)
+    IEnumerator DamageRoutine()
     {
         isDamaged = true;
 
-        ClearOverBlock();
+        anim.SetTrigger("OnDamaged");
+        anim.SetBool("OnDamage", true);
+        rigid.velocity = Vector2.zero;
+        capCol.enabled = false;
+        boxCol.enabled = false;
+
         StopCoroutine(BreatheRoutine());
-        OnDamaged(block.GetComponent<Block>().attackDamage);
 
         yield return new WaitForSeconds(3.5f);
-
         anim.SetBool("OnDamage", false);
-        this.GetComponent<CapsuleCollider2D>().enabled = true;
+        ClearOverBlock();
 
         yield return new WaitForSeconds(0.5f);
         isDamaged = false;
+        capCol.enabled = true;
+        boxCol.enabled = true;
         StartCoroutine(BreatheRoutine());
     }
 
@@ -354,7 +354,8 @@ public class PlayerMoveMent : MonoBehaviour
     {
         if (collision.gameObject.tag == "Block" && !isDamaged && !isDead)
         {
-            StartCoroutine(DamageRoutine(collision.gameObject));
+            OnDamaged(collision.GetComponent<Block>().attackDamage);
+            //StartCoroutine(DamageRoutine(collision.gameObject));
         }
 
         if (collision.gameObject.tag == "Item" && !isDead)

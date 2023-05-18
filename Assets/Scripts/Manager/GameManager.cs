@@ -8,7 +8,7 @@ public class GameManager : SingleTon<GameManager>
 
     public enum BreakType { Single, Multi, AirCore, ClearLevel }
     [Header("---------------------Score")]
-    [SerializeField] int score;
+    [SerializeField] public int score;
     [SerializeField] int airCount;
 
     [Header("---------------------GameObject")]

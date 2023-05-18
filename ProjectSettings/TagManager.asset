@@ -7,11 +7,12 @@ TagManager:
   - Block
   - Monster
   - Item
+  - Glass
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Block

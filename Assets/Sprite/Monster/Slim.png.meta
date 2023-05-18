@@ -3,7 +3,7 @@ guid: 08c30a6a6d7f6384bac6c1c253435d24
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -516,24 +517,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Slim_9: -1444542243
       Slim_0: 1376073814
-      Slim_4: 1097825539
-      Slim_7: -980119504
-      Slim_15: -1098366821
-      Slim_17: 2018778878
-      Slim_12: 313504478
-      Slim_3: 2136893342
-      Slim_13: -1515146270
-      Slim_6: 1808699380
-      Slim_14: 256034800
-      Slim_11: 816915559
       Slim_1: -1006793066
-      Slim_16: -859115250
-      Slim_5: -1010477169
-      Slim_2: 1164850753
       Slim_10: -490348674
+      Slim_11: 816915559
+      Slim_12: 313504478
+      Slim_13: -1515146270
+      Slim_14: 256034800
+      Slim_15: -1098366821
+      Slim_16: -859115250
+      Slim_17: 2018778878
+      Slim_2: 1164850753
+      Slim_3: 2136893342
+      Slim_4: 1097825539
+      Slim_5: -1010477169
+      Slim_6: 1808699380
+      Slim_7: -980119504
       Slim_8: 1394614145
+      Slim_9: -1444542243
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -27,6 +27,7 @@ public class UIManager : SingleTon<UIManager>
     [SerializeField] Text hpText;
     [SerializeField] Text oxygenText;
     [SerializeField] Text depthText;
+    [SerializeField] Text scoreText;
 
     private void Awake()
     {
@@ -55,6 +56,7 @@ public class UIManager : SingleTon<UIManager>
         UpdateHpText(player.hp);
         UpdateOxygenText(player.oxygen);
         UpdateDepthText(player.transform.position.y * (-1));
+        UpdateScoreText(GameManager.Instance.score);
     }
 
 
@@ -90,6 +92,11 @@ public class UIManager : SingleTon<UIManager>
     public void UpdateDepthText(float yPos)
     {
         depthText.text = ((int)yPos).ToString() + "/" + GameManager.Instance.clearDepth.ToString();
+    }
+    public void UpdateScoreText(int score)
+    {
+
+        scoreText.text = score.ToString();
     }
 
     public void SettingAirImage(int type)
