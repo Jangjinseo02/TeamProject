@@ -1,0 +1,10 @@
+Thank you for your purchase!
+
+Package contains:
+24 original visual effects
+66 prefabs with already painted and ready to use.
+2 custom shaders written by me.
+29 unique textures.
+
+All assets are optimized for mobile devices and work as a Standard Render Pipeline and in the Lightweight Render Pipeline.
+Also all prefabs are kept in greyscale.
