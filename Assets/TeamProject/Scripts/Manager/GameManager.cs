@@ -14,6 +14,7 @@ public class GameManager : SingleTon<GameManager>
     [Header("---------------------GameObject")]
     [SerializeField] BlockMgr[] blockMgrs;
     [SerializeField] GameObject backGround;
+    public BlockMgr stayBlockMgr;
     Vector2 blockMgrPos;
 
     [Header("---------------------BackGround")]
@@ -29,7 +30,7 @@ public class GameManager : SingleTon<GameManager>
     //레벨 목표 깊이
     
     public enum Level { Easy, Nomal, Hard };
-    Level level = Level.Easy;
+    public Level level = Level.Easy;
     [Header("---------------------Level")]
     [SerializeField] int[] depth;
     public int clearDepth = 0;
@@ -63,12 +64,6 @@ public class GameManager : SingleTon<GameManager>
         blockMgrPos = Vector2.zero;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetBlockStage()
     {
         StageSetting();
@@ -76,12 +71,16 @@ public class GameManager : SingleTon<GameManager>
         blockMgrPos.y -= 100;
         blockMgrs[curLevel].gameObject.transform.position = blockMgrPos;
         blockMgrs[curLevel].gameObject.SetActive(true);
+        stayBlockMgr = blockMgrs[curLevel];
+        player.transform.parent = stayBlockMgr.transform;
 
         backGround.gameObject.transform.position = blockMgrPos;
     }
 
     public void BlockStageClear()
     {
+        player.transform.parent = null;
+
         blockMgrs[curLevel].Disable();
         UIManager.Instance.SelectBackGroundPopup();
 

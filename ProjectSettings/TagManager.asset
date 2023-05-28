@@ -8,6 +8,7 @@ TagManager:
   - Monster
   - Item
   - Glass
+  - Object
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - UI
   - Block
   - Monster
-  - 
-  - 
+  - Item
+  - Object
   - 
   - 
   - 

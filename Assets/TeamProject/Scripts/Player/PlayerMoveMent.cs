@@ -18,9 +18,10 @@ public class PlayerMoveMent : MonoBehaviour
     public bool isDead = false;
     public bool isDamaged = false;
     public bool isDrop = false;
-    bool isJump = false;
+    public bool isStun = false;
+    public bool isJump = false;
+    public bool isGetTime = false;
     bool closeDeath = false;
-
 
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float jumpPower = 5f;
@@ -31,10 +32,13 @@ public class PlayerMoveMent : MonoBehaviour
     BoxCollider2D boxCol;
     CapsuleCollider2D capCol;
 
+    public CameraMove followCamera;
+
     private void Awake()
     {
         boxCol = GetComponent<BoxCollider2D>();
         capCol = GetComponent<CapsuleCollider2D>();
+        followCamera = FindObjectOfType<CameraMove>();
     }
 
     void Start()
@@ -80,7 +84,7 @@ public class PlayerMoveMent : MonoBehaviour
                 DropOff();
         }
 
-        if (isDamaged)
+        if (isDamaged || isStun)
             return;
 
         Move();
@@ -107,6 +111,17 @@ public class PlayerMoveMent : MonoBehaviour
     void DownOff()
     {
         anim.SetBool("isDown", false);
+    }
+
+    public void PlayerStun()
+    {
+        isStun = true;
+        Invoke("PlayerAwake", 1f);
+    }
+
+    void PlayerAwake()
+    {
+        isStun = false;
     }
 
     private void Move()
@@ -345,26 +360,35 @@ public class PlayerMoveMent : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Block" && !isDamaged && !isDead)
+        if (collision.CompareTag("Block") && !isDamaged && !isDead)
         {
+            Barrier barrier = GetComponentInChildren<Barrier>();
+            if(barrier != null)
+            {
+                barrier.Use(collision.gameObject);
+                return;
+            }
+
             OnDamaged(collision.GetComponent<Block>().attackDamage);
-            //StartCoroutine(DamageRoutine(collision.gameObject));
         }
 
-        if (collision.gameObject.tag == "Item" && !isDead)
+        if (collision.CompareTag("Item") && !isDead && !isGetTime)
         {
             IItem item = collision.GetComponent<IItem>();
             if (item != null)
             {
-                item.Use(gameObject);
+                isGetTime = true;
+                StartCoroutine(UsingRoutine(item));
             }
         }
+    }
+
+    IEnumerator UsingRoutine(IItem item)
+    {
+        item.Use(gameObject);
+        yield return new WaitForSeconds(0.5f);
+        isGetTime = false;
     }
 }

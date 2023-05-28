@@ -92,17 +92,14 @@ public class Group
 
 public class Block : MonoBehaviour
 {
-    public enum BlockState { Drop, Idle }
-    public BlockState blockState = BlockState.Idle;
     public int type;
-    public float gravity = 5f;
-
-    public float health = 10;
     public Group group;
+    public float health = 10;
     public bool isCheck = false;
-    public Vector3 afVec;
-    public Vector3 pos;
 
+    public float gravity = 3f;
+    float shakeTime = 1;
+    
     IEnumerator drop;
     IEnumerator shake;
     IEnumerator blink;
@@ -110,14 +107,6 @@ public class Block : MonoBehaviour
     SpriteRenderer sprite;
     [SerializeField] Sprite[] sprites;
 
-    private void OnEnable()
-    {
-        pos = transform.localPosition;
-    }
-    private void OnDisable()
-    {
-        //ObjectManager.Instance.ReturnBlock(this.gameObject);
-    }
     private void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
@@ -211,14 +200,16 @@ public class Block : MonoBehaviour
         pos.x = col;
         pos.y = transform.localPosition.y;
 
-        float startTime = Time.time;
+        float curTime = 0;
         float beforeX = pos.x;
 
-        while (Time.time < startTime + 0.5f)
+        while (curTime < shakeTime)
         {
             float offset = Mathf.PingPong(Time.time * 10f, 0.1f) - 0.05f;
             pos.x += offset;
             transform.localPosition = pos;
+
+            curTime += Time.deltaTime;
             yield return true;
         }
 

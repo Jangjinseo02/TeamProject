@@ -38,7 +38,7 @@ public class InputManager : SingleTon<InputManager>
     public void Attack()
     {
         //player.isDamaged Ãß°¡
-        if (player.isDead || player.isDamaged)
+        if (player.isDead || player.isDamaged || player.isStun || player.isDrop || player.isJump)
             return;
 
         if (!isAttack && !player.isDrop)

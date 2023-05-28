@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Restore : Item, IItem
 {
+    [SerializeField] float restoreOxygen;
+
     public void Use(GameObject target)
     {
         if (isUse)
@@ -31,7 +33,7 @@ public class Restore : Item, IItem
         UsingItem();
 
         GameManager.Instance.GetScore(GameManager.BreakType.AirCore);
-        player.oxygen += 20f;
+        player.oxygen += restoreOxygen;
         if (player.oxygen >= 100)
             player.oxygen = 100;
     }

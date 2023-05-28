@@ -88,6 +88,11 @@ public class CameraMove : MonoBehaviour
         }
     }
 
+    public HashSet<Block> ReturnBlock()
+    {
+        return inCamera;
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

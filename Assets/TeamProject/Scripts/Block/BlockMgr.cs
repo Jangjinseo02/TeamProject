@@ -7,6 +7,8 @@ public class BlockMgr : MonoBehaviour
     public enum BlocksType { ClearBlock, BlockB, BlockC, BlockD, BlockF, HardBlock, MeteorBlcok, GlassBlock }
     public enum MonsterType { Slim = 8, MonsterB, MonsterC }
 
+    public enum Object { BarrierObj = 13 }
+
     GameObject[,] blocks;
     HashSet<GameObject> removeBlocks = new HashSet<GameObject>();
     int[,] types;
@@ -267,6 +269,7 @@ public class BlockMgr : MonoBehaviour
         }
     }
 
+    //방향 체크
     public void CheckBlock(int ranDir, int i, int j, int type)
     {
         if (ranDir == 0)
@@ -281,6 +284,7 @@ public class BlockMgr : MonoBehaviour
             ChangeBlock(BlockCheck(i, j), i, j, type);
     }
 
+    //교체
     void ChangeBlock(GameObject block, int row, int col, int type)
     {
         if (block == null)
@@ -290,6 +294,23 @@ public class BlockMgr : MonoBehaviour
         ObjectManager.Instance.ReturnBlock(block);
         blocks[row, col] = ObjectManager.Instance.GetBlock(type);
         SetBlock(row, col);
+    }
+
+    //교체가 아닌 추가
+    public void AddBlock(int row, int col, int type, GameObject obj)
+    {
+        if (BlockCheck(row, col) == null)
+        {
+            if (obj == null)
+                blocks[row, col] = ObjectManager.Instance.GetBlock(type);
+            else
+                blocks[row, col] = obj;
+
+            SetBlock(row, col);
+
+            Search(blocks[row, col].GetComponent<Block>());
+            blocks[row, col].SetActive(true);
+        }
     }
 
     public void AllGrouping()

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6923413918772647938
+--- !u!1 &1517988838531213395
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7220772486084085901}
-  - component: {fileID: 6585764094793131691}
-  - component: {fileID: 7702276528858068672}
-  - component: {fileID: 2436755802027945234}
-  m_Layer: 8
-  m_Name: UseItem
-  m_TagString: Item
+  - component: {fileID: 486164571205803330}
+  - component: {fileID: 1967598209328552111}
+  - component: {fileID: 8672230454477193698}
+  m_Layer: 9
+  m_Name: BarrierObj
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7220772486084085901
+--- !u!4 &486164571205803330
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6923413918772647938}
+  m_GameObject: {fileID: 1517988838531213395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,13 +33,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6585764094793131691
+--- !u!212 &1967598209328552111
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6923413918772647938}
+  m_GameObject: {fileID: 1517988838531213395}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -75,47 +74,31 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: d0e66408c7e72634289aea0e7047990a, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.3333334, y: 1.3333334}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7702276528858068672
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6923413918772647938}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &2436755802027945234
+--- !u!114 &8672230454477193698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6923413918772647938}
+  m_GameObject: {fileID: 1517988838531213395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b89e07b8756d98f458835c39652d81b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 63edaafe0573edd45bd6385d20e88f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blockState: 1
-  type: 12
+  type: 13
   gravity: 3
   health: 10
   isCheck: 0
@@ -123,15 +106,3 @@ MonoBehaviour:
   pos: {x: 0, y: 0, z: 0}
   sprites: []
   col: 0
-  isUse: 0
-  itemObject:
-  - {fileID: 3295285543806842681, guid: 01348b4823f33874595d62efbf298768, type: 3}
-  - {fileID: 1811327550249459077, guid: 3fed1389cc3803d4dbf35c63d7532ec4, type: 3}
-  - {fileID: 2335791333016288004, guid: 9ae9b6fa939dc2a4a98cba78c89416a8, type: 3}
-  - {fileID: 8765048315726947921, guid: 2102c8c560f2e714da5b017f19e070fc, type: 3}
-  - {fileID: 5565241830147067397, guid: eae7eb52b374afc49b75da44a0614a1c, type: 3}
-  - {fileID: 1293455399230881107, guid: 15715c20ba954ed4d98b988adf02d903, type: 3}
-  - {fileID: 1344981945569213264, guid: c0095412c5f7c564db434df942755451, type: 3}
-  ItemSprites:
-  - {fileID: -1815385192, guid: 22444c913a8162d4693c8961014a4d2a, type: 3}
-  - {fileID: 336536421, guid: 22444c913a8162d4693c8961014a4d2a, type: 3}
