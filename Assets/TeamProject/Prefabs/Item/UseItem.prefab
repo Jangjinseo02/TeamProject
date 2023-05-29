@@ -114,23 +114,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89e07b8756d98f458835c39652d81b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockState: 1
   type: 12
-  gravity: 3
   health: 10
   isCheck: 0
-  afVec: {x: 0, y: 0, z: 0}
-  pos: {x: 0, y: 0, z: 0}
+  gravity: 3
   sprites: []
   col: 0
   isUse: 0
   itemObject:
   - {fileID: 3295285543806842681, guid: 01348b4823f33874595d62efbf298768, type: 3}
-  - {fileID: 1811327550249459077, guid: 3fed1389cc3803d4dbf35c63d7532ec4, type: 3}
-  - {fileID: 2335791333016288004, guid: 9ae9b6fa939dc2a4a98cba78c89416a8, type: 3}
-  - {fileID: 8765048315726947921, guid: 2102c8c560f2e714da5b017f19e070fc, type: 3}
+  - {fileID: 380857684122014484, guid: 3fed1389cc3803d4dbf35c63d7532ec4, type: 3}
+  - {fileID: 2661349095780030889, guid: 9ae9b6fa939dc2a4a98cba78c89416a8, type: 3}
+  - {fileID: 3768921653615546851, guid: 2102c8c560f2e714da5b017f19e070fc, type: 3}
   - {fileID: 5565241830147067397, guid: eae7eb52b374afc49b75da44a0614a1c, type: 3}
-  - {fileID: 1293455399230881107, guid: 15715c20ba954ed4d98b988adf02d903, type: 3}
+  - {fileID: 4520420954239398217, guid: 15715c20ba954ed4d98b988adf02d903, type: 3}
   - {fileID: 1344981945569213264, guid: c0095412c5f7c564db434df942755451, type: 3}
   ItemSprites:
   - {fileID: -1815385192, guid: 22444c913a8162d4693c8961014a4d2a, type: 3}
