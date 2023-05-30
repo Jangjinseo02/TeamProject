@@ -10,16 +10,8 @@ public class Monster : Block
     public bool isDead;
     public bool inCamera;
 
-    private void Awake()
-    {
-        //anim = GetComponent<Animator>();
-    }
-
-    private void OnEnable()
-    {
-        isDead = false;
-        inCamera = false;
-    }
+    protected Animator anim;
+    protected BoxCollider2D bodyBoxCol;
 
     public virtual void CameraOut()
     {
@@ -30,7 +22,6 @@ public class Monster : Block
         inCamera = true;
         Debug.Log("Parent : CheckTarget");
     }
-
 
     public virtual void Attack()
     {
@@ -45,7 +36,26 @@ public class Monster : Block
     public override void OnDamaged(int damage)
     {
         health -= damage;
+
+        if (health <= 0)
+        {
+            if (isDead)
+                return;
+
+            isDead = true;
+            bodyBoxCol.enabled = false;
+            anim.SetTrigger("Dead");
+            StartCoroutine(DeadRoutine());
+        }
     }
 
-    
+    IEnumerator DeadRoutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+        GameObject item = group.blockManager.SettingBlockList(11, this.row, this.col);
+        item.GetComponent<UseItem>().SpriteSetting((int)monsterType);
+        gameObject.SetActive(false);
+    }
+
+
 }

@@ -6,19 +6,21 @@ public class MonsterB : Monster
 {
     BlockMgr blockmgr;
 
-    Animator anim;
-
     IEnumerator checkTarget;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        bodyBoxCol = GetComponent<BoxCollider2D>();
     }
 
     private void OnEnable()
     {
         if (group != null)
             blockmgr = group.blockManager;
+
+        isDead = false;
+        inCamera = false;
     }
 
     public override void CameraOut()
@@ -126,25 +128,5 @@ public class MonsterB : Monster
 
 
         blockmgr.AllGrouping();
-    }
-
-    public override void OnDamaged(int damage)
-    {
-        base.OnDamaged(damage);
-
-        if (health <= 0)
-        {
-            StartCoroutine(DeadRoutine());
-        }
-    }
-
-    IEnumerator DeadRoutine()
-    {
-        anim.SetTrigger("Dead");
-        yield return new WaitForSeconds(1f);
-
-        GameObject item = group.blockManager.SettingBlockList(11, this.row, this.col);
-        item.GetComponent<UseItem>().SpriteSetting((int)monsterType);
-        gameObject.SetActive(false);
     }
 }

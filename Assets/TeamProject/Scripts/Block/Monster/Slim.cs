@@ -7,6 +7,7 @@ public class Slim : Block
     [SerializeField] GameObject dropPrefab;
 
     Animator anim;
+    BoxCollider2D bodyBoxCol;
     bool isDeadRoutine;
 
     private void OnEnable()
@@ -17,6 +18,7 @@ public class Slim : Block
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        bodyBoxCol = GetComponent<BoxCollider2D>();
     }
 
     public override void OnDamaged(int damage)
@@ -28,16 +30,17 @@ public class Slim : Block
 
         if (health <= 0)
         {
-            //type = -1;
+            isDeadRoutine = true;
+            bodyBoxCol.enabled = false;
+            anim.SetTrigger("IsDead");
+            
             StartCoroutine(DeadRoutine());
         }
     }
 
     IEnumerator DeadRoutine()
     {
-        isDeadRoutine = true;
-        anim.SetTrigger("IsDead");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         //GameObject dropItem = Instantiate(dropPrefab);
         group.blockManager.SettingBlockList(12, this.row, this.col);
         gameObject.SetActive(false);

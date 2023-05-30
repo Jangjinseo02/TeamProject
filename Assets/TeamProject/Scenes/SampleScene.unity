@@ -3346,6 +3346,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4367694314881907794, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4367694314881907797, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -3391,9 +3395,37 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4367694314881907798, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
+      propertyPath: dropPower
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367694314881907798, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
+      propertyPath: jumpPower
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367694314881907798, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
       propertyPath: virtualJoystick
       value: 
       objectReference: {fileID: 31488250}
+    - target: {fileID: 4373500579948622818, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
+      propertyPath: m_Size.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373500579948622818, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807698381078903356, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
+      propertyPath: m_Size.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807698381078903356, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
+      propertyPath: m_Size.y
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807698381078903356, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
 --- !u!114 &1193863548 stripped

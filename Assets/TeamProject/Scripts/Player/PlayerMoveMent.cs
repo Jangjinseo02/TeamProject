@@ -21,10 +21,11 @@ public class PlayerMoveMent : MonoBehaviour
     public bool isStun = false;
     public bool isJump = false;
     public bool isGetTime = false;
+    bool isWalk = false;
     bool closeDeath = false;
 
     [SerializeField] private float moveSpeed = 1f;
-    [SerializeField] private float jumpPower = 5f;
+    [SerializeField] private float jumpPower = 25f;
     [SerializeField] private float dropPower = 5f;
     [SerializeField] private VirtualJoystick virtualJoystick;
 
@@ -38,14 +39,13 @@ public class PlayerMoveMent : MonoBehaviour
     {
         boxCol = GetComponent<BoxCollider2D>();
         capCol = GetComponent<CapsuleCollider2D>();
+        rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         followCamera = FindObjectOfType<CameraMove>();
     }
 
     void Start()
     {
-        rigid = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-
         StartCoroutine(BreatheRoutine());
         StartCoroutine(RecoveryRoutine());
     }
@@ -60,57 +60,79 @@ public class PlayerMoveMent : MonoBehaviour
             return;
         }
 
-        RaycastHit2D rayhitDown = Physics2D.Raycast(transform.position + (Vector3.down * 0.51f), Vector2.down, 0.1f, LayerMask.GetMask("Block"));
+        DropCheck();
 
-        if (!rayhitDown && !isJump)
+        if (isDamaged || isStun || isDrop || isGetTime)
         {
-            DropOn();
-            return;
-        }
-        else if (rayhitDown)
-        {
-            if (isDrop && rayhitDown.collider.tag == "Monster") //drop 상태에서 monster를 밟는 경우
-            {
-                DropOn();
-                rayhitDown.collider.GetComponent<Block>().OnDamaged(100);
-                return;
-            }
-            else if (rayhitDown.collider.tag == "Monster") //걷다가 아래가 빈 공간 없이 바로 몬스터 머리를 밟는 경우 << isDrop이 true가 아닌 상태에서 위 if문이 실행되어 문제가 있다.
-            {
-                DropOn();
-                return;
-            }
-            else
-                DropOff();
-        }
+            if (anim.GetBool("isWalk"))
+                anim.SetBool("isWalk", false);
 
-        if (isDamaged || isStun)
+            dirvec = Vector3.zero;
+            jumpTime = 0f;
             return;
+        }else if (InputManager.Instance.isAttack)
+        {
+            jumpTime = 0f;
+        }
 
         Move();
     }
 
+    void DropCheck()
+    {
+        RaycastHit2D rayhitDown = Physics2D.Raycast(transform.position, Vector2.down, 0.585f, LayerMask.GetMask("Block"));
+        Debug.DrawRay(transform.position, Vector2.down * 0.585f, Color.green);
+
+        if (rayhitDown && !isJump)
+        {
+            if (isWalk && !isDrop) //걷다가 아래가 빈 공간 없이 바로 몬스터 머리를 밟는 경우 << isDrop이 true가 아닌 상태에서 위 if문이 실행되어 문제가 있다.
+            {
+                RaycastHit2D rayhitFront = Physics2D.Raycast(transform.position, dirvec, 0.6f, LayerMask.GetMask("Block"));
+
+                if (rayhitFront && !rayhitFront.collider.CompareTag("Monster") && rayhitDown.collider.CompareTag("Monster"))
+                    DropOn();
+            }
+            else if (isDrop && rayhitDown.collider.CompareTag("Monster")) //drop 상태에서 monster를 밟는 경우
+            {
+                DropOn();
+                rayhitDown.collider.GetComponent<Block>().OnDamaged(100);
+            }
+            else
+                DropOff();
+        }
+        else if (!rayhitDown && !isJump)
+        {
+            DropOn();
+        }
+    }
+
+
     void DropOn()
     {
-        isDrop = true;
-        rigid.velocity = new Vector3(rigid.velocity.x, 0, 0);
+        if (!isDrop)
+        {
+            Debug.Log("Drop");
+            isDrop = true;
+            anim.SetTrigger("IsDrop");
+            anim.SetBool("isDrop", true);
+        }
+        rigid.velocity = Vector3.zero;
         transform.position = transform.position + Vector3.down * dropPower * Time.deltaTime;
-        anim.SetBool("isDrop", true);
-
     }
 
     void DropOff()
     {
-        isDrop = false;
         rigid.velocity = Vector3.zero;
-        anim.SetBool("isDrop", false);
-        anim.SetBool("isDown", true);
-        Invoke("DownOff", 0.2f);
+        if (isDrop)
+        {
+            anim.SetBool("isDrop", false);
+            Invoke("DownOff", 0.25f);
+        }
     }
 
     void DownOff()
     {
-        anim.SetBool("isDown", false);
+        isDrop = false;
     }
 
     public void PlayerStun()
@@ -126,51 +148,58 @@ public class PlayerMoveMent : MonoBehaviour
 
     private void Move()
     {
-        //Vector2 horizontal = new Vector2(InputManager.Instance.dirVec.x, 0);
-        dirvec = new Vector2(virtualJoystick.Horizontal, virtualJoystick.Vertical).normalized;
-        InputManager.Instance.DragEnter(dirvec);
-        Vector2 horizontal = new Vector2(virtualJoystick.Horizontal, 0);
+        Vector2 curVec = new Vector2(virtualJoystick.Horizontal, virtualJoystick.Vertical).normalized;
+        bool filpX = dirvec.x != curVec.x; //방향 전환이 되었는가?
 
-        if(horizontal.x != 0)
+        if (!isJump)
+            dirvec = curVec;
+        InputManager.Instance.DragEnter(dirvec);
+        Vector2 horizontal = new Vector2(dirvec.x, 0);
+
+        if (horizontal.x != 0)
         {
-            anim.SetBool("isWalk", true);
+            if (!anim.GetBool("isWalk"))
+                anim.SetBool("isWalk", true);
+
+            //방향 전환, jumpTime 초기화
+            if (filpX)
+            {
+                gameObject.GetComponent<SpriteRenderer>().flipX = horizontal.x > 0 ? true : false;
+                jumpTime = 0f;
+            }
+            isWalk = true;
         }
         else
         {
-            anim.SetBool("isWalk", false);
+            if (anim.GetBool("isWalk"))
+                anim.SetBool("isWalk", false);
+            isWalk = false;
         }
 
-        if (horizontal.x > 0)
-        {
-            gameObject.GetComponent<SpriteRenderer>().flipX = true;
-        }
-        else if (horizontal.x < 0)
-        {
-            gameObject.GetComponent<SpriteRenderer>().flipX = false;
-        }
+        rigid.velocity = new Vector2(horizontal.x * moveSpeed, rigid.velocity.y);
 
-       
-        rigid.velocity = horizontal * moveSpeed;
+        JumpCheck(horizontal);
+    }
 
+    void JumpCheck(Vector3 horizontal)
+    {
         RaycastHit2D rayhit = Physics2D.Raycast(transform.position, horizontal, 0.8f, LayerMask.GetMask("Block"));
-        if (rayhit && rayhit.collider.tag == "Block" && !isJump)
+        if (rayhit && (rayhit.collider.CompareTag("Block") || rayhit.collider.CompareTag("Glass") || rayhit.collider.CompareTag("Monster") || rayhit.collider.CompareTag("Item")) && !isJump)
         {
             RaycastHit2D uprayhit = Physics2D.Raycast(transform.position + Vector3.up, horizontal, 0.8f, LayerMask.GetMask("Block"));
             jumpTime += Time.deltaTime; //점프 시간 측정
 
-            if ((!uprayhit || uprayhit.collider.tag == "Monster" || uprayhit.collider.tag == "Item") && jumpTime >= 0.4f) //점프 위치가 빈 경우, 그리고 점프 위치 블록이 몬스터인 경우
+            if ((!uprayhit || uprayhit.collider.CompareTag("Monster") || uprayhit.collider.CompareTag("Item")) && jumpTime >= 0.4f) //점프 위치가 빈 경우, 그리고 점프 위치 블록이 몬스터인 경우
             {
                 anim.SetTrigger("isJump");
-                afpos = horizontal;
                 Jump();
                 jumpTime = 0;
             }
-            else if (uprayhit && uprayhit.collider.tag != "Monster" && uprayhit.collider.tag != "Item") //몬스터의 경우 측정되야함, 즉 리셋 하지 않음
+            else if (uprayhit && !uprayhit.collider.CompareTag("Monster") && uprayhit.collider.CompareTag("Item")) //몬스터의 경우 측정되야함, 즉 리셋 하지 않음
             {
                 jumpTime = 0;
             }
         }
-
     }
 
     void Jump()
@@ -181,10 +210,10 @@ public class PlayerMoveMent : MonoBehaviour
     IEnumerator JumpRoutine()
     {
         isJump = true;
-        rigid.AddForce(Vector2.up * jumpPower * 5, ForceMode2D.Impulse);
-        //rigid.velocity = new Vector2(0, jumpPower * 5);
-        yield return new WaitForSeconds(0.1f);
-        rigid.velocity = afpos * moveSpeed;
+        //followCamera.JumpCameraMove(); //카메라 움직임 변경
+
+        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.25f);
         isJump = false;
     }
 
@@ -387,6 +416,7 @@ public class PlayerMoveMent : MonoBehaviour
 
     IEnumerator UsingRoutine(IItem item)
     {
+        anim.SetTrigger("GetItem");
         item.Use(gameObject);
         yield return new WaitForSeconds(0.5f);
         isGetTime = false;

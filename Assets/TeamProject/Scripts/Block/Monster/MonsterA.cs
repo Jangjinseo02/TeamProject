@@ -6,7 +6,6 @@ public class MonsterA : Monster
 {
     [SerializeField] AttackArea attackArea;
 
-    Animator anim;
     PlayerMoveMent player;
 
     IEnumerator checkTarget;
@@ -19,12 +18,16 @@ public class MonsterA : Monster
     private void OnEnable()
     {
         health = 5 + GameManager.Instance.stageLevel * 1.25f;
+
+        isDead = false;
+        inCamera = false;
     }
 
     private void Awake()
     {
         attackArea = GetComponentInChildren<AttackArea>();
         anim = GetComponent<Animator>();
+        bodyBoxCol = GetComponent<BoxCollider2D>();
     }
 
     public override void CameraOut()
@@ -126,26 +129,5 @@ public class MonsterA : Monster
         Debug.Log("target Check");
         if (player)
             Attack();
-    }
-
-    public override void OnDamaged(int damage)
-    {
-        base.OnDamaged(damage);
-
-        if(health <= 0)
-        {
-            StartCoroutine(DeadRoutine());
-        }
-    }
-
-    IEnumerator DeadRoutine()
-    {
-        anim.SetTrigger("Dead");
-        yield return new WaitForSeconds(1f);
-        //GameObject dropItem = ObjectManager.Instance.GetBlock(12);
-        //dropItem.GetComponent<IItem>().Set(gameObject);
-        GameObject item = group.blockManager.SettingBlockList(11, this.row, this.col);
-        item.GetComponent<UseItem>().SpriteSetting((int)monsterType);
-        gameObject.SetActive(false);
     }
 }
