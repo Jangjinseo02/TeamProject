@@ -14,8 +14,8 @@ public class BlockMgr : MonoBehaviour
     int[,] types;
 
     [SerializeField] GameObject blockPool;
-    [SerializeField] private int numRow;
-    [SerializeField] private int numCol;
+    public int numRow;
+    public int numCol;
 
     [SerializeField] float allPers;
     [SerializeField] float glassPers;
@@ -29,10 +29,16 @@ public class BlockMgr : MonoBehaviour
     float[] bfValue = { 50, 30, 15, 5, 0 };
     float[] curValue = { 50, 30, 15, 5, 0 };
 
+    BoxCollider2D breathRoom;
+
     private void Awake()
     {
-        blocks = new GameObject[numRow, numCol];
-        types = new int[numRow, numCol];
+        breathRoom = GetComponent<BoxCollider2D>();
+    }
+
+    private void Start()
+    {
+        breathRoom.offset = new Vector2(GameManager.Instance.player.transform.position.x, 100); //박스 콜라이더 위치 이동
     }
 
     private void OnEnable()
@@ -110,6 +116,12 @@ public class BlockMgr : MonoBehaviour
             }
         }
         balanceBlockList.Clear();
+    }
+
+    public void StartSetting()
+    {
+        blocks = new GameObject[numRow, numCol];
+        types = new int[numRow, numCol];
     }
 
     void BlockCreate()

@@ -33,6 +33,9 @@ public class PlayerMoveMent : MonoBehaviour
     BoxCollider2D boxCol;
     CapsuleCollider2D capCol;
 
+    IEnumerator breath;
+    IEnumerator recovery;
+
     public CameraMove followCamera;
 
     private void Awake()
@@ -46,8 +49,7 @@ public class PlayerMoveMent : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(BreatheRoutine());
-        StartCoroutine(RecoveryRoutine());
+       
     }
 
     private void FixedUpdate()
@@ -56,7 +58,6 @@ public class PlayerMoveMent : MonoBehaviour
         {
             rigid.velocity = Vector2.zero;
             UIManager.Instance.ClearCountSpeechBubble();
-            GameManager.Instance.PlayerDead();
             return;
         }
 
@@ -227,14 +228,13 @@ public class PlayerMoveMent : MonoBehaviour
         if (oxygen <= 0)
         {
             oxygen = 0;
-            //UIManager.Instance.UpdateOxygenText(oxygen);
-            //   UIManager.Instance.UpdateOxygenText(oxygen);
+
             if (closeDeath)
             {
                 closeDeath = false;
                 SoundManager.Instance.SfxAllStop();
             }
-            OnDamaged(maxHealth);
+            OnDamaged(maxHealth + 1);
         }
         else if (oxygen <= 30)
         {
@@ -242,6 +242,7 @@ public class PlayerMoveMent : MonoBehaviour
             if (oxygen <= 10)
             {
                 Debug.Log("Oxygen <= 10");
+                SoundManager.Instance.SpeedUpSound((int)SoundManager.Sfx.CloseDeath); // 사운드 빠르게
                 UIManager.Instance.SettingCountSpeechBubble(oxygen);
             }
             else
@@ -292,7 +293,9 @@ public class PlayerMoveMent : MonoBehaviour
         {
             hp = 0;
             isDead = true;
+            GameManager.Instance.GameExit();
             anim.SetTrigger("Die");
+            StartCoroutine(DeadRoutine());
         }
     }
 
@@ -317,6 +320,11 @@ public class PlayerMoveMent : MonoBehaviour
         capCol.enabled = true;
         boxCol.enabled = true;
         StartCoroutine(BreatheRoutine());
+    }
+    IEnumerator DeadRoutine()
+    {
+        yield return new WaitForSeconds(3f);
+        GameManager.Instance.PlayerDead();
     }
 
     void ClearOverBlock()
@@ -391,6 +399,20 @@ public class PlayerMoveMent : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("Manager"))
+        {
+            if (breath == null)
+            {
+                breath = BreatheRoutine();
+                StartCoroutine(breath);
+            }
+            if (recovery == null)
+            {
+                recovery = RecoveryRoutine();
+                StartCoroutine(recovery);
+            }
+        }
+
         if (collision.CompareTag("Block") && !isDamaged && !isDead)
         {
             Barrier barrier = GetComponentInChildren<Barrier>();

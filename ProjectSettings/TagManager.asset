@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Glass
   - Object
+  - Manager
   layers:
   - Default
   - TransparentFX

@@ -43,4 +43,30 @@ public class SoundManager : SingleTon<SoundManager>
             SFX_Player[i].clip = null;
         }
     }
+
+    //일시정지
+    public void SoundPause()
+    {
+        for (int i = 0; i < SFX_Player.Length; i++)
+        {
+            SFX_Player[i].Pause();
+        }
+    }
+    //다시 재생
+    public void SoundPlay()
+    {
+        for (int i = 0; i < SFX_Player.Length; i++)
+        {
+            SFX_Player[i].Play();
+        }
+    }
+
+    public void SpeedUpSound(int value)
+    {
+        for (int i = 0; i < SFX_Player.Length; i++)
+        {
+            if (SFX_Player[i].clip == sfx[value] && SFX_Player[i].pitch <= 1)
+                SFX_Player[i].pitch += 0.5f;
+        }
+    }
 }

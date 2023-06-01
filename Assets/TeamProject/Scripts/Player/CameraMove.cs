@@ -16,13 +16,36 @@ public class CameraMove : MonoBehaviour
         pos.y = player.transform.position.y;
 
         this.transform.position = pos;
-
-        StartCoroutine(CheckList());
     }
 
     void Update()
     {
         this.transform.position = new Vector3(transform.position.x, player.transform.position.y, -10);
+    }
+
+    public void StartSetting()
+    {
+        GameManager.Level level = GameManager.Instance.level;
+
+        switch (level)
+        {
+            case GameManager.Level.Easy:
+                Camera.main.orthographicSize = 5f;
+                break;
+            case GameManager.Level.Nomal:
+                Camera.main.orthographicSize = 6.5f;
+                break;
+            case GameManager.Level.Hard:
+                Camera.main.orthographicSize = 8f;
+                break;
+        }
+
+        pos.x = player.transform.position.x;
+        pos.y = player.transform.position.y;
+
+        this.transform.position = pos;
+
+        StartCoroutine(CheckList());
     }
 
     void Check()

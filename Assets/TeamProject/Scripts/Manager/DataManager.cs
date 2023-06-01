@@ -5,16 +5,15 @@ using UnityEngine;
 public class DataManager : SingleTon<DataManager>
 {
     public enum Level { Easy, Nomal, Hard };
-    Level level;
+
+    public Level level { get; set; }
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-    }
-
-    void Start()
-    {
-        level = Level.Nomal;
+        if (FindObjectOfType<DataManager>() != this)
+            Destroy(this.gameObject);
+        else
+            DontDestroyOnLoad(gameObject);
     }
 
     public Level ReturnLevel()

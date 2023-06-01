@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : SingleTon<GameManager>
 {
     public GameObject player;
+    public CameraMove followCamera;
 
     public enum BreakType { Single, Multi, AirCore, ClearLevel }
     [Header("---------------------Score")]
@@ -47,18 +48,34 @@ public class GameManager : SingleTon<GameManager>
             level = (GameManager.Level)DataManager.Instance.ReturnLevel();
 
         //목표 깊이 설정
-        switch (level)
+        for (int i = 0; i < blockMgrs.Length; i++)
         {
-            case Level.Easy:
-                clearDepth = depth[(int)Level.Easy];
-                break;
-            case Level.Nomal:
-                clearDepth = depth[(int)Level.Nomal];
-                break;
-            case Level.Hard:
-                clearDepth = depth[(int)Level.Hard];
-                break;
+            switch (level)
+            {
+                case Level.Easy:
+                    //clearDepth = depth[(int)Level.Easy];
+                    blockMgrs[i].numCol = 7;
+                    break;
+                case Level.Nomal:
+                    //clearDepth = depth[(int)Level.Nomal];
+                    blockMgrs[i].numCol = 9;
+                    break;
+                case Level.Hard:
+                    //clearDepth = depth[(int)Level.Hard];
+                    blockMgrs[i].numCol = 11;
+                    break;
+            }
+
+            blockMgrs[i].StartSetting();
         }
+
+        //벽 위치 조정
+        BoxCollider2D boxCol = backGround.GetComponentInChildren<BoxCollider2D>();
+        boxCol.offset = new Vector2(blockMgrs[0].numCol, boxCol.offset.y);
+        
+        //player 위치 및 Camera 위치 변경
+        player.transform.position = new Vector2((blockMgrs[0].numCol - 1) / 2, player.transform.position.y);
+        followCamera.StartSetting();
 
         stageLevel = 0;
         blockMgrPos = Vector2.zero;
@@ -98,7 +115,11 @@ public class GameManager : SingleTon<GameManager>
 
     void RanValue()
     {
-        ran = Random.Range(0, 4);
+        if (stageLevel == 0) //첫 시작은 흙
+            ran = 0;
+        else
+            ran = Random.Range(0, 4);
+
         if (ran == curRan)
             RanValue();
         else
@@ -111,6 +132,21 @@ public class GameManager : SingleTon<GameManager>
         Time.timeScale = 0;
         //결과창으로 이동
         UIManager.Instance.ResultScreenPopup();
+    }
+
+    public void GameExit()
+    {
+        //게임 종료 시 실행되던 모든 block들의 코루틴 종료
+        Block[] childs = null;
+        for (int i = 0; i < blockMgrs.Length; i++)
+        {
+            if (blockMgrs[i].gameObject.activeInHierarchy)
+                childs = blockMgrs[i].GetComponentsInChildren<Block>();
+        }
+
+        foreach (Block member in childs)
+            if (member.gameObject.activeInHierarchy)
+                member.StopAllCoroutines();
     }
 
     public void GetScore(BreakType breakType)

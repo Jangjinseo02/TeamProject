@@ -40,10 +40,16 @@ public class BTN : MonoBehaviour
                 break;
             case BTNType.Option:
                 Option_pannel.SetActive(true);
+                //사운드 일시 정지
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.SoundPause();
                 Time.timeScale = 0;              
                 break;
             case BTNType.Option_Back:
                 Option_pannel.SetActive(false);
+                //사운드 다시 재생
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.SoundPlay();
                 Time.timeScale = 1;
                 break;
             case BTNType.Back:
@@ -51,11 +57,16 @@ public class BTN : MonoBehaviour
                 Second_UI.SetActive(false);
                 break;
             case BTNType.Easy_Mode:
+                DataManager.Instance.level = DataManager.Level.Easy;
                 SceneManager.LoadScene("SampleScene");
                 break;
             case BTNType.Hard_Mode:
+                DataManager.Instance.level = DataManager.Level.Nomal;
+                SceneManager.LoadScene("SampleScene");
                 break;
             case BTNType.Infinite_Mode:
+                DataManager.Instance.level = DataManager.Level.Hard;
+                SceneManager.LoadScene("SampleScene");
                 break;
             case BTNType.Title:
                 SceneManager.LoadScene("TitleScene");

@@ -10,6 +10,7 @@ public class UIManager : SingleTon<UIManager>
     [Header("---------------------Screen")]
     [SerializeField] Image selectBackGround;
     [SerializeField] Image resultScreen;
+    [SerializeField] Image FadeScreen;
 
     [Header("---------------------AirSpeechBubble")]
     [SerializeField] Image airSpeechBubbleImage;
@@ -28,6 +29,8 @@ public class UIManager : SingleTon<UIManager>
     [SerializeField] Text oxygenText;
     [SerializeField] Text depthText;
     [SerializeField] Text scoreText;
+
+    float fadeSpeed = 3f;
 
     private void Awake()
     {
@@ -55,7 +58,7 @@ public class UIManager : SingleTon<UIManager>
 
         UpdateHpText(player.hp);
         UpdateOxygenText(player.oxygen);
-        UpdateDepthText(player.transform.position.y * (-1));
+        UpdateDepthText(player.transform.position.y);
         UpdateScoreText(GameManager.Instance.score);
     }
 
@@ -70,6 +73,7 @@ public class UIManager : SingleTon<UIManager>
     {
         Time.timeScale = 1;
         selectBackGround.gameObject.SetActive(false);
+        Fade();
     }
 
     public void ResultScreenPopup()
@@ -81,7 +85,6 @@ public class UIManager : SingleTon<UIManager>
 
     public void UpdateHpText(float hp)
     {
-        
         hpText.text = ((int)hp).ToString() + "/100";
     }
     public void UpdateOxygenText(float oxygen)
@@ -91,11 +94,15 @@ public class UIManager : SingleTon<UIManager>
 
     public void UpdateDepthText(float yPos)
     {
-        depthText.text = ((int)yPos).ToString() + "/" + GameManager.Instance.clearDepth.ToString();
+        if (yPos > 0)
+            yPos = 0;
+        else if (yPos <= 0)
+            yPos *= -1;
+
+        depthText.text = ((int)yPos).ToString();
     }
     public void UpdateScoreText(int score)
     {
-
         scoreText.text = score.ToString();
     }
 
@@ -139,5 +146,35 @@ public class UIManager : SingleTon<UIManager>
     public void ClearCountSpeechBubble()
     {
         countSpeechBubbleImage.gameObject.SetActive(false);
+    }
+
+    void Fade()
+    {
+        StartCoroutine(FadeRoutine());
+    }
+
+    IEnumerator FadeRoutine()
+    {
+        Color fadeColor = FadeScreen.color;
+
+        FadeScreen.gameObject.SetActive(true);
+
+        while (fadeColor.a < 1)
+        {
+            fadeColor.a += fadeSpeed * Time.deltaTime;
+            FadeScreen.color = fadeColor;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        while (fadeColor.a > 0)
+        {
+            fadeColor.a -= fadeSpeed * Time.deltaTime;
+            FadeScreen.color = fadeColor;
+            yield return null;
+        }
+
+        FadeScreen.gameObject.SetActive(false);
     }
 }
