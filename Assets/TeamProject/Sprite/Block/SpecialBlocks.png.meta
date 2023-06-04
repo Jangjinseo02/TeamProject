@@ -125,7 +125,7 @@ TextureImporter:
         width: 399
         height: 402
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -146,7 +146,7 @@ TextureImporter:
         width: 402
         height: 402
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -167,7 +167,7 @@ TextureImporter:
         width: 402
         height: 403
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -188,7 +188,7 @@ TextureImporter:
         width: 403
         height: 404
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -209,7 +209,7 @@ TextureImporter:
         width: 405
         height: 403
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -230,7 +230,7 @@ TextureImporter:
         width: 405
         height: 403
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -251,7 +251,7 @@ TextureImporter:
         width: 405
         height: 404
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -267,33 +267,12 @@ TextureImporter:
       name: SpecialBlocks_7
       rect:
         serializedVersion: 2
-        x: 119
-        y: 244
-        width: 401
-        height: 403
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 49f4cac35b1a5a446a435d469f67419f
-      internalID: 1741178854
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SpecialBlocks_8
-      rect:
-        serializedVersion: 2
         x: 617
         y: 247
         width: 402
         height: 401
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -306,28 +285,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpecialBlocks_9
-      rect:
-        serializedVersion: 2
-        x: 987
-        y: 645
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 72f0636660fc02e43ba25a9f273bfb5f
-      internalID: 1565765648
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SpecialBlocks_10
+      name: SpecialBlocks_8
       rect:
         serializedVersion: 2
         x: 1125
@@ -335,7 +293,7 @@ TextureImporter:
         width: 402
         height: 402
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -348,7 +306,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpecialBlocks_11
+      name: SpecialBlocks_9
       rect:
         serializedVersion: 2
         x: 1672
@@ -356,7 +314,7 @@ TextureImporter:
         width: 404
         height: 402
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -369,7 +327,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpecialBlocks_12
+      name: SpecialBlocks_10
       rect:
         serializedVersion: 2
         x: 2186
@@ -377,7 +335,7 @@ TextureImporter:
         width: 402
         height: 404
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -390,7 +348,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpecialBlocks_13
+      name: SpecialBlocks_11
       rect:
         serializedVersion: 2
         x: 2702
@@ -398,7 +356,7 @@ TextureImporter:
         width: 404
         height: 402
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -423,18 +381,16 @@ TextureImporter:
     nameFileIdTable:
       SpecialBlocks_0: 2033163431
       SpecialBlocks_1: -1869109426
-      SpecialBlocks_10: -800311252
-      SpecialBlocks_11: -185402638
-      SpecialBlocks_12: 1893302095
-      SpecialBlocks_13: 959334279
+      SpecialBlocks_10: 1893302095
+      SpecialBlocks_11: 959334279
       SpecialBlocks_2: 2111262076
       SpecialBlocks_3: -59023642
       SpecialBlocks_4: 233200293
       SpecialBlocks_5: -1363466269
       SpecialBlocks_6: -618308801
-      SpecialBlocks_7: 1741178854
-      SpecialBlocks_8: 1344977377
-      SpecialBlocks_9: 1565765648
+      SpecialBlocks_7: 1344977377
+      SpecialBlocks_8: -800311252
+      SpecialBlocks_9: -185402638
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

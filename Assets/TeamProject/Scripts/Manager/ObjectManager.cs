@@ -116,6 +116,7 @@ public class ObjectManager : SingleTon<ObjectManager>
 
     public void ReturnBlock(GameObject block)
     {
+        block.transform.parent = blockPool.transform;
         block.SetActive(false);
         GameObject prefab = blockPrefabs[block.GetComponent<Block>().type];
         objectPool[prefab].Add(block);

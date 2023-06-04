@@ -24,7 +24,7 @@ public class Ufo : MonoBehaviour
 
         while (startTime <= maxTime)
         {
-            gameObject.transform.position = playerObj.transform.position + Vector3.up;
+            gameObject.transform.position = playerObj.transform.position + Vector3.up * 3;
             startTime += Time.deltaTime;
             yield return null;
         }

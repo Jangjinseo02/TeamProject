@@ -68,6 +68,7 @@ public class PlayerMoveMent : MonoBehaviour
             if (anim.GetBool("isWalk"))
                 anim.SetBool("isWalk", false);
 
+            rigid.velocity = Vector2.zero;
             dirvec = Vector3.zero;
             jumpTime = 0f;
             return;
@@ -96,6 +97,8 @@ public class PlayerMoveMent : MonoBehaviour
             else if (isDrop && rayhitDown.collider.CompareTag("Monster")) //drop 상태에서 monster를 밟는 경우
             {
                 DropOn();
+                if (rayhitDown.collider.GetComponent<Monster>())
+                    GameManager.Instance.GetScore(GameManager.BreakType.Monster);
                 rayhitDown.collider.GetComponent<Block>().OnDamaged(100);
             }
             else

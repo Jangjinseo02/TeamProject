@@ -7,16 +7,38 @@ public class UfoBeam : MonoBehaviour
 
     float curTime = 0;
 
-    BoxCollider2D boxCol;
     Ufo ufo;
 
     public void OnEnable()
     {
         curTime = 0;
-        boxCol = GetComponent<BoxCollider2D>();
         ufo = GetComponentInParent<Ufo>();
 
         StartCoroutine(EndTime());
+    }
+
+    private void Update()
+    {
+        TickCheck();
+    }
+
+    void TickCheck()
+    {
+        RaycastHit2D rayhit = Physics2D.Raycast(ufo.gameObject.transform.position, Vector2.down,
+                                                100, LayerMask.GetMask("Player"));
+        if (rayhit)
+        {
+            curTime += Time.deltaTime;
+
+            if (curTime >= 0.4f)
+            {
+                GameObject playerObj = GameManager.Instance.player;
+                playerObj.GetComponent<PlayerMoveMent>().PlayerStun();
+
+                StopCoroutine(EndTime());
+                Destroy(ufo.gameObject);
+            }
+        }
     }
 
     IEnumerator EndTime()
@@ -24,29 +46,5 @@ public class UfoBeam : MonoBehaviour
         yield return new WaitForSeconds(8f);
 
         Destroy(ufo.gameObject);
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            curTime += Time.deltaTime;
-            Debug.Log(curTime);
-
-            //boxCol.offset = new Vector2(0, Random.Range(curOffset, startOffset));
-
-            if (curTime >= 0.4f)
-            {
-                //플레이어 기절
-                Debug.Log("플레이어 기절");
-
-                GameObject playerObj = GameManager.Instance.player;
-                playerObj.GetComponent<PlayerMoveMent>().PlayerStun();
-                boxCol.enabled = false;
-
-                StopCoroutine(EndTime());
-                Destroy(ufo.gameObject);
-            }
-        }
     }
 }

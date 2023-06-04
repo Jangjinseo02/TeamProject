@@ -98,14 +98,15 @@ public class Block : MonoBehaviour
     public bool isCheck = false;
 
     public float gravity = 3f;
-    float shakeTime = 1;
-    
+    public float shakeTime = 1;
+    public float curTime = 0;
+
     IEnumerator drop;
     IEnumerator shake;
     IEnumerator blink;
 
     protected SpriteRenderer sprite;
-    [SerializeField] Sprite[] sprites;
+    [SerializeField] protected Sprite[] sprites;
 
     [SerializeField] protected GameObject effect;
     [SerializeField] protected GameObject aliveEffect;
@@ -224,12 +225,11 @@ public class Block : MonoBehaviour
         pos.x = col;
         pos.y = transform.localPosition.y;
 
-        float curTime = 0;
         float beforeX = pos.x;
 
         while (curTime < shakeTime)
         {
-            float offset = Mathf.PingPong(Time.time * 10f, 0.1f) - 0.05f;
+            float offset = Mathf.PingPong(Time.time, 0.1f) - 0.05f;
             pos.x += offset;
             transform.localPosition = pos;
 
@@ -237,6 +237,7 @@ public class Block : MonoBehaviour
             yield return true;
         }
 
+        curTime = 0;
         pos.x = beforeX;
         transform.localPosition = pos;
         DropStart();

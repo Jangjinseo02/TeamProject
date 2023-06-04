@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1531402697, guid: 23fa56d1624d566429f53339e57c65f5, type: 3}
+  m_Sprite: {fileID: 2111262076, guid: 6da40cf3c53424f419331c6ab59cebd9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,7 +103,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.005, y: 1.0078074}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -124,11 +124,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db832bb0b3ec3434f8dfe88d10fdfa7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockState: 1
   type: 5
-  gravity: 3
+  health: 10
   isCheck: 0
-  afVec: {x: 0, y: 0, z: 0}
-  pos: {x: 0, y: 0, z: 0}
-  sprites: []
+  gravity: 3
+  shakeTime: 1
+  curTime: 0
+  sprites:
+  - {fileID: 2111262076, guid: 6da40cf3c53424f419331c6ab59cebd9, type: 3}
+  - {fileID: -59023642, guid: 6da40cf3c53424f419331c6ab59cebd9, type: 3}
+  - {fileID: 233200293, guid: 6da40cf3c53424f419331c6ab59cebd9, type: 3}
+  - {fileID: -1363466269, guid: 6da40cf3c53424f419331c6ab59cebd9, type: 3}
+  - {fileID: -618308801, guid: 6da40cf3c53424f419331c6ab59cebd9, type: 3}
+  effect: {fileID: 0}
+  aliveEffect: {fileID: 0}
   col: 0

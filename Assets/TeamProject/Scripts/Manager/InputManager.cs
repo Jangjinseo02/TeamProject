@@ -54,12 +54,14 @@ public class InputManager : SingleTon<InputManager>
         {
             RaycastHit2D rayhit = Physics2D.Raycast(player.transform.position, Vector3.down, 0.6f, LayerMask.GetMask("Block"));
             Block block = rayhit.collider != null && rayhit.collider.tag != "Item" ? rayhit.collider.GetComponent<Block>() : null;
+            
 
             //Block firstMember = null;
             if (block != null)
             {
                 HardBlock hard = block.GetComponent<HardBlock>();
                 ClearBlock clear = block.GetComponent<ClearBlock>();
+                Monster monster = block.GetComponent<Monster>();
 
                 playeranim.SetTrigger("downAttack");
 
@@ -78,9 +80,6 @@ public class InputManager : SingleTon<InputManager>
                             GameManager.Instance.GetScore(GameManager.BreakType.Single);
                     }
 
-
-
-
                 if (hard)
                     if (hard.isDestroy())
                     {
@@ -89,6 +88,8 @@ public class InputManager : SingleTon<InputManager>
                     }
                 if (clear)
                     block.StageClear();
+                if (monster)
+                    GameManager.Instance.GetScore(GameManager.BreakType.Monster);
                 //if (firstMember != null)
                 //    firstMember.StageClear();
             }
@@ -103,8 +104,8 @@ public class InputManager : SingleTon<InputManager>
             {
                 HardBlock hard = block.GetComponent<HardBlock>();
                 ClearBlock clear = block.GetComponent<ClearBlock>();
+                Monster monster = block.GetComponent<Monster>();
 
-                Debug.Log("Attack");
                 if (dirVec == Vector3.up)
                     playeranim.SetTrigger("upAttack");
                 else if (dirVec == Vector3.right || dirVec == Vector3.left)
@@ -136,6 +137,8 @@ public class InputManager : SingleTon<InputManager>
                     }  
                 if (clear)
                     block.StageClear();
+                if (monster)
+                    GameManager.Instance.GetScore(GameManager.BreakType.Monster);
             }
         }
 

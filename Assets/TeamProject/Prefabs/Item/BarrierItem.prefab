@@ -118,6 +118,10 @@ MonoBehaviour:
   health: 10
   isCheck: 0
   gravity: 3
+  shakeTime: 1
+  curTime: 0
   sprites: []
+  effect: {fileID: 0}
+  aliveEffect: {fileID: 0}
   col: 0
   isUse: 0

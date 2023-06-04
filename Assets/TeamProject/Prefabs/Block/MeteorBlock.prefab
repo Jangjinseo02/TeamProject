@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -525976804, guid: 23fa56d1624d566429f53339e57c65f5, type: 3}
+  m_Sprite: {fileID: 2033163431, guid: 6da40cf3c53424f419331c6ab59cebd9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,7 +104,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.995, y: 1}
+    oldSize: {x: 0.99749994, y: 1.0053067}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -129,6 +129,8 @@ MonoBehaviour:
   health: 10
   isCheck: 0
   gravity: 3
+  shakeTime: 1
+  curTime: 0
   sprites: []
   effect: {fileID: 0}
   aliveEffect: {fileID: 7587366770298839153}

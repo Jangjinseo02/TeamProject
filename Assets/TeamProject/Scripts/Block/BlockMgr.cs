@@ -10,7 +10,6 @@ public class BlockMgr : MonoBehaviour
     public enum Object { BarrierObj = 13 }
 
     GameObject[,] blocks;
-    HashSet<GameObject> removeBlocks = new HashSet<GameObject>();
     int[,] types;
 
     [SerializeField] GameObject blockPool;
@@ -97,25 +96,33 @@ public class BlockMgr : MonoBehaviour
             if (firstmember.group.Count > 3)
                 foreach (Block member in firstmember.group)
                     member.BlinkStart();
-
-            foreach (Block member in firstmember.group)
+            else
             {
-                if (member.shaking && !member.dropping)
-                {
-                    foreach (Block block in member.group)
-                    {
-                        block.ShakeEnd();
-                    }
-                    foreach (Block block in firstmember.group)
-                    {
-                        block.group.unbalance = true;
-                        unbalanceBlockList.Add(block);
-                    }
-                    break;
-                }
+                firstmember.group.CheckGroupUnbalance();
+
+                if (firstmember.group.unbalance)
+                    SetCurTime(firstmember);
             }
+
         }
         balanceBlockList.Clear();
+    }
+
+    void SetCurTime(Block first)
+    {
+        float setCurTime = 0;
+
+        foreach (Block member in first.group)
+        {
+            if (setCurTime < member.curTime)
+                setCurTime = member.curTime;
+        }
+
+        foreach (Block member in first.group)
+        {
+            member.ShakeEnd();
+            member.curTime = setCurTime;
+        }
     }
 
     public void StartSetting()
@@ -452,7 +459,6 @@ public class BlockMgr : MonoBehaviour
 
     public void RemovePos(Block block)
     {
-        removeBlocks.Add(block.gameObject);
         types[block.row, block.col] = -1;
         blocks[block.row, block.col] = null;
 
@@ -525,31 +531,27 @@ public class BlockMgr : MonoBehaviour
 
     public void Disable()
     {
+        while (transform.childCount > 0)
+        {
+            GameObject child = transform.GetChild(0).gameObject;
+
+            ObjectManager.Instance.ReturnBlock(child);
+        }
+
         for (int i = 0; i < numRow; i++)
         {
             for (int j = 0; j < numCol; j++)
             {
-                if (blocks[i, j] == null)
-                    continue;
-                blocks[i, j].SetActive(false);
-                blocks[i, j].gameObject.transform.parent = blockPool.transform;
-                //blocks[i,j]에 없는 값이 있음, 반환할 리스트를 하나 만들어야 할 듯?
-                ObjectManager.Instance.ReturnBlock(blocks[i, j]);
                 blocks[i, j] = null;
                 types[i, j] = -1;
             }
-        }
-        foreach (GameObject block in removeBlocks)
-        {
-            block.SetActive(false);
-            block.gameObject.transform.parent = blockPool.transform;
-            ObjectManager.Instance.ReturnBlock(block);
         }
 
         unbalanceBlockList.Clear();
         balanceBlockList.Clear();
 
         gameObject.SetActive(false);
+
     }
     public GameObject SettingBlockList(int blockType, int row, int col)
     {

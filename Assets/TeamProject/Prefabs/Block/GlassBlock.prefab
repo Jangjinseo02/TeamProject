@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1489270826799722637}
   - component: {fileID: 1489270826799722638}
   - component: {fileID: -5162076192791352740}
+  - component: {fileID: 4416511373113800377}
   m_Layer: 6
   m_Name: GlassBlock
   m_TagString: Glass
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 244293914, guid: 23fa56d1624d566429f53339e57c65f5, type: 3}
+  m_Sprite: {fileID: 1344977377, guid: 6da40cf3c53424f419331c6ab59cebd9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,7 +105,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.005, y: 1.002806}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -129,11 +130,34 @@ MonoBehaviour:
   health: 10
   isCheck: 0
   gravity: 3
+  shakeTime: 1
+  curTime: 0
   sprites: []
   effect: {fileID: 0}
   aliveEffect: {fileID: 664124125152528661}
   col: 0
   inCamera: 0
+--- !u!95 &4416511373113800377
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489270826799722642}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3e4a7abd9e431ee42951759aaf4e84b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1603215090660777681
 PrefabInstance:
   m_ObjectHideFlags: 0

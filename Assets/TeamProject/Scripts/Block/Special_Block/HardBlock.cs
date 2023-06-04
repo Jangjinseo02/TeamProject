@@ -6,6 +6,8 @@ public class HardBlock : Block
 {
     bool isDestory;
 
+    int hitCount = 0;
+
     public override void Awake()
     {
         base.Awake();
@@ -16,11 +18,13 @@ public class HardBlock : Block
         base.OnEnable();
 
         health = 50f;
+        hitCount = 0;
         isDestory = false;
     }
 
     public override void OnDamaged(int damage)
     {
+        sprite.sprite = sprites[hitCount + 1 < sprites.Length ? ++hitCount : hitCount];
         health -= damage;
 
         if (health <= 0)

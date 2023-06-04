@@ -44,8 +44,6 @@ public class Monster : Block
 
             isDead = true;
             bodyBoxCol.enabled = false;
-            if (!GameManager.Instance.player.GetComponent<PlayerMoveMent>().isDamaged)
-                GameManager.Instance.curCatch += 1;
             anim.SetTrigger("Dead");
             StartCoroutine(DeadRoutine());
         }

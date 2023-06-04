@@ -8,7 +8,7 @@ public class GameManager : SingleTon<GameManager>
     public GameObject player;
     public CameraMove followCamera;
 
-    public enum BreakType { Single, Multi, AirCore, ClearLevel }
+    public enum BreakType { Single, Multi, AirCore, ClearLevel, Monster }
     [Header("---------------------Score")]
     [SerializeField] public int score;
     [SerializeField] int airCount;
@@ -220,6 +220,10 @@ public class GameManager : SingleTon<GameManager>
             case BreakType.ClearLevel:
                 stageLevel += 1;
                 score += stageLevel * 1000;
+                break;
+            case BreakType.Monster:
+                curCatch += 1;
+                score += curCatch * 300;
                 break;
         }
     }
