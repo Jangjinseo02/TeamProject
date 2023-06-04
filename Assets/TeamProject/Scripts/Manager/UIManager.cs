@@ -21,16 +21,22 @@ public class UIManager : SingleTon<UIManager>
     [SerializeField] Image countImage;
     [SerializeField] Sprite[] countSprites;
 
+    [Header("---------------------ItemUI")]
+    [SerializeField] Image itemUIImage;
+    [SerializeField] Sprite[] itemUISprites;
+
     [Header("---------------------SpeechBubblePos")]
     [SerializeField] Transform speechBubblePos;
+    [SerializeField] Transform itemUIPos;
 
     [Header("---------------------OtherText")]
     [SerializeField] Text hpText;
     [SerializeField] Text oxygenText;
     [SerializeField] Text depthText;
     [SerializeField] Text scoreText;
+    [SerializeField] Text catchText;
 
-    float fadeSpeed = 3f;
+    float fadeSpeed = 2f;
 
     private void Awake()
     {
@@ -39,31 +45,35 @@ public class UIManager : SingleTon<UIManager>
 
     private void LateUpdate()
     {
-        if (airSpeechBubbleImage.gameObject.activeInHierarchy)
+        if (airSpeechBubbleImage.gameObject.activeInHierarchy || countSpeechBubbleImage.gameObject.activeInHierarchy)
         {
             Vector2 pos;
             pos.x = speechBubblePos.position.x;
             pos.y = speechBubblePos.position.y;
 
-            airSpeechBubbleImage.transform.position = pos;
+            if(airSpeechBubbleImage.gameObject.activeInHierarchy)
+                airSpeechBubbleImage.transform.position = pos;
+            if(countSpeechBubbleImage.gameObject.activeInHierarchy)
+                countSpeechBubbleImage.transform.position = pos;
         }
-        if (countSpeechBubbleImage.gameObject.activeInHierarchy)
+        if (itemUIImage.gameObject.activeInHierarchy)
         {
             Vector2 pos;
-            pos.x = speechBubblePos.position.x;
-            pos.y = speechBubblePos.position.y;
+            pos.x = itemUIPos.position.x;
+            pos.y = itemUIPos.position.y;
 
-            countSpeechBubbleImage.transform.position = pos;
+            itemUIImage.transform.position = pos;
         }
 
         UpdateHpText(player.hp);
         UpdateOxygenText(player.oxygen);
         UpdateDepthText(player.transform.position.y);
         UpdateScoreText(GameManager.Instance.score);
+        UpdateCatchText(GameManager.Instance.curCatch);
     }
 
 
-    public void SelectBackGroundPopup()
+    /*public void SelectBackGroundPopup()
     {
         Time.timeScale = 0;
         selectBackGround.gameObject.SetActive(true);
@@ -74,7 +84,7 @@ public class UIManager : SingleTon<UIManager>
         Time.timeScale = 1;
         selectBackGround.gameObject.SetActive(false);
         Fade();
-    }
+    }*/
 
     public void ResultScreenPopup()
     {
@@ -104,6 +114,10 @@ public class UIManager : SingleTon<UIManager>
     public void UpdateScoreText(int score)
     {
         scoreText.text = score.ToString();
+    }
+    public void UpdateCatchText(float curCatch)
+    {
+        catchText.text = ((int)curCatch).ToString() + "/" + GameManager.Instance.clearCatch.ToString();
     }
 
     public void SettingAirImage(int type)
@@ -136,6 +150,8 @@ public class UIManager : SingleTon<UIManager>
     public void SettingCountSpeechBubble(float oxygen)
     {
         int value = Mathf.FloorToInt(oxygen) - 1;
+        if (value > 10)
+            return;
         countImage.sprite = countSprites[value];
         countImage.SetNativeSize();
 
@@ -148,7 +164,28 @@ public class UIManager : SingleTon<UIManager>
         countSpeechBubbleImage.gameObject.SetActive(false);
     }
 
-    void Fade()
+    public void SettingItemUIImage(int type)
+    {
+        itemUIImage.sprite = itemUISprites[type - 14]; // type == 0 +air, type == 1 -air
+        itemUIImage.SetNativeSize();
+
+        Vector2 pos;
+        pos.x = itemUIPos.position.x;
+        pos.y = itemUIPos.position.y;
+
+        itemUIImage.transform.position = pos;
+
+        StartCoroutine(UIImageClear());
+    }
+
+    IEnumerator UIImageClear()
+    {
+        itemUIImage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        itemUIImage.gameObject.SetActive(false);
+    }
+
+    public void Fade()
     {
         StartCoroutine(FadeRoutine());
     }

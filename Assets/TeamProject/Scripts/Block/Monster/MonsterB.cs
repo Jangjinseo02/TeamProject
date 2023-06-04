@@ -8,13 +8,15 @@ public class MonsterB : Monster
 
     IEnumerator checkTarget;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         anim = GetComponent<Animator>();
         bodyBoxCol = GetComponent<BoxCollider2D>();
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         if (group != null)
             blockmgr = group.blockManager;

@@ -31,7 +31,7 @@ public class AttackArea : MonoBehaviour
         if (collision.tag == "Player" && target == null && !monster.isDead)
         {
             target = collision.GetComponent<PlayerMoveMent>();
-            target.OnDamaged(monster.attackDamage);
+            target.OnDamaged(monster.attackDamage, false);
         }
     }
 }

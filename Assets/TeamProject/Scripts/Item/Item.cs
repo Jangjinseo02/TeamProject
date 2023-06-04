@@ -6,7 +6,7 @@ public class Item : Block
 {
     public bool isUse = false;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         if (group != null)
             this.group.CheckGroupUnbalance();

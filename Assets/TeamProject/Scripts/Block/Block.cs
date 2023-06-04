@@ -104,12 +104,36 @@ public class Block : MonoBehaviour
     IEnumerator shake;
     IEnumerator blink;
 
-    SpriteRenderer sprite;
+    protected SpriteRenderer sprite;
     [SerializeField] Sprite[] sprites;
 
-    private void Awake()
+    [SerializeField] protected GameObject effect;
+    [SerializeField] protected GameObject aliveEffect;
+
+    public virtual void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
+    }
+
+    public virtual void OnEnable()
+    {
+        if(aliveEffect != null)
+            SetAlive();
+    }
+
+    void SetAlive()
+    {
+        StartCoroutine(SetAliveRoutine());
+    }
+
+    IEnumerator SetAliveRoutine()
+    {
+        sprite.color = Color.clear;
+        aliveEffect.SetActive(true);
+
+        yield return new WaitForSeconds(0.2f);
+        sprite.color = Color.white;
+        aliveEffect.SetActive(false);
     }
 
     public virtual int attackDamage
@@ -264,8 +288,23 @@ public class Block : MonoBehaviour
         if (health <= 0)
         {
             //type = -1;
-            group.blockManager.RemovePos(this);
-            gameObject.SetActive(false);
+            if(gameObject.activeInHierarchy)
+                StartCoroutine(DestroyRoutine());
         }
+    }
+
+    IEnumerator DestroyRoutine()
+    {
+        effect = ObjectManager.Instance.GetEffect((int)ObjectManager.effect.Nomal);
+        effect.transform.position = this.transform.position;
+        sprite.color = Color.clear;
+        effect.SetActive(true);
+
+        yield return new WaitForSeconds(0.2f);
+        ObjectManager.Instance.ReturnEffect(effect, (int)ObjectManager.effect.Nomal);
+        yield return new WaitForSeconds(0.05f);
+
+        group.blockManager.RemovePos(this);
+        gameObject.SetActive(false);
     }
 }

@@ -15,6 +15,8 @@ public class UfoItem : Item, IItem
 
         if (player != null && !isUse)
         {
+            UIManager.Instance.SettingItemUIImage(type);
+
             GameObject ufo = Instantiate(ufoPre);
 
             ufo.SetActive(true);

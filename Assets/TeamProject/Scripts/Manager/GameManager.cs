@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingleTon<GameManager>
 {
@@ -24,18 +25,20 @@ public class GameManager : SingleTon<GameManager>
     public int ran = 0;
     int curRan = -1;
 
+    public bool giveUp = false;
+
     BoxCollider2D boxCollider;
     public int stageLevel = 0;
     int curLevel = 0;
 
-    //레벨 목표 깊이
-    
     public enum Level { Easy, Nomal, Hard };
     public Level level = Level.Easy;
-    [Header("---------------------Level")]
-    [SerializeField] int[] depth;
-    public int clearDepth = 0;
 
+    [Header("---------------------Level")]
+    //레벨 목표 마리수
+    [SerializeField] GameObject clearObject;
+    public int curCatch = 0;
+    public int clearCatch = 0;
 
     private void Awake()
     {
@@ -53,16 +56,16 @@ public class GameManager : SingleTon<GameManager>
             switch (level)
             {
                 case Level.Easy:
-                    //clearDepth = depth[(int)Level.Easy];
                     blockMgrs[i].numCol = 7;
+                    clearCatch = 10;
                     break;
                 case Level.Nomal:
-                    //clearDepth = depth[(int)Level.Nomal];
                     blockMgrs[i].numCol = 9;
+                    clearCatch = 25;
                     break;
                 case Level.Hard:
-                    //clearDepth = depth[(int)Level.Hard];
                     blockMgrs[i].numCol = 11;
+                    clearCatch = 50;
                     break;
             }
 
@@ -99,11 +102,27 @@ public class GameManager : SingleTon<GameManager>
         player.transform.parent = null;
 
         blockMgrs[curLevel].Disable();
-        UIManager.Instance.SelectBackGroundPopup();
+        //UIManager.Instance.SelectBackGroundPopup();
 
         GetScore(BreakType.ClearLevel); //stagelevel++ and addscore
 
         curLevel = stageLevel % 2;
+
+        if (clearCatch <= curCatch)
+        {
+            clearObject.transform.position = new Vector2(0, player.transform.position.y + Vector2.down.y);
+            clearObject.SetActive(true);
+
+            //GameExit 사용하면 될듯
+            //플레이어 내부에 클리어에 관한 플레이어 행동이 정의되어야함
+            //코루틴으로
+            //플레이어 animation 출력
+            //결과창 출력
+        }
+        else
+        {
+            UIManager.Instance.Fade();
+        }
     }
 
     public void StageSetting()
@@ -126,12 +145,33 @@ public class GameManager : SingleTon<GameManager>
             curRan = ran;
     }
 
-    //플레이어가 죽음
-    public void PlayerDead()
+    //플레이어 죽음 판별, 이후 행동 실행
+    void PlayerDead()
     {
-        Time.timeScale = 0;
+        if (!player.GetComponent<PlayerMoveMent>().isDead)
+            player.GetComponent<PlayerMoveMent>().OnDamaged(1000, false);
+
         //결과창으로 이동
+        if(!giveUp)
+            StartCoroutine(PopRoutine());
+        else
+            StartCoroutine(GiveUpRoutine());
+    }
+
+    IEnumerator PopRoutine()
+    {
+        //player anim 출력
+        yield return new WaitForSeconds(3f);
         UIManager.Instance.ResultScreenPopup();
+        Time.timeScale = 0;
+    }
+
+    IEnumerator GiveUpRoutine()
+    {
+        //player anim 출력
+        yield return new WaitForSecondsRealtime(3f);
+        SceneManager.LoadScene("TitleScene");
+        Time.timeScale = 1f;
     }
 
     public void GameExit()
@@ -147,6 +187,11 @@ public class GameManager : SingleTon<GameManager>
         foreach (Block member in childs)
             if (member.gameObject.activeInHierarchy)
                 member.StopAllCoroutines();
+
+        //목표 완수시 
+
+        //목표 완수 실패시
+        PlayerDead();
     }
 
     public void GetScore(BreakType breakType)

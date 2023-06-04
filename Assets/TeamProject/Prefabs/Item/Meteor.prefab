@@ -114,10 +114,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 455b1a94f2d157248853264afb67acdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 17
+  type: 19
   health: 10
   isCheck: 0
   gravity: 3
   sprites: []
+  effect: {fileID: 0}
+  aliveEffect: {fileID: 0}
   col: 0
   isUse: 0

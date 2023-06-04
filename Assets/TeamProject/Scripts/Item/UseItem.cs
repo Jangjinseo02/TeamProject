@@ -10,7 +10,7 @@ public class UseItem : Item, IItem
     [SerializeField] Sprite[] ItemSprites;
     SpriteRenderer spriteRenderer;
 
-    public void Awake()
+    public override void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
@@ -25,7 +25,17 @@ public class UseItem : Item, IItem
         if (isUse)
             return;
 
-        item = itemObject[Random.Range(0, itemObject.Length)];
+        int ran = Random.Range(0, 7);
+
+        if (ran <= (int)ObjectManager.item.Bigbang)
+        {
+            item = ObjectManager.Instance.GetItem(ran);
+            item.transform.position = new Vector2(0, 100);
+        }
+        else
+            item = itemObject[ran];
+
+        item.SetActive(true);
         item.GetComponent<IItem>().Use(target);
         
         if (group != null)

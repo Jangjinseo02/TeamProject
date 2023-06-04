@@ -76,7 +76,11 @@ public class CameraMove : MonoBehaviour
             case "Glass":
                 GlassBlock glass = target.GetComponent<GlassBlock>();
                 if (glass != null)
-                    glass.OnDamaged((int)target.health);
+                {
+                    if (glass.inCamera)
+                        return;
+                    glass.InCamera();
+                }
                 break;
         }
     }

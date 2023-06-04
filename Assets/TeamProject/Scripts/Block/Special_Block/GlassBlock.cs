@@ -7,17 +7,24 @@ public class GlassBlock : Block
     Camera mainCamera;
     CameraMove checkCamera;
 
-    private void Awake()
+    public bool inCamera = false;
+
+    public override void Awake()
     {
+        base.Awake();
         mainCamera = FindObjectOfType<Camera>();
         checkCamera = mainCamera.GetComponent<CameraMove>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public override void OnEnable()
     {
-        Debug.Log(mainCamera);
-        Debug.Log(checkCamera);
+        base.OnEnable();
+    }
+
+    public void InCamera()
+    {
+        inCamera = true;
+        OnDamaged((int)health);
     }
 
     public override void OnDamaged(int damage)
@@ -26,13 +33,24 @@ public class GlassBlock : Block
 
         if (health <= 0)
         {
-            StartCoroutine(DamageRoutine());
+            if (gameObject.activeInHierarchy)
+                StartCoroutine(DamageRoutine());
         }
     }
 
     IEnumerator DamageRoutine()
     {
         yield return new WaitForSeconds(1.5f);
+
+        effect = ObjectManager.Instance.GetEffect((int)ObjectManager.effect.Glass);
+        effect.transform.position = this.transform.position;
+        sprite.color = Color.clear;
+        effect.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        ObjectManager.Instance.ReturnEffect(effect, (int)ObjectManager.effect.Glass);
+
+        yield return new WaitForSeconds(0.05f);
+
         group.blockManager.RemovePos(this);
         gameObject.SetActive(false);
     }

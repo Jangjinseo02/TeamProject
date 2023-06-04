@@ -13,6 +13,8 @@ public class Crystal : Item, IItem
 
         if (player != null && !isUse)
         {
+            UIManager.Instance.SettingItemUIImage(type);
+            
             HashSet<Block> destroyBlock = new HashSet<Block>(player.followCamera.ReturnBlock());
             int ran = 1; //Random.Range((int)BlockMgr.BlocksType.BlockB, (int)BlockMgr.BlocksType.BlockF + 1);
             Block firstBlock = null;

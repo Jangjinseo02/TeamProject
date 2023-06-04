@@ -234,7 +234,7 @@ public class PlayerMoveMent : MonoBehaviour
                 closeDeath = false;
                 SoundManager.Instance.SfxAllStop();
             }
-            OnDamaged(maxHealth + 1);
+            OnDamaged(maxHealth + 1, false);
         }
         else if (oxygen <= 30)
         {
@@ -284,9 +284,8 @@ public class PlayerMoveMent : MonoBehaviour
         UIManager.Instance.SettingAirImage(0); // type == 0 -air ;
     }
 
-    public void OnDamaged(int damage)
+    public void OnDamaged(int damage, bool isBlock)
     {
-        StartCoroutine(DamageRoutine());
         hp -= damage;
 
         if (hp <= 0)
@@ -295,11 +294,14 @@ public class PlayerMoveMent : MonoBehaviour
             isDead = true;
             GameManager.Instance.GameExit();
             anim.SetTrigger("Die");
-            StartCoroutine(DeadRoutine());
+        }
+        else
+        {
+            StartCoroutine(DamageRoutine(isBlock));
         }
     }
 
-    IEnumerator DamageRoutine()
+    IEnumerator DamageRoutine(bool isBlock)
     {
         isDamaged = true;
 
@@ -313,18 +315,15 @@ public class PlayerMoveMent : MonoBehaviour
 
         yield return new WaitForSeconds(3.5f);
         anim.SetBool("OnDamage", false);
-        ClearOverBlock();
+
+        if(isBlock)
+            ClearOverBlock();
 
         yield return new WaitForSeconds(0.5f);
         isDamaged = false;
         capCol.enabled = true;
         boxCol.enabled = true;
         StartCoroutine(BreatheRoutine());
-    }
-    IEnumerator DeadRoutine()
-    {
-        yield return new WaitForSeconds(3f);
-        GameManager.Instance.PlayerDead();
     }
 
     void ClearOverBlock()
@@ -422,7 +421,7 @@ public class PlayerMoveMent : MonoBehaviour
                 return;
             }
 
-            OnDamaged(collision.GetComponent<Block>().attackDamage);
+            OnDamaged(collision.GetComponent<Block>().attackDamage, true);
         }
 
         if (collision.CompareTag("Item") && !isDead && !isGetTime)

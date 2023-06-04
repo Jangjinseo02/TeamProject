@@ -12,10 +12,10 @@ public class MonsterA : Monster
 
     public override int attackDamage
     {
-        get { return 5 + (GameManager.Instance.stageLevel * 1); }
+        get { return 10 + (GameManager.Instance.stageLevel * 1); }
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         health = 5 + GameManager.Instance.stageLevel * 1.25f;
 
@@ -23,8 +23,10 @@ public class MonsterA : Monster
         inCamera = false;
     }
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         attackArea = GetComponentInChildren<AttackArea>();
         anim = GetComponent<Animator>();
         bodyBoxCol = GetComponent<BoxCollider2D>();

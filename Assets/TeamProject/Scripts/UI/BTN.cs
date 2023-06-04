@@ -78,8 +78,18 @@ public class BTN : MonoBehaviour
                 break;
             case BTNType.Yes:
                 Give_UP.SetActive(false);
-                SceneManager.LoadScene("TitleScene");
-                Time.timeScale = 1;
+
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.giveUp = true;
+                    GameManager.Instance.GameExit(); //playerDead실행 이후 loadScene("title")이 실행
+
+                    Option_pannel.SetActive(false); //옵션 창 끈 후 플레이어 애니메이션 출력
+                    //사운드 다시 재생
+                    if (SoundManager.Instance != null)
+                        SoundManager.Instance.SoundPlay();
+                    Time.timeScale = 1;
+                }
                 break;
             case BTNType.No:
                 Give_UP.SetActive(false);

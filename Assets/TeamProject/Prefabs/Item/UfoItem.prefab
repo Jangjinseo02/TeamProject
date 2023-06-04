@@ -119,6 +119,8 @@ MonoBehaviour:
   isCheck: 0
   gravity: 3
   sprites: []
+  effect: {fileID: 0}
+  aliveEffect: {fileID: 0}
   col: 0
   isUse: 0
   ufoPre: {fileID: 7611003850440314156, guid: 58b66ad87efb9184cafd86fa639f6d1d, type: 3}

@@ -10,13 +10,15 @@ public class Slim : Block
     BoxCollider2D bodyBoxCol;
     bool isDeadRoutine;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         isDeadRoutine = false;
     }
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         anim = GetComponent<Animator>();
         bodyBoxCol = GetComponent<BoxCollider2D>();
     }

@@ -194,7 +194,7 @@ public class InputManager : SingleTon<InputManager>
 
     public void Select()
     {
-        UIManager.Instance.SelectBackGroundPopdown();
+        //UIManager.Instance.SelectBackGroundPopdown();
         isAttack = false;
     }
 

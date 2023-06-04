@@ -10,10 +10,10 @@ public class BarrierItem : Item, IItem
             return;
 
         PlayerMoveMent player = target.GetComponent<PlayerMoveMent>();
-        Debug.Log("Use");
 
         if (player != null && !isUse)
         {
+            UIManager.Instance.SettingItemUIImage(type);
 
             GameObject obj = ObjectManager.Instance.GetBlock((int)BlockMgr.Object.BarrierObj);
             obj.transform.parent = player.gameObject.transform;

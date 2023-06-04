@@ -6,6 +6,18 @@ public class Restore : Item, IItem
 {
     [SerializeField] float restoreOxygen;
 
+    public override void Awake()
+    {
+        base.Awake();
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+
+        sprite.color = Color.white;
+    }
+
     public void Use(GameObject target)
     {
         if (isUse)
@@ -17,14 +29,35 @@ public class Restore : Item, IItem
         {
             OxygenRestore(player);
 
-            UIManager.Instance.SettingAirImage(1); // type == 1 +air
+            if(type == 11)
+                UIManager.Instance.SettingAirImage(1); // type == 1 +air
+            else if(type == 16)
+                UIManager.Instance.SettingItemUIImage(type);
 
-            if (group != null)
-                group.blockManager.RemovePos(this);
-
-            gameObject.SetActive(false);
+            if(gameObject.activeInHierarchy)
+                StartCoroutine(DestroyRoutine());
         }
     }
+
+    IEnumerator DestroyRoutine()
+    {
+        effect = ObjectManager.Instance.GetEffect((int)ObjectManager.effect.AirCore);
+        effect.transform.position = GameManager.Instance.player.transform.position;
+        effect.SetActive(true);
+        sprite.color = Color.clear;
+        yield return new WaitForSeconds(0.1f);
+        ObjectManager.Instance.ReturnEffect(effect, (int)ObjectManager.effect.AirCore);
+        yield return new WaitForSeconds(0.05f);
+
+        if (group != null)
+            group.blockManager.RemovePos(this);
+        yield return new WaitForSeconds(0.05f);
+        if (type == 11)
+            ObjectManager.Instance.ReturnItem(this.gameObject, (int)ObjectManager.item.Restore);
+        else
+            ObjectManager.Instance.ReturnItem(this.gameObject, (int)ObjectManager.item.Recovery);
+    }
+
     void OxygenRestore(PlayerMoveMent player)
     {
         if (isUse)
@@ -36,14 +69,5 @@ public class Restore : Item, IItem
         player.oxygen += restoreOxygen;
         if (player.oxygen >= 100)
             player.oxygen = 100;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Block")
-        {
-            ObjectManager.Instance.ReturnBlock(this.gameObject);
-            gameObject.SetActive(false);
-        }
     }
 }
