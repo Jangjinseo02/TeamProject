@@ -34,6 +34,8 @@ public class GameManager : SingleTon<GameManager>
     public enum Level { Easy, Nomal, Hard };
     public Level level = Level.Easy;
 
+    public bool clear = false;
+
     [Header("---------------------Level")]
     //레벨 목표 마리수
     [SerializeField] GameObject clearObject;
@@ -110,9 +112,11 @@ public class GameManager : SingleTon<GameManager>
 
         if (clearCatch <= curCatch)
         {
+            clear = true;
             clearObject.transform.position = new Vector2(0, player.transform.position.y + Vector2.down.y);
             clearObject.SetActive(true);
 
+            GameExit();
             //GameExit 사용하면 될듯
             //플레이어 내부에 클리어에 관한 플레이어 행동이 정의되어야함
             //코루틴으로
@@ -134,10 +138,10 @@ public class GameManager : SingleTon<GameManager>
 
     void RanValue()
     {
-        if (stageLevel == 0) //첫 시작은 흙
+        if (stageLevel == 0) //첫 시작은 외계인 기지
             ran = 0;
         else
-            ran = Random.Range(0, 4);
+            ran = Random.Range(0, 5);
 
         if (ran == curRan)
             RanValue();
@@ -148,7 +152,11 @@ public class GameManager : SingleTon<GameManager>
     //플레이어 죽음 판별, 이후 행동 실행
     void PlayerDead()
     {
-        if (!player.GetComponent<PlayerMoveMent>().isDead)
+        if (clear)
+        {
+            player.GetComponent<PlayerMoveMent>().ClearPos();
+        }
+        else if (!player.GetComponent<PlayerMoveMent>().isDead)
             player.GetComponent<PlayerMoveMent>().OnDamaged(1000, false);
 
         //결과창으로 이동
@@ -176,21 +184,22 @@ public class GameManager : SingleTon<GameManager>
 
     public void GameExit()
     {
-        //게임 종료 시 실행되던 모든 block들의 코루틴 종료
-        Block[] childs = null;
-        for (int i = 0; i < blockMgrs.Length; i++)
+        if (!clear)
         {
-            if (blockMgrs[i].gameObject.activeInHierarchy)
-                childs = blockMgrs[i].GetComponentsInChildren<Block>();
+            //게임 종료 시 실행되던 모든 block들의 코루틴 종료
+            Block[] childs = null;
+            for (int i = 0; i < blockMgrs.Length; i++)
+            {
+                if (blockMgrs[i].gameObject.activeInHierarchy)
+                    childs = blockMgrs[i].GetComponentsInChildren<Block>();
+            }
+
+            foreach (Block member in childs)
+                if (member.gameObject.activeInHierarchy)
+                    member.StopAllCoroutines();
         }
 
-        foreach (Block member in childs)
-            if (member.gameObject.activeInHierarchy)
-                member.StopAllCoroutines();
-
-        //목표 완수시 
-
-        //목표 완수 실패시
+        //목표에 대한 행동 정의
         PlayerDead();
     }
 

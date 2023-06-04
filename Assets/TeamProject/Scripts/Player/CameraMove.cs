@@ -50,6 +50,8 @@ public class CameraMove : MonoBehaviour
 
     void Check()
     {
+        if (GameManager.Instance.clear)
+            return;
         ObjectCheckAtiveInHierarchy();
         HashSet<Block> blocks = new HashSet<Block>(inCamera);
 
@@ -61,6 +63,8 @@ public class CameraMove : MonoBehaviour
 
     public void CheckBlock(Block target)
     {
+        if (GameManager.Instance.clear)
+            return;
 
         switch (target.tag)
         {
@@ -87,6 +91,19 @@ public class CameraMove : MonoBehaviour
 
     void ObjectCheckAtiveInHierarchy()
     {
+        if (GameManager.Instance.clear)
+        {
+            List<Block> allRemoveList = new List<Block>(inCamera);
+
+            foreach(Block member in allRemoveList)
+            {
+                if(member != null)
+                    inCamera.Remove(member);
+            }
+
+            return;
+        }
+
         List<Block> removeList = new List<Block>();
 
         foreach (Block member in inCamera)
@@ -108,7 +125,7 @@ public class CameraMove : MonoBehaviour
     {
         PlayerMoveMent playerDead = player.GetComponent<PlayerMoveMent>();
 
-        while (!playerDead.isDead)
+        while (!playerDead.isDead || !GameManager.Instance.clear)
         {
             Check();
             yield return new WaitForSeconds(0.2f);
@@ -123,6 +140,9 @@ public class CameraMove : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (GameManager.Instance.clear)
+            return;
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Block"))
         {
             inCamera.Add(collision.GetComponent<Block>());
@@ -131,6 +151,9 @@ public class CameraMove : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (GameManager.Instance.clear)
+            return;
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Block"))
         {
             switch (collision.tag)

@@ -241,7 +241,6 @@ public class PlayerMoveMent : MonoBehaviour
             //10이하
             if (oxygen <= 10)
             {
-                Debug.Log("Oxygen <= 10");
                 SoundManager.Instance.SpeedUpSound((int)SoundManager.Sfx.CloseDeath); // 사운드 빠르게
                 UIManager.Instance.SettingCountSpeechBubble(oxygen);
             }
@@ -284,6 +283,11 @@ public class PlayerMoveMent : MonoBehaviour
         UIManager.Instance.SettingAirImage(0); // type == 0 -air ;
     }
 
+    public void ChangeFilp(bool isRight)
+    {
+        gameObject.GetComponent<SpriteRenderer>().flipX = isRight;
+    }
+
     public void OnDamaged(int damage, bool isBlock)
     {
         hp -= damage;
@@ -304,6 +308,8 @@ public class PlayerMoveMent : MonoBehaviour
     IEnumerator DamageRoutine(bool isBlock)
     {
         isDamaged = true;
+
+        anim.SetBool("Block", isBlock);
 
         anim.SetTrigger("OnDamaged");
         anim.SetBool("OnDamage", true);
@@ -441,5 +447,10 @@ public class PlayerMoveMent : MonoBehaviour
         item.Use(gameObject);
         yield return new WaitForSeconds(0.5f);
         isGetTime = false;
+    }
+
+    public void ClearPos()
+    {
+        anim.SetTrigger("Clear");
     }
 }
