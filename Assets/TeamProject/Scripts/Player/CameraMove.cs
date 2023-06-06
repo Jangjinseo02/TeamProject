@@ -5,10 +5,16 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     [SerializeField] private GameObject player;
+    PlayerMoveMent playerScript;
 
     Vector3 pos;
 
     HashSet<Block> inCamera = new HashSet<Block>();
+
+    private void Awake()
+    {
+        playerScript = player.GetComponent<PlayerMoveMent>();
+    }
 
     private void Start()
     {
@@ -20,7 +26,8 @@ public class CameraMove : MonoBehaviour
 
     void Update()
     {
-        this.transform.position = new Vector3(transform.position.x, player.transform.position.y, -10);
+        if(!playerScript.isDead)
+            this.transform.position = new Vector3(transform.position.x, player.transform.position.y, -10);
     }
 
     public void StartSetting()

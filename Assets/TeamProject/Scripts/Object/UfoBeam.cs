@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UfoBeam : MonoBehaviour
 {
-
     float curTime = 0;
 
     Ufo ufo;
@@ -13,6 +12,7 @@ public class UfoBeam : MonoBehaviour
     {
         curTime = 0;
         ufo = GetComponentInParent<Ufo>();
+        SoundManager.Instance.SfxPlay(SoundManager.Sfx.UfoBeam, true);
 
         StartCoroutine(EndTime());
     }
@@ -44,6 +44,8 @@ public class UfoBeam : MonoBehaviour
     IEnumerator EndTime()
     {
         yield return new WaitForSeconds(8f);
+
+        SoundManager.Instance.SfxStop(SoundManager.Sfx.UfoBeam);
 
         Destroy(ufo.gameObject);
     }

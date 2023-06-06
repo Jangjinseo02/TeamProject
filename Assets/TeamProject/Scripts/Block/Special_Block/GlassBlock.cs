@@ -33,6 +33,9 @@ public class GlassBlock : Block
 
         if (health <= 0)
         {
+            if (!group.isSoundPlay)
+                group.FirstMemberSoundPlay(SoundManager.Sfx.BreakGlass);
+
             if (gameObject.activeInHierarchy)
                 StartCoroutine(DamageRoutine());
         }

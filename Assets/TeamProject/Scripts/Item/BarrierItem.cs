@@ -13,6 +13,8 @@ public class BarrierItem : Item, IItem
 
         if (player != null && !isUse)
         {
+            SoundManager.Instance.SfxPlay(SoundManager.Sfx.Barrier,false);
+
             UIManager.Instance.SettingItemUIImage(type);
 
             GameObject obj = ObjectManager.Instance.GetBlock((int)BlockMgr.Object.BarrierObj);

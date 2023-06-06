@@ -21,6 +21,7 @@ public class Ufo : MonoBehaviour
     {
         float startTime = 0;
         float maxTime = 4f;
+        SoundManager.Instance.SfxPlay(SoundManager.Sfx.UfoMove, true);
 
         while (startTime <= maxTime)
         {
@@ -29,6 +30,8 @@ public class Ufo : MonoBehaviour
             yield return null;
         }
 
+        SoundManager.Instance.SfxStop(SoundManager.Sfx.UfoMove);
+        SoundManager.Instance.SfxPlay(SoundManager.Sfx.UfoStop, false);
         yield return new WaitForSeconds(1f);
         ufoBeam.gameObject.SetActive(true);
     }

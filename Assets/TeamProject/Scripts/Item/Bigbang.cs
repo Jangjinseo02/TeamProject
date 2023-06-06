@@ -23,6 +23,8 @@ public class Bigbang : Item, IItem
         
         if (player!= null && !isUse)
         {
+            SoundManager.Instance.SfxPlay(SoundManager.Sfx.Bigbang, false);
+
             UIManager.Instance.SettingItemUIImage(type);
             HashSet<Block> destroyBlock = new HashSet<Block>(player.followCamera.ReturnBlock());
 

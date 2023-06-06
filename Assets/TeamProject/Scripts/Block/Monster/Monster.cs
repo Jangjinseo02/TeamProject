@@ -52,8 +52,7 @@ public class Monster : Block
     IEnumerator DeadRoutine()
     {
         yield return new WaitForSeconds(1.5f);
-        GameObject item = group.blockManager.SettingBlockList(11, this.row, this.col);
-        item.GetComponent<UseItem>().SpriteSetting((int)monsterType);
+        group.blockManager.SettingBlockList(11, this.row, this.col);
         gameObject.SetActive(false);
     }
 

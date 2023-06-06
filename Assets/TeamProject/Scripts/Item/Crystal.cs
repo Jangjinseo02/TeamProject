@@ -13,6 +13,8 @@ public class Crystal : Item, IItem
 
         if (player != null && !isUse)
         {
+            SoundManager.Instance.SfxPlay(SoundManager.Sfx.Crystal, false);
+
             UIManager.Instance.SettingItemUIImage(type);
             
             HashSet<Block> destroyBlock = new HashSet<Block>(player.followCamera.ReturnBlock());

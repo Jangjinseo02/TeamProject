@@ -8,24 +8,42 @@ public class UseItem : Item, IItem
     GameObject item;
 
     [SerializeField] Sprite[] ItemSprites;
-    SpriteRenderer spriteRenderer;
+    
+    CircleCollider2D circle;
+    Animator anim;
+
+    bool removePos = false;
 
     public override void Awake()
     {
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        base.Awake();
+
+        anim = GetComponent<Animator>();
+        circle = GetComponent<CircleCollider2D>();
     }
 
-    public void SpriteSetting(int monsterType)
+    public override void OnEnable()
     {
-        spriteRenderer.sprite = ItemSprites[monsterType];
+        base.OnEnable();
+
+        circle.enabled = true;
+
+        if (group != null)
+        {
+            group.CheckGroupUnbalance();
+        }
+        removePos = false;
     }
 
     public void Use(GameObject target)
     {
         if (isUse)
             return;
+        circle.enabled = false;
 
-        int ran = Random.Range(0, 7);
+        int ran = Random.Range(0, itemObject.Length);
+
+        StartCoroutine(EffectRoutine());
 
         if (ran <= (int)ObjectManager.item.Bigbang)
         {
@@ -37,9 +55,38 @@ public class UseItem : Item, IItem
 
         item.SetActive(true);
         item.GetComponent<IItem>().Use(target);
-        
+
+
+        GameManager.Instance.PickUp(gameObject);
+        StartCoroutine(GetRoutine());
+    }
+
+    IEnumerator EffectRoutine()
+    {
+        effect = ObjectManager.Instance.GetEffect((int)ObjectManager.effect.AirCore);
+        effect.transform.position = GameManager.Instance.player.transform.position;
+        effect.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        ObjectManager.Instance.ReturnEffect(effect, (int)ObjectManager.effect.AirCore);
+    }
+
+    IEnumerator GetRoutine()
+    {
+        while (GameManager.Instance.pick != null)
+        {
+            if (anim.GetBool("Pick") && !removePos)
+            {
+                removePos = true;
+                if (group != null)
+                    group.blockManager.RemovePos(this);
+            }
+            yield return null;
+        }
+
+        anim.SetBool("Pick", false);
+        removePos = false;
         if (group != null)
-            group.blockManager.RemovePos(this);
+            transform.parent = group.blockManager.transform;
         gameObject.SetActive(false);
     }
 }

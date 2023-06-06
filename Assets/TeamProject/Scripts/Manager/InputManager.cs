@@ -50,96 +50,61 @@ public class InputManager : SingleTon<InputManager>
 
     IEnumerator AttackRoutine()
     {
-        if (dirVec == Vector3.zero)
+        RaycastHit2D rayhit = Physics2D.Raycast(player.transform.position, dirVec == Vector3.zero ? Vector3.down : dirVec, 0.65f, LayerMask.GetMask("Block"));
+        Block block = rayhit.collider != null && rayhit.collider.tag != "Item" ? rayhit.collider.GetComponent<Block>() : null;
+
+        if (block != null)
         {
-            RaycastHit2D rayhit = Physics2D.Raycast(player.transform.position, Vector3.down, 0.6f, LayerMask.GetMask("Block"));
-            Block block = rayhit.collider != null && rayhit.collider.tag != "Item" ? rayhit.collider.GetComponent<Block>() : null;
-            
+            HardBlock hard = block.GetComponent<HardBlock>();
+            ClearBlock clear = block.GetComponent<ClearBlock>();
+            Monster monster = block.GetComponent<Monster>();
+            Slim slim = block.GetComponent<Slim>();
 
-            //Block firstMember = null;
-            if (block != null)
-            {
-                HardBlock hard = block.GetComponent<HardBlock>();
-                ClearBlock clear = block.GetComponent<ClearBlock>();
-                Monster monster = block.GetComponent<Monster>();
-
+            if (dirVec == Vector3.up)
+                playeranim.SetTrigger("upAttack");
+            else if (dirVec == Vector3.right || dirVec == Vector3.left)
+                playeranim.SetTrigger("lrAttack");
+            else
                 playeranim.SetTrigger("downAttack");
 
-                if (hard)
-                    hard.OnDamaged(10);
-                else
-                    if (block.group != null)
-                    foreach (Block member in block.group)
-                    {
-                        //if (block.type == 0 && firstMember == null) //type == 0 : ClearBlock
-                        //    firstMember = member;
-                        member.OnDamaged(10);
-                        if (block.group.Count >= 4)
-                            GameManager.Instance.GetScore(GameManager.BreakType.Multi);
-                        else
-                            GameManager.Instance.GetScore(GameManager.BreakType.Single);
-                    }
-
-                if (hard)
-                    if (hard.isDestroy())
-                    {
-                        player.RealeseAir();
-                        GameManager.Instance.GetScore(GameManager.BreakType.Single);
-                    }
-                if (clear)
-                    block.StageClear();
-                if (monster)
-                    GameManager.Instance.GetScore(GameManager.BreakType.Monster);
-                //if (firstMember != null)
-                //    firstMember.StageClear();
-            }
-        }
-        else
-        {
-            RaycastHit2D rayhit = Physics2D.Raycast(player.transform.position, dirVec, 0.6f, LayerMask.GetMask("Block"));
-            Block block = rayhit.collider != null ? rayhit.collider.GetComponent<Block>() : null;
+            //Attack 사운드 출력
+            if (hard)
+                SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackHard, false);
+            else if (monster || slim)
+                SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackMonster, false);
+            else if (block)
+                SoundManager.Instance.SfxPlay(SoundManager.Sfx.Attack, false);
 
 
-            if (block != null)
+            if (hard)
+                hard.OnDamaged(10);
+            else if (block.group != null)
             {
-                HardBlock hard = block.GetComponent<HardBlock>();
-                ClearBlock clear = block.GetComponent<ClearBlock>();
-                Monster monster = block.GetComponent<Monster>();
+                block.group.isSoundPlay = true;
 
-                if (dirVec == Vector3.up)
-                    playeranim.SetTrigger("upAttack");
-                else if (dirVec == Vector3.right || dirVec == Vector3.left)
-                    playeranim.SetTrigger("lrAttack");
-                else
-                    playeranim.SetTrigger("downAttack");
-
-                if (hard)
-                    hard.OnDamaged(10);
-                else
-                    if (block.group != null)
-                    foreach (Block member in block.group)
-                    {
-                        //if (block.type == 0 && firstMember == null) //type == 0 : ClearBlock
-                        //    firstMember = member;
-                        member.OnDamaged(10);
-                        if (block.group.Count >= 4)
-                            GameManager.Instance.GetScore(GameManager.BreakType.Multi);
-                        else
-                            GameManager.Instance.GetScore(GameManager.BreakType.Single);
-                    }
-
-
-                if (hard)
-                    if (hard.isDestroy())
-                    {
-                        player.RealeseAir();
+                foreach (Block member in block.group)
+                {
+                    //if (block.type == 0 && firstMember == null) //type == 0 : ClearBlock
+                    //    firstMember = member;
+                    member.OnDamaged(10);
+                    if (block.group.Count >= 4)
+                        GameManager.Instance.GetScore(GameManager.BreakType.Multi);
+                    else
                         GameManager.Instance.GetScore(GameManager.BreakType.Single);
-                    }  
-                if (clear)
-                    block.StageClear();
-                if (monster)
-                    GameManager.Instance.GetScore(GameManager.BreakType.Monster);
+                }
             }
+
+            if (hard)
+                if (hard.isDestroy())
+                {
+                    player.RealeseAir();
+                    GameManager.Instance.GetScore(GameManager.BreakType.Single);
+                }
+            if (clear)
+                block.StageClear();
+            if (monster)
+                GameManager.Instance.GetScore(GameManager.BreakType.Monster);
+
         }
 
         yield return new WaitForSeconds(0.2f);

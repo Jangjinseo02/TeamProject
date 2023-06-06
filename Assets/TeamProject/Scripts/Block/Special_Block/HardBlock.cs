@@ -31,6 +31,9 @@ public class HardBlock : Block
         {
             isDestory = true;
 
+            if (!group.isSoundPlay)
+                group.FirstMemberSoundPlay(SoundManager.Sfx.BreakHard);
+
             if (gameObject.activeInHierarchy)
                 StartCoroutine(DestroyRoutine());
         }

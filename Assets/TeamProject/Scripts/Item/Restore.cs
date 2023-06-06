@@ -29,12 +29,18 @@ public class Restore : Item, IItem
         {
             OxygenRestore(player);
 
-            if(type == 11)
+            if (type == 11)
+            {
                 UIManager.Instance.SettingAirImage(1); // type == 1 +air
-            else if(type == 16)
+                SoundManager.Instance.SfxPlay(SoundManager.Sfx.Restore, false);
+            }
+            else if (type == 16)
+            {
                 UIManager.Instance.SettingItemUIImage(type);
+                SoundManager.Instance.SfxPlay(SoundManager.Sfx.Recovery, false);
+            }
 
-            if(gameObject.activeInHierarchy)
+            if (gameObject.activeInHierarchy)
                 StartCoroutine(DestroyRoutine());
         }
     }

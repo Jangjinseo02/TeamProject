@@ -150,7 +150,7 @@ public class UIManager : SingleTon<UIManager>
     public void SettingCountSpeechBubble(float oxygen)
     {
         int value = Mathf.FloorToInt(oxygen) - 1;
-        if (value > 10)
+        if (value >= 10 || value < 0)
             return;
         countImage.sprite = countSprites[value];
         countImage.SetNativeSize();

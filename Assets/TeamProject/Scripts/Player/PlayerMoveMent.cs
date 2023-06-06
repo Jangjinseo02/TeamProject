@@ -47,16 +47,13 @@ public class PlayerMoveMent : MonoBehaviour
         followCamera = FindObjectOfType<CameraMove>();
     }
 
-    void Start()
-    {
-       
-    }
-
     private void FixedUpdate()
     {
         if (isDead)
         {
             rigid.velocity = Vector2.zero;
+            capCol.enabled = false;
+            boxCol.enabled = false;
             UIManager.Instance.ClearCountSpeechBubble();
             return;
         }
@@ -68,7 +65,8 @@ public class PlayerMoveMent : MonoBehaviour
             if (anim.GetBool("isWalk"))
                 anim.SetBool("isWalk", false);
 
-            rigid.velocity = Vector2.zero;
+            if(!isDrop)
+                rigid.velocity = Vector2.zero;
             dirvec = Vector3.zero;
             jumpTime = 0f;
             return;
@@ -99,6 +97,8 @@ public class PlayerMoveMent : MonoBehaviour
                 DropOn();
                 if (rayhitDown.collider.GetComponent<Monster>())
                     GameManager.Instance.GetScore(GameManager.BreakType.Monster);
+
+                SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackMonster, false);
                 rayhitDown.collider.GetComponent<Block>().OnDamaged(100);
             }
             else
@@ -235,7 +235,6 @@ public class PlayerMoveMent : MonoBehaviour
             if (closeDeath)
             {
                 closeDeath = false;
-                SoundManager.Instance.SfxAllStop();
             }
             OnDamaged(maxHealth + 1, false);
         }
@@ -249,6 +248,7 @@ public class PlayerMoveMent : MonoBehaviour
             }
             else
             {
+                //SoundManager.Instance.SpeedDownSound((int)SoundManager.Sfx.CloseDeath); // 사운드 느리게
                 UIManager.Instance.ClearCountSpeechBubble();
             }
 
@@ -259,7 +259,7 @@ public class PlayerMoveMent : MonoBehaviour
             anim.SetLayerWeight(1, 1);
 
             //사운드 출력
-            SoundManager.Instance.SfxPlay(SoundManager.Sfx.CloseDeath);
+            SoundManager.Instance.SfxPlay(SoundManager.Sfx.CloseDeath, true);
         }
         else
         {
@@ -272,7 +272,7 @@ public class PlayerMoveMent : MonoBehaviour
 
     IEnumerator BreatheRoutine()
     {
-        while (!isDead && !isDamaged)
+        while (!isDead && !isDamaged && !GameManager.Instance.clear)
         {
             Breathe(GameManager.Instance.stageLevel);
             yield return new WaitForSeconds(0.5f);
@@ -284,6 +284,7 @@ public class PlayerMoveMent : MonoBehaviour
     {
         oxygen -= 20 + GameManager.Instance.stageLevel * 0.5f;
         UIManager.Instance.SettingAirImage(0); // type == 0 -air ;
+        SoundManager.Instance.SfxPlay(SoundManager.Sfx.LoseAir, false);
     }
 
     public void ChangeFilp(bool isRight)

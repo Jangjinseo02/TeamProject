@@ -13,6 +13,8 @@ public class Meteor : Item, IItem
 
         if (player != null && !isUse)
         {
+            SoundManager.Instance.SfxPlay(SoundManager.Sfx.Meteor, false);
+
             UIManager.Instance.SettingItemUIImage(type);
 
             HashSet<Block> destroyBlock = new HashSet<Block>(player.followCamera.ReturnBlock());

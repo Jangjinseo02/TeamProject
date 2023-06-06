@@ -452,9 +452,9 @@ public class BlockMgr : MonoBehaviour
 
     public void UpdatePos(Block block)
     {
-        block.transform.localPosition = new Vector3(block.col, block.row, 0);
-        types[block.row, block.col] = block.type;
-        blocks[block.row, block.col] = block.gameObject;
+        block.transform.localPosition = new Vector3(block.col, block.roundRow, 0);
+        types[block.roundRow, block.col] = block.type;
+        blocks[block.roundRow, block.col] = block.gameObject;
     }
 
     public void RemovePos(Block block)

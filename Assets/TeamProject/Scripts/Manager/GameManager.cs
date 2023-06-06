@@ -42,6 +42,7 @@ public class GameManager : SingleTon<GameManager>
     public int curCatch = 0;
     public int clearCatch = 0;
 
+    public IEnumerator pick;
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
@@ -149,6 +150,46 @@ public class GameManager : SingleTon<GameManager>
             curRan = ran;
     }
 
+    public void PickUp(GameObject target)
+    {
+        GameObject tongs = followCamera.transform.GetChild(0).gameObject;
+
+        pick = PickUpRoutine(tongs, target);
+        StartCoroutine(pick);
+    }
+
+    IEnumerator PickUpRoutine(GameObject pick, GameObject target)
+    {
+        pick.transform.position = new Vector3(target.transform.position.x, pick.transform.position.y, 0);
+
+        while (pick.transform.position.y >= target.transform.position.y)
+        {
+            pick.transform.position = pick.transform.position + Vector3.down * 5/*moveSpeed*/ * Time.deltaTime;
+            yield return true;
+        }
+
+        //집게 애니메이션 출력
+        GameObject tongs = pick.transform.GetChild(0).gameObject;
+        tongs.GetComponent<Animator>().SetBool("Pick", true);
+
+        target.GetComponent<Animator>().SetBool("Pick", true);
+        yield return new WaitForSeconds(0.2f);
+        target.transform.parent = pick.transform;
+        yield return new WaitForSeconds(0.3f);
+
+        //외부 이동
+        while (pick.transform.localPosition.y < 6)
+        {
+            pick.transform.localPosition = pick.transform.localPosition + Vector3.up * 5/*moveSpeed*/ * Time.deltaTime;
+            yield return true;
+        }
+
+        tongs.GetComponent<Animator>().SetBool("Pick", false);
+
+        target.transform.parent = null;
+        this.pick = null;
+    }
+
     //플레이어 죽음 판별, 이후 행동 실행
     void PlayerDead()
     {
@@ -156,11 +197,15 @@ public class GameManager : SingleTon<GameManager>
         {
             player.GetComponent<PlayerMoveMent>().ClearPos();
         }
-        else if (!player.GetComponent<PlayerMoveMent>().isDead)
-            player.GetComponent<PlayerMoveMent>().OnDamaged(1000, false);
+        else
+        {
+            if (!player.GetComponent<PlayerMoveMent>().isDead)
+                player.GetComponent<PlayerMoveMent>().OnDamaged(1000, false);
+            PickUp(player);
+        }
 
         //결과창으로 이동
-        if(!giveUp)
+        if (!giveUp)
             StartCoroutine(PopRoutine());
         else
             StartCoroutine(GiveUpRoutine());
@@ -168,16 +213,22 @@ public class GameManager : SingleTon<GameManager>
 
     IEnumerator PopRoutine()
     {
-        //player anim 출력
-        yield return new WaitForSeconds(3f);
+        while (pick != null)
+        {
+            yield return null;
+        }
+        if (clear)
+            yield return new WaitForSecondsRealtime(3f);
         UIManager.Instance.ResultScreenPopup();
         Time.timeScale = 0;
     }
 
     IEnumerator GiveUpRoutine()
     {
-        //player anim 출력
-        yield return new WaitForSecondsRealtime(3f);
+        while (pick != null)
+        {
+            yield return null;
+        }
         SceneManager.LoadScene("TitleScene");
         Time.timeScale = 1f;
     }
@@ -198,6 +249,8 @@ public class GameManager : SingleTon<GameManager>
                 if (member.gameObject.activeInHierarchy)
                     member.StopAllCoroutines();
         }
+        
+        SoundManager.Instance.SfxAllStop();
 
         //목표에 대한 행동 정의
         PlayerDead();

@@ -9,6 +9,7 @@ public class Group
 
     public bool unbalance = false;
 
+    public bool isSoundPlay = false;
     public int Count
     {
         get { return this.blocks.Count; }
@@ -87,6 +88,15 @@ public class Group
         }
     }
 
+    public void FirstMemberSoundPlay(SoundManager.Sfx sfx)
+    {
+        if (isSoundPlay)
+            return;
+
+        isSoundPlay = true;
+        SoundManager.Instance.SfxPlay(sfx, false);
+    }
+
 }
 
 
@@ -146,6 +156,12 @@ public class Block : MonoBehaviour
     {
         get { return Mathf.CeilToInt(transform.localPosition.y);}
     }
+
+    public int roundRow
+    {
+        get { return Mathf.RoundToInt(transform.localPosition.y); }
+    }
+
     public int col;
 
     public bool dropping
@@ -289,7 +305,10 @@ public class Block : MonoBehaviour
         if (health <= 0)
         {
             //type = -1;
-            if(gameObject.activeInHierarchy)
+            if (!group.isSoundPlay)
+                group.FirstMemberSoundPlay(SoundManager.Sfx.BreakNomal);
+
+            if (gameObject.activeInHierarchy)
                 StartCoroutine(DestroyRoutine());
         }
     }

@@ -15,6 +15,8 @@ public class UfoItem : Item, IItem
 
         if (player != null && !isUse)
         {
+            SoundManager.Instance.SfxPlay(SoundManager.Sfx.Ufo, false);
+
             UIManager.Instance.SettingItemUIImage(type);
 
             GameObject ufo = Instantiate(ufoPre);
