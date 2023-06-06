@@ -3816,7 +3816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4367694314881907798, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
       propertyPath: oxygen
-      value: 40
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4367694314881907798, guid: dbba7675f92d69946be3a779be2a4cac, type: 3}
       propertyPath: dropPower
