@@ -36,6 +36,10 @@ public class UIManager : SingleTon<UIManager>
     [SerializeField] Text scoreText;
     [SerializeField] Text catchText;
 
+    [Header("---------------------OtherImage")]
+    [SerializeField] Image hpImage;
+    [SerializeField] Image oxygenImage;
+
     float fadeSpeed = 2f;
 
     private void Awake()
@@ -96,10 +100,12 @@ public class UIManager : SingleTon<UIManager>
     public void UpdateHpText(float hp)
     {
         hpText.text = ((int)hp).ToString() + "/100";
+        hpImage.fillAmount = hp / 100;
     }
     public void UpdateOxygenText(float oxygen)
     {
         oxygenText.text = ((int)oxygen).ToString() + "/100";
+        oxygenImage.fillAmount = oxygen / 100;
     }
 
     public void UpdateDepthText(float yPos)
