@@ -13,7 +13,6 @@ public class MonsterB : Monster
         base.Awake();
 
         anim = GetComponent<Animator>();
-        bodyBoxCol = GetComponent<BoxCollider2D>();
     }
 
     public override void OnEnable()
@@ -21,6 +20,7 @@ public class MonsterB : Monster
         if (group != null)
             blockmgr = group.blockManager;
 
+        boxCol.enabled = true;
         isDead = false;
         inCamera = false;
     }

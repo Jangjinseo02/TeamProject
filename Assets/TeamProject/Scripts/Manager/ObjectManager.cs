@@ -25,7 +25,7 @@ public class ObjectManager : SingleTon<ObjectManager>
     int monsterCount = 50;
     int itemCount = 5;
 
-    int effectCount = 15;
+    int effectCount = 75;
 
     private void Awake()
     {

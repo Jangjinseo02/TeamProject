@@ -115,6 +115,8 @@ public class Block : MonoBehaviour
     IEnumerator shake;
     IEnumerator blink;
 
+    protected BoxCollider2D boxCol;
+
     protected SpriteRenderer sprite;
     [SerializeField] protected Sprite[] sprites;
 
@@ -124,6 +126,7 @@ public class Block : MonoBehaviour
     public virtual void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
+        boxCol = GetComponent<BoxCollider2D>() != null ? GetComponent<BoxCollider2D>() : null;
     }
 
     public virtual void OnEnable()
@@ -140,6 +143,8 @@ public class Block : MonoBehaviour
     IEnumerator SetAliveRoutine()
     {
         sprite.color = Color.clear;
+        if(boxCol != null)
+            boxCol.enabled = true;
         aliveEffect.SetActive(true);
 
         yield return new WaitForSeconds(0.2f);
@@ -305,6 +310,9 @@ public class Block : MonoBehaviour
         if (health <= 0)
         {
             //type = -1;
+            if(boxCol != null)
+                boxCol.enabled = false;
+
             if (!group.isSoundPlay)
                 group.FirstMemberSoundPlay(SoundManager.Sfx.BreakNomal);
 

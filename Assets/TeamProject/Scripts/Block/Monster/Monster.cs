@@ -11,7 +11,11 @@ public class Monster : Block
     public bool inCamera;
 
     protected Animator anim;
-    protected BoxCollider2D bodyBoxCol;
+
+    public override void Awake()
+    {
+        base.Awake();
+    }
 
     public virtual void CameraOut()
     {
@@ -20,7 +24,6 @@ public class Monster : Block
     public virtual void CheckTarget(HashSet<Block> blocks)
     {
         inCamera = true;
-        Debug.Log("Parent : CheckTarget");
     }
 
     public virtual void Attack()
@@ -43,7 +46,7 @@ public class Monster : Block
                 return;
 
             isDead = true;
-            bodyBoxCol.enabled = false;
+            boxCol.enabled = false;
             anim.SetTrigger("Dead");
             StartCoroutine(DeadRoutine());
         }

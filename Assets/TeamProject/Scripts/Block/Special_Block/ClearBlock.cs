@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class ClearBlock : Block
 {
+    public override void Awake()
+    {
+        base.Awake();
+    }
+
+    public override void OnEnable()
+    {
+        boxCol.enabled = true;
+    }
+
 
     public override void StageClear()
     {
@@ -16,6 +26,8 @@ public class ClearBlock : Block
 
         if (health <= 0)
         {
+            boxCol.enabled = false;
+
             gameObject.SetActive(false);
         }
     }

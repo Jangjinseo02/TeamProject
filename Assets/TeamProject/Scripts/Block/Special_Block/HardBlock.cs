@@ -17,6 +17,8 @@ public class HardBlock : Block
     {
         base.OnEnable();
 
+        boxCol.enabled = true;
+
         health = 50f;
         hitCount = 0;
         isDestory = false;
@@ -30,6 +32,7 @@ public class HardBlock : Block
         if (health <= 0)
         {
             isDestory = true;
+            boxCol.enabled = false;
 
             if (!group.isSoundPlay)
                 group.FirstMemberSoundPlay(SoundManager.Sfx.BreakHard);
@@ -49,6 +52,9 @@ public class HardBlock : Block
         ObjectManager.Instance.ReturnEffect(effect, (int)ObjectManager.effect.Hard);
 
         yield return new WaitForSeconds(0.05f);
+
+        group.blockManager.RemovePos(this);
+
         foreach (Block member in this.group)
         {
             if (this == member)
@@ -57,7 +63,6 @@ public class HardBlock : Block
             member.group.CheckGroupUnbalance();
         }
 
-        group.blockManager.RemovePos(this);
         gameObject.SetActive(false);
     }
 

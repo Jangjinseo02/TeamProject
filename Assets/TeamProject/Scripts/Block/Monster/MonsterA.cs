@@ -19,6 +19,7 @@ public class MonsterA : Monster
     {
         health = 5 + GameManager.Instance.stageLevel * 1.25f;
 
+        boxCol.enabled = true;
         isDead = false;
         inCamera = false;
     }
@@ -29,7 +30,6 @@ public class MonsterA : Monster
 
         attackArea = GetComponentInChildren<AttackArea>();
         anim = GetComponent<Animator>();
-        bodyBoxCol = GetComponent<BoxCollider2D>();
     }
 
     public override void CameraOut()

@@ -18,7 +18,7 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
-        pos.x = player.transform.position.x;
+        pos.x = player.transform.position.x + 0.1f;
         pos.y = player.transform.position.y;
 
         this.transform.position = pos;
@@ -37,17 +37,17 @@ public class CameraMove : MonoBehaviour
         switch (level)
         {
             case GameManager.Level.Easy:
-                Camera.main.orthographicSize = 5f;
+                Camera.main.orthographicSize = 4.5f;
                 break;
             case GameManager.Level.Nomal:
-                Camera.main.orthographicSize = 6.5f;
+                Camera.main.orthographicSize = 5.85f;
                 break;
             case GameManager.Level.Hard:
-                Camera.main.orthographicSize = 8f;
+                Camera.main.orthographicSize = 7.15f;
                 break;
         }
 
-        pos.x = player.transform.position.x;
+        pos.x = player.transform.position.x + 0.1f;
         pos.y = player.transform.position.y;
 
         this.transform.position = pos;

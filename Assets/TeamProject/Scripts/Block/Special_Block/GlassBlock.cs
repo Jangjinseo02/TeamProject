@@ -33,6 +33,8 @@ public class GlassBlock : Block
 
         if (health <= 0)
         {
+            
+
             if (!group.isSoundPlay)
                 group.FirstMemberSoundPlay(SoundManager.Sfx.BreakGlass);
 
@@ -44,6 +46,8 @@ public class GlassBlock : Block
     IEnumerator DamageRoutine()
     {
         yield return new WaitForSeconds(1.5f);
+
+        boxCol.enabled = false;
 
         effect = ObjectManager.Instance.GetEffect((int)ObjectManager.effect.Glass);
         effect.transform.position = this.transform.position;

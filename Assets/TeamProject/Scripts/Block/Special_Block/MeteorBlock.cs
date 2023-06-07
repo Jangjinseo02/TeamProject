@@ -26,6 +26,9 @@ public class MeteorBlock : Block
 
         if (health <= 0)
         {
+
+            boxCol.enabled = false;
+
             if (!group.isSoundPlay)
                 group.FirstMemberSoundPlay(SoundManager.Sfx.BreakMeteor);
 

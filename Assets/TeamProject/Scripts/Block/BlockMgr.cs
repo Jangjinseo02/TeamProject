@@ -452,6 +452,9 @@ public class BlockMgr : MonoBehaviour
 
     public void UpdatePos(Block block)
     {
+        if (block.roundRow >= numRow || block.roundRow < 0 || block.col < 0 || block.col >= numCol)
+            return;
+
         block.transform.localPosition = new Vector3(block.col, block.roundRow, 0);
         types[block.roundRow, block.col] = block.type;
         blocks[block.roundRow, block.col] = block.gameObject;
@@ -459,6 +462,9 @@ public class BlockMgr : MonoBehaviour
 
     public void RemovePos(Block block)
     {
+        if (block.row >= numRow || block.row < 0 || block.col < 0 || block.col >= numCol)
+            return;
+
         types[block.row, block.col] = -1;
         blocks[block.row, block.col] = null;
 

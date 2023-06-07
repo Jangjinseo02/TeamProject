@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class Barrier : Block, IItem
 {
+    public override void Awake()
+    {
+        base.Awake();
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+    }
+
     public void Use(GameObject target)
     {
         PlayerMoveMent player = GetComponentInParent<PlayerMoveMent>();
