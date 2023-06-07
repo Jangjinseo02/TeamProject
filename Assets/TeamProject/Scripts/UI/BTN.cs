@@ -18,6 +18,7 @@ public enum BTNType
     Title_Option_panel,
     Yes,
     No,
+    Restart,
 }
 
 public class BTN : MonoBehaviour
@@ -94,6 +95,11 @@ public class BTN : MonoBehaviour
             case BTNType.No:
                 Give_UP.SetActive(false);
                 Time.timeScale = 0;
+                break;
+            case BTNType.Restart:
+                Option_pannel.SetActive(false);
+                SceneManager.LoadScene("SampleScene");
+                Time.timeScale = 1;
                 break;
         }
     }
