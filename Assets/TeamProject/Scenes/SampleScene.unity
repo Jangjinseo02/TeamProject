@@ -2407,7 +2407,7 @@ MonoBehaviour:
   level: 0
   clear: 0
   clearObject: {fileID: 1283781680}
-  curCatch: 10
+  curCatch: 8
   clearCatch: 0
 --- !u!61 &582583552
 BoxCollider2D:

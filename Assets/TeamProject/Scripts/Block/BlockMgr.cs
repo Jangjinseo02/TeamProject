@@ -470,6 +470,9 @@ public class BlockMgr : MonoBehaviour
 
     public Block UnderBlock(int row, int col)
     {
+        if (row >= numRow || row < 0 || col < 0 || col >= numCol)
+            return null;
+
         if (row == 0 || types[row - 1, col] == -1)
             return null;
 
@@ -480,6 +483,9 @@ public class BlockMgr : MonoBehaviour
 
     public Block UpBlock(int row, int col)
     {
+        if (row >= numRow || row < 0 || col < 0 || col >= numCol)
+            return null;
+
         if (row == numRow - 1 || types[row + 1, col] == -1)
             return null;
 
