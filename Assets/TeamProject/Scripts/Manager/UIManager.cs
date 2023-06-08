@@ -94,6 +94,11 @@ public class UIManager : SingleTon<UIManager>
     {
         Text depth = resultScreen.GetComponentInChildren<Text>();
         depth.text = depthText.text;
+        Text score = resultScreen.GetComponentInChildren<Text>();
+        score.text = scoreText.text;
+        Text curCatch = resultScreen.GetComponentInChildren<Text>();
+        curCatch.text = catchText.text;
+        
         resultScreen.gameObject.SetActive(true);
     }
 
