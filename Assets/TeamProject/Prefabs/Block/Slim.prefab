@@ -125,15 +125,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49567b4aff5f51428abdefb69e7a4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockState: 1
   type: 8
-  gravity: 3
+  health: 10
   isCheck: 0
-  afVec: {x: 0, y: 0, z: 0}
-  pos: {x: 0, y: 0, z: 0}
+  gravity: 3
+  shakeTime: 1
+  curTime: 0
   sprites: []
+  effect: {fileID: 0}
+  aliveEffect: {fileID: 0}
   col: 0
-  dropPrefab: {fileID: 3295285543806842681, guid: 01348b4823f33874595d62efbf298768, type: 3}
+  item: {fileID: 3295285543806842682, guid: 01348b4823f33874595d62efbf298768, type: 3}
 --- !u!95 &6434611145937664602
 Animator:
   serializedVersion: 5

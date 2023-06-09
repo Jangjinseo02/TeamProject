@@ -126,18 +126,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9439119062277f4589bab1de52b19e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockState: 1
   type: 9
-  gravity: 3
   health: 10
   isCheck: 0
-  afVec: {x: 0, y: 0, z: 0}
-  pos: {x: 0, y: 0, z: 0}
+  gravity: 3
+  shakeTime: 1
+  curTime: 0
   sprites: []
+  effect: {fileID: 0}
+  aliveEffect: {fileID: 0}
   col: 0
   monsterType: 0
   isDead: 0
   inCamera: 0
+  item: {fileID: 2436755802027945234, guid: 84be7357897ad264497212d93bb34b28, type: 3}
   attackArea: {fileID: 0}
 --- !u!95 &597405436
 Animator:

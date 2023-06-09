@@ -12,6 +12,8 @@ public class Monster : Block
 
     protected Animator anim;
 
+    [SerializeField] Item item;
+
     public override void Awake()
     {
         base.Awake();
@@ -55,7 +57,7 @@ public class Monster : Block
     IEnumerator DeadRoutine()
     {
         yield return new WaitForSeconds(1.5f);
-        group.blockManager.SettingBlockList(11, this.row, this.col);
+        group.blockManager.SettingBlockList(item.type, this.row, this.col);
         gameObject.SetActive(false);
     }
 

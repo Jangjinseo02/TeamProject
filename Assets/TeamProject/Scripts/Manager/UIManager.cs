@@ -71,24 +71,14 @@ public class UIManager : SingleTon<UIManager>
 
         UpdateHpText(player.hp);
         UpdateOxygenText(player.oxygen);
+
+        if (player.isDead || GameManager.Instance.clear)
+            return;
         UpdateDepthText(player.transform.position.y);
         UpdateScoreText(GameManager.Instance.score);
         UpdateCatchText(GameManager.Instance.curCatch);
+
     }
-
-
-    /*public void SelectBackGroundPopup()
-    {
-        Time.timeScale = 0;
-        selectBackGround.gameObject.SetActive(true);
-    }
-
-    public void SelectBackGroundPopdown()
-    {
-        Time.timeScale = 1;
-        selectBackGround.gameObject.SetActive(false);
-        Fade();
-    }*/
 
     public void ResultScreenPopup()
     {
@@ -98,7 +88,7 @@ public class UIManager : SingleTon<UIManager>
         score.text = scoreText.text;
         Text curCatch = resultScreen.transform.GetChild(2).GetComponent<Text>();
         curCatch.text = GameManager.Instance.curCatch.ToString();
-        Text clearCatch = resultScreen.transform.GetChild(0).GetComponent<Text>();
+        Text clearCatch = resultScreen.transform.GetChild(3).GetComponent<Text>();
         clearCatch.text = GameManager.Instance.clearCatch.ToString();
 
         resultScreen.gameObject.SetActive(true);

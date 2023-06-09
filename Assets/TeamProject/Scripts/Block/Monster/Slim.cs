@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Slim : Block
 {
-    [SerializeField] GameObject dropPrefab;
+    [SerializeField] Item item;
 
     Animator anim;
     bool isDeadRoutine;
@@ -45,7 +45,7 @@ public class Slim : Block
     {
         yield return new WaitForSeconds(1.5f);
         //GameObject dropItem = Instantiate(dropPrefab);
-        group.blockManager.SettingBlockList(12, this.row, this.col);
+        group.blockManager.SettingBlockList(item.type, this.row, this.col);
         gameObject.SetActive(false);
     }
 

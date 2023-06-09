@@ -86,24 +86,26 @@ public class PlayerMoveMent : MonoBehaviour
 
         if (rayhitDown && !isJump)
         {
-            if (isWalk && !isDrop) //걷다가 아래가 빈 공간 없이 바로 몬스터 머리를 밟는 경우 << isDrop이 true가 아닌 상태에서 위 if문이 실행되어 문제가 있다.
+            if (isWalk || isDrop) //걷다가 아래가 빈 공간 없이 바로 몬스터 머리를 밟는 경우 << isDrop이 true가 아닌 상태에서 위 if문이 실행되어 문제가 있다.
             {
-                RaycastHit2D rayhitFront = Physics2D.Raycast(transform.position, dirvec, 0.6f, LayerMask.GetMask("Block"));
+                if (rayhitDown.collider.CompareTag("Monster"))
+                {
+                    Vector2 hitPos = rayhitDown.collider.transform.position;
+                    Vector2 playerPos = this.transform.position;
+                    //아래에 몬스터가 있는 경우
+                    if (playerPos.y - hitPos.y > 0.1f)
+                    {
+                        DropOn();
+                        if (rayhitDown.collider.GetComponent<Monster>())
+                            GameManager.Instance.GetScore(GameManager.BreakType.Monster);
 
-                if (rayhitFront && !rayhitFront.collider.CompareTag("Monster") && rayhitDown.collider.CompareTag("Monster"))
-                    DropOn();
+                        SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackMonster, false);
+                        rayhitDown.collider.GetComponent<Block>().OnDamaged(100);
+                    }
+                }
+                else
+                    DropOff();
             }
-            else if (isDrop && rayhitDown.collider.CompareTag("Monster")) //drop 상태에서 monster를 밟는 경우
-            {
-                DropOn();
-                if (rayhitDown.collider.GetComponent<Monster>())
-                    GameManager.Instance.GetScore(GameManager.BreakType.Monster);
-
-                SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackMonster, false);
-                rayhitDown.collider.GetComponent<Block>().OnDamaged(100);
-            }
-            else
-                DropOff();
         }
         else if (!rayhitDown && !isJump)
         {

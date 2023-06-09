@@ -42,6 +42,8 @@ public class GameManager : SingleTon<GameManager>
     public int curCatch = 0;
     public int clearCatch = 0;
 
+    public int resultDepth = 0;
+
     public IEnumerator pick;
     private void Awake()
     {
@@ -196,6 +198,8 @@ public class GameManager : SingleTon<GameManager>
     //플레이어 죽음 판별, 이후 행동 실행
     void PlayerDead()
     {
+        resultDepth = (int)player.transform.position.y;
+
         if (clear)
         {
             player.GetComponent<PlayerMoveMent>().ClearPos();
