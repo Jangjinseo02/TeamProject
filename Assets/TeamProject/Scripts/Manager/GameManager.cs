@@ -59,14 +59,17 @@ public class GameManager : SingleTon<GameManager>
             switch (level)
             {
                 case Level.Easy:
+                    player.GetComponent<PlayerMoveMent>().curOxygen = 0.5f;
                     blockMgrs[i].numCol = 7;
                     clearCatch = 10;
                     break;
                 case Level.Nomal:
+                    player.GetComponent<PlayerMoveMent>().curOxygen = 0.55f;
                     blockMgrs[i].numCol = 9;
                     clearCatch = 25;
                     break;
                 case Level.Hard:
+                    player.GetComponent<PlayerMoveMent>().curOxygen = 1f;
                     blockMgrs[i].numCol = 11;
                     clearCatch = 50;
                     break;

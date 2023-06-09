@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bffffa8ec9f97d649ad735ab23836f40
+guid: dceb95015b0b1e140840fe8505eeb528
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI_Score_1
+      name: GiveUp_0
       rect:
         serializedVersion: 2
-        x: 1023
-        y: 0
-        width: 897
-        height: 1080
+        x: 292
+        y: 184
+        width: 1312
+        height: 710
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,29 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bec22af03fc5ee34e9ec26e52c5a2471
-      internalID: 1822534152
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Score_0
-      rect:
-        serializedVersion: 2
-        x: 454
-        y: 314
-        width: 53
-        height: 528
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 08cdc25a529f85e479a14d7ceeeb3e54
-      internalID: 1267960206
+      spriteID: 18eadffa68e445340820454e8c29d459
+      internalID: -1809896821
       vertices: []
       indices: 
       edges: []
@@ -169,8 +148,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      UI_Score_0: 1267960206
-      UI_Score_1: 1822534152
+      GiveUp_0: -1809896821
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ec14593cfff2dfa48a9c7b354fcad2c1
+guid: 7a0f9ab15962e81418c4fa98742d7065
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uAC9C\uD654\uBA74_0"
+      name: GameScreen_2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 608
-        height: 1080
+        x: 371
+        y: 467
+        width: 189
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,8 +131,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 051bbe7e1dace914fae77f1cb63cca7b
-      internalID: -296834799
+      spriteID: 760a8231693a5a54788ba434c595f45e
+      internalID: 366163114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameScreen_2_1
+      rect:
+        serializedVersion: 2
+        x: 1002
+        y: 16
+        width: 910
+        height: 1048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6da0f4c685b95ce47a601a18e1120349
+      internalID: -2089520949
       vertices: []
       indices: 
       edges: []
@@ -148,7 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\uAC9C\uD654\uBA74_0": -296834799
+      GameScreen_2_0: 366163114
+      GameScreen_2_1: -2089520949
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

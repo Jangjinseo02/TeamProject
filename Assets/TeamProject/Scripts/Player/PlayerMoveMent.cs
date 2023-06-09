@@ -7,6 +7,7 @@ public class PlayerMoveMent : MonoBehaviour
     int maxHealth = 100;
     public float hp = 100f;
     public float oxygen = 100f;
+    public float curOxygen = 0.5f;
 
     Vector2 afpos;
     Vector3 dirvec;
@@ -224,7 +225,7 @@ public class PlayerMoveMent : MonoBehaviour
 
     public void Breathe(int stageLevel)
     {
-        oxygen -= 1f + (stageLevel * 0.2f);
+        oxygen -= curOxygen + (stageLevel * 0.2f);
 
         //UIManager.Instance.UpdateOxygenText(oxygen);
 

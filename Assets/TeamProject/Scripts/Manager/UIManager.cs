@@ -92,13 +92,15 @@ public class UIManager : SingleTon<UIManager>
 
     public void ResultScreenPopup()
     {
-        Text depth = resultScreen.GetComponentInChildren<Text>();
+        Text depth = resultScreen.transform.GetChild(0).GetComponent<Text>();
         depth.text = depthText.text;
-        Text score = resultScreen.GetComponentInChildren<Text>();
+        Text score = resultScreen.transform.GetChild(1).GetComponent<Text>();
         score.text = scoreText.text;
-        Text curCatch = resultScreen.GetComponentInChildren<Text>();
-        curCatch.text = catchText.text;
-        
+        Text curCatch = resultScreen.transform.GetChild(2).GetComponent<Text>();
+        curCatch.text = GameManager.Instance.curCatch.ToString();
+        Text clearCatch = resultScreen.transform.GetChild(0).GetComponent<Text>();
+        clearCatch.text = GameManager.Instance.clearCatch.ToString();
+
         resultScreen.gameObject.SetActive(true);
     }
 
@@ -120,7 +122,7 @@ public class UIManager : SingleTon<UIManager>
         else if (yPos <= 0)
             yPos *= -1;
 
-        depthText.text = ((int)yPos).ToString();
+        depthText.text = ((int)yPos).ToString() + " M";
     }
     public void UpdateScoreText(int score)
     {
