@@ -211,6 +211,13 @@ public class GameManager : SingleTon<GameManager>
             PickUp(player);
         }
 
+        if (PlayerPrefs.GetInt(level.ToString()) < score)
+        {
+            PlayerPrefs.SetInt(level.ToString(), score);
+            if (DataManager.Instance != null)
+                DataManager.Instance.SetScore();
+        }
+
         //결과창으로 이동
         if (!giveUp)
             StartCoroutine(PopRoutine());
