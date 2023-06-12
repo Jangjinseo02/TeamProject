@@ -41,31 +41,33 @@ public class InputManager : SingleTon<InputManager>
         if (player.isDead || player.isDamaged || player.isStun || player.isDrop || player.isJump)
             return;
 
-        if (!isAttack && !player.isDrop)
+        if (!isAttack && !player.isDrop && !player.isJump)
         {
-            isAttack = true;
             StartCoroutine(AttackRoutine());
         }
     }
 
     IEnumerator AttackRoutine()
     {
-        RaycastHit2D rayhit = Physics2D.Raycast(player.transform.position, dirVec == Vector3.zero ? Vector3.down : dirVec, 0.65f, LayerMask.GetMask("Block"));
+        int layer = (1 << LayerMask.NameToLayer("Block")) + (1 << LayerMask.NameToLayer("Monster"));
+        RaycastHit2D rayhit = Physics2D.Raycast(player.transform.position, dirVec == Vector3.zero ? Vector3.down : dirVec, 0.65f, layer);
         Block block = rayhit.collider != null && rayhit.collider.tag != "Item" ? rayhit.collider.GetComponent<Block>() : null;
 
         if (block != null)
         {
+            isAttack = true;
+
             HardBlock hard = block.GetComponent<HardBlock>();
             ClearBlock clear = block.GetComponent<ClearBlock>();
             Monster monster = block.GetComponent<Monster>();
             Slim slim = block.GetComponent<Slim>();
 
             if (dirVec == Vector3.up)
-                playeranim.SetTrigger("upAttack");
+                playeranim.SetTrigger("UpCheck");
             else if (dirVec == Vector3.right || dirVec == Vector3.left)
-                playeranim.SetTrigger("lrAttack");
+                playeranim.SetTrigger("LRCheck");
             else
-                playeranim.SetTrigger("downAttack");
+                playeranim.SetTrigger("DownCheck");
 
             //Attack 사운드 출력
             if (hard)
@@ -107,7 +109,7 @@ public class InputManager : SingleTon<InputManager>
 
         }
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         isAttack = false;
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMoveMent : MonoBehaviour
 {
     int maxHealth = 100;
+    int layer = 0;
     public float hp = 100f;
     public float oxygen = 100f;
     public float curOxygen = 0.5f;
@@ -48,6 +49,11 @@ public class PlayerMoveMent : MonoBehaviour
         followCamera = FindObjectOfType<CameraMove>();
     }
 
+    private void Start()
+    {
+        layer = (1 << LayerMask.NameToLayer("Block")) + (1 << LayerMask.NameToLayer("Monster"));
+    }
+
     private void FixedUpdate()
     {
         if (isDead)
@@ -59,6 +65,7 @@ public class PlayerMoveMent : MonoBehaviour
             return;
         }
 
+        AttackAnim();
         DropCheck();
 
         if (isDamaged || isStun || isDrop || isGetTime)
@@ -66,7 +73,7 @@ public class PlayerMoveMent : MonoBehaviour
             if (anim.GetBool("isWalk"))
                 anim.SetBool("isWalk", false);
 
-            if(!isDrop)
+            if (!isDrop)
                 rigid.velocity = Vector2.zero;
             dirvec = Vector3.zero;
             jumpTime = 0f;
@@ -79,10 +86,17 @@ public class PlayerMoveMent : MonoBehaviour
         Move();
     }
 
+    void AttackAnim()
+    {
+        anim.SetBool("Attack", InputManager.Instance.isAttack);
+    }
     void DropCheck()
     {
-        RaycastHit2D rayhitDown = Physics2D.Raycast(transform.position, Vector2.down, 0.585f, LayerMask.GetMask("Block"));
+        RaycastHit2D rayhitDown = Physics2D.Raycast(transform.position, Vector2.down, 0.585f, layer);
         Debug.DrawRay(transform.position, Vector2.down * 0.585f, Color.green);
+
+        if (isJump)
+            return;
 
         if (rayhitDown && !isJump)
         {
@@ -116,12 +130,10 @@ public class PlayerMoveMent : MonoBehaviour
 
     void DropOn()
     {
-        if (!isDrop)
+        if (!isDrop && !isDamaged)
         {
-            Debug.Log("Drop");
             isDrop = true;
-            anim.SetTrigger("IsDrop");
-            anim.SetBool("isDrop", true);
+            anim.SetBool("Drop", isDrop);
         }
         rigid.velocity = Vector3.zero;
         transform.position = transform.position + Vector3.down * dropPower * Time.deltaTime;
@@ -130,9 +142,10 @@ public class PlayerMoveMent : MonoBehaviour
     void DropOff()
     {
         rigid.velocity = Vector3.zero;
-        if (isDrop)
+        if (isDrop && !isDamaged)
         {
-            anim.SetBool("isDrop", false);
+            anim.SetBool("Drop", false);
+            anim.SetBool("Idle", true);
             Invoke("DownOff", 0.25f);
         }
     }
@@ -165,8 +178,10 @@ public class PlayerMoveMent : MonoBehaviour
 
         if (horizontal.x != 0)
         {
+            isWalk = true;
+
             if (!anim.GetBool("isWalk"))
-                anim.SetBool("isWalk", true);
+                anim.SetBool("isWalk", isWalk);
 
             //방향 전환, jumpTime 초기화
             if (filpX)
@@ -174,13 +189,13 @@ public class PlayerMoveMent : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().flipX = horizontal.x > 0 ? true : false;
                 jumpTime = 0f;
             }
-            isWalk = true;
         }
         else
         {
-            if (anim.GetBool("isWalk"))
-                anim.SetBool("isWalk", false);
             isWalk = false;
+            if (anim.GetBool("isWalk"))
+                anim.SetBool("isWalk", isWalk);
+            anim.SetBool("Idle", true);
         }
 
         rigid.velocity = new Vector2(horizontal.x * moveSpeed, rigid.velocity.y);
@@ -191,14 +206,15 @@ public class PlayerMoveMent : MonoBehaviour
     void JumpCheck(Vector3 horizontal)
     {
         RaycastHit2D rayhit = Physics2D.Raycast(transform.position, horizontal, 0.8f, LayerMask.GetMask("Block"));
-        if (rayhit && (rayhit.collider.CompareTag("Block") || rayhit.collider.CompareTag("Glass") || rayhit.collider.CompareTag("Monster") || rayhit.collider.CompareTag("Item")) && !isJump)
+        if (rayhit && (rayhit.collider.CompareTag("Block") || rayhit.collider.CompareTag("Glass") || rayhit.collider.CompareTag("Item")) && !isJump)
         {
             RaycastHit2D uprayhit = Physics2D.Raycast(transform.position + Vector3.up, horizontal, 0.8f, LayerMask.GetMask("Block"));
             jumpTime += Time.deltaTime; //점프 시간 측정
 
             if ((!uprayhit || uprayhit.collider.CompareTag("Monster") || uprayhit.collider.CompareTag("Item")) && jumpTime >= 0.4f) //점프 위치가 빈 경우, 그리고 점프 위치 블록이 몬스터인 경우
             {
-                anim.SetTrigger("isJump");
+                isJump = true;
+                anim.SetBool("Jump", isJump);
                 Jump();
                 jumpTime = 0;
             }
@@ -216,20 +232,16 @@ public class PlayerMoveMent : MonoBehaviour
 
     IEnumerator JumpRoutine()
     {
-        isJump = true;
-        //followCamera.JumpCameraMove(); //카메라 움직임 변경
-
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.25f);
         isJump = false;
+        anim.SetBool("Jump", isJump);
     }
 
 
     public void Breathe(int stageLevel)
     {
         oxygen -= curOxygen + (stageLevel * 0.2f);
-
-        //UIManager.Instance.UpdateOxygenText(oxygen);
 
         if (oxygen <= 0)
         {
@@ -316,10 +328,10 @@ public class PlayerMoveMent : MonoBehaviour
     {
         isDamaged = true;
 
+        anim.SetBool("Idle", false);
         anim.SetBool("Block", isBlock);
 
         anim.SetTrigger("OnDamaged");
-        anim.SetBool("OnDamage", true);
         rigid.velocity = Vector2.zero;
         capCol.enabled = false;
         boxCol.enabled = false;
@@ -327,7 +339,7 @@ public class PlayerMoveMent : MonoBehaviour
         StopCoroutine(BreatheRoutine());
 
         yield return new WaitForSeconds(3.5f);
-        anim.SetBool("OnDamage", false);
+        anim.SetBool("Idle", true);
 
         if(isBlock)
             ClearOverBlock();
@@ -341,9 +353,9 @@ public class PlayerMoveMent : MonoBehaviour
 
     void ClearOverBlock()
     {
-        RaycastHit2D[] rayhits = Physics2D.RaycastAll(transform.position, Vector2.up, 100, LayerMask.GetMask("Block"));
-        RaycastHit2D[] leftrayhits = Physics2D.RaycastAll(transform.position + Vector3.left, Vector2.up, 100, LayerMask.GetMask("Block"));
-        RaycastHit2D[] rightrayhits = Physics2D.RaycastAll(transform.position + Vector3.right, Vector2.up, 100, LayerMask.GetMask("Block"));
+        RaycastHit2D[] rayhits = Physics2D.RaycastAll(transform.position, Vector2.up, 100, layer);
+        RaycastHit2D[] leftrayhits = Physics2D.RaycastAll(transform.position + Vector3.left, Vector2.up, 100, layer);
+        RaycastHit2D[] rightrayhits = Physics2D.RaycastAll(transform.position + Vector3.right, Vector2.up, 100, layer);
 
         if (rayhits != null)
         {

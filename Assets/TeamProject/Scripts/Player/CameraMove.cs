@@ -11,6 +11,8 @@ public class CameraMove : MonoBehaviour
 
     HashSet<Block> inCamera = new HashSet<Block>();
 
+    int layer = 0;
+
     private void Awake()
     {
         playerScript = player.GetComponent<PlayerMoveMent>();
@@ -22,6 +24,7 @@ public class CameraMove : MonoBehaviour
         pos.y = player.transform.position.y;
 
         this.transform.position = pos;
+        
     }
 
     void Update()
@@ -51,6 +54,7 @@ public class CameraMove : MonoBehaviour
         pos.y = player.transform.position.y;
 
         this.transform.position = pos;
+        layer = (1 << LayerMask.NameToLayer("Block")) + (1 << LayerMask.NameToLayer("Monster"));
 
         StartCoroutine(CheckList());
     }
@@ -150,7 +154,8 @@ public class CameraMove : MonoBehaviour
         if (GameManager.Instance.clear)
             return;
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Block"))
+        if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Block")) ||
+            collision.gameObject.layer.Equals(LayerMask.NameToLayer("Monster")))
         {
             inCamera.Add(collision.GetComponent<Block>());
         }
@@ -161,7 +166,8 @@ public class CameraMove : MonoBehaviour
         if (GameManager.Instance.clear)
             return;
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Block"))
+        if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Block")) || 
+            collision.gameObject.layer.Equals(LayerMask.NameToLayer("Monster")))
         {
             switch (collision.tag)
             {
