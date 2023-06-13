@@ -14,6 +14,8 @@ public class SceneMgr : SingleTon<SceneMgr>
     [SerializeField] Button hardScorebtn;
     [SerializeField] Button extraScorebtn;
 
+    [SerializeField] GameObject leaderBoard;
+
     string level = "easy";
 
     private void Awake()
@@ -37,5 +39,35 @@ public class SceneMgr : SingleTon<SceneMgr>
         {
             setName.onClick.AddListener(() => DataManager.Instance.CreateEmail(setNameField));
         }
+    }
+
+    public void CloseTab()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (i < 5)
+            {
+                leaderBoard.transform.GetChild(0).transform.GetChild(0).transform.GetChild(i).GetComponent<Text>().text = null;
+                leaderBoard.transform.GetChild(0).transform.GetChild(1).transform.GetChild(i).GetComponent<Text>().text = null;
+            }
+            else
+            {
+                leaderBoard.transform.GetChild(1).transform.GetChild(0).transform.GetChild(i).GetComponent<Text>().text = null;
+                leaderBoard.transform.GetChild(1).transform.GetChild(1).transform.GetChild(i).GetComponent<Text>().text = null;
+            }
+        }
+
+        leaderBoard.transform.GetChild(0).gameObject.SetActive(true);
+        leaderBoard.transform.GetChild(1).gameObject.SetActive(false);
+
+        leaderBoard.SetActive(false);
+    }
+
+    public void NextTab()
+    {
+        if (leaderBoard.transform.GetChild(1).gameObject.activeInHierarchy)
+            leaderBoard.transform.GetChild(1).gameObject.SetActive(false);
+        else if (leaderBoard.transform.GetChild(0).gameObject.activeInHierarchy)
+            leaderBoard.transform.GetChild(1).gameObject.SetActive(true);
     }
 }

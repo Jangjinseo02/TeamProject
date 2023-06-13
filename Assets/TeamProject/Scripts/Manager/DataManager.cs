@@ -4,6 +4,7 @@ using UnityEngine;
 using Firebase.Analytics;
 using Firebase.Auth;
 using Firebase.Database;
+using UnityEngine.UI;
 using TMPro;
 
 public class DataManager : SingleTon<DataManager>
@@ -32,6 +33,8 @@ public class DataManager : SingleTon<DataManager>
 
     public Level level { get; set; }
 
+    GameObject leaderBoard = null;
+
     private void Awake()
     {
         //PlayerPrefs.DeleteAll();
@@ -51,8 +54,7 @@ public class DataManager : SingleTon<DataManager>
         db = FirebaseDatabase.DefaultInstance;
         reference = db.RootReference;
 
-        //PlayerPrefs.SetInt(level.ToString(), 30);
-        //score = PlayerPrefs.GetInt(level.ToString());
+        leaderBoard = GameObject.Find("Canvas").transform.Find("LeaderBoard").gameObject;
 
         if (!string.IsNullOrEmpty(PlayerPrefs.GetString("userID")))
         {
@@ -304,13 +306,53 @@ public class DataManager : SingleTon<DataManager>
             //Debug.Log(i.ToString() + "번째 : " + "leaderboardScore " + leaderboardScore[i] + " max " + max);
         }
 
+        leaderboard.Clear();
+        leaderboardKey.Clear();
+
+
+        GameObject pgOneName = leaderBoard.transform.GetChild(0).Find("Name").gameObject;
+        GameObject pgTwoName = leaderBoard.transform.GetChild(1).Find("Name").gameObject;
+        GameObject pgOneScore = leaderBoard.transform.GetChild(0).Find("Score").gameObject;
+        GameObject pgTwoScore = leaderBoard.transform.GetChild(1).Find("Score").gameObject;
+
+        string emptyScore = "기록없음";
+
         for (int i = 0; i < maxCount; i++)
         {
             if (leaderboardName.Length > i)
-                Debug.Log(i.ToString() + "번째 : " + "이름 : " + leaderboardName[i] + " 점수 : " + leaderboardScore[i]);
+            {
+                if(i < 5)
+                {
+                    pgOneName.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardName[i];
+                    pgOneScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardScore[i];
+                }
+                else
+                {
+                    pgTwoName.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardName[i];
+                    pgTwoScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardScore[i];
+                }
+            }
             else
-                Debug.Log(i.ToString() + "번째 : " + "기록없음");
+            {
+                if (i < 5)
+                {
+                    pgOneName.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
+                    pgOneScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
+                }
+                else
+                {
+                    pgTwoName.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
+                    pgTwoScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
+                }
+            }
+                //Debug.Log(i.ToString() + "번째 : " + "기록없음");
         }
+
+        //leaderBoard.transform.GetChild(1).gameObject.SetActive(false);
+        leaderBoard.SetActive(true);
+
+        leaderboardName = null;
+        leaderboardScore = null;
     }
 
 
