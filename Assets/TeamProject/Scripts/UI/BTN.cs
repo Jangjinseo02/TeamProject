@@ -70,6 +70,12 @@ public class BTN : MonoBehaviour
                 SceneManager.LoadScene("SampleScene");
                 break;
             case BTNType.Title:
+                if (GameManager.Instance != null && GameManager.Instance.clear)
+                {
+                    SceneManager.LoadScene("OuttroScene");
+                    Time.timeScale = 1f;
+                    break;
+                }  
                 SceneManager.LoadScene("TitleScene");
                 Time.timeScale = 1;
                 break;

@@ -31,7 +31,7 @@ public class GameManager : SingleTon<GameManager>
     public int stageLevel = 0;
     int curLevel = 0;
 
-    public enum Level { Easy, Nomal, Hard };
+    public enum Level { Easy, Nomal, Hard, Extra, Tutorial };
     public Level level = Level.Easy;
 
     public bool clear = false;
@@ -62,16 +62,25 @@ public class GameManager : SingleTon<GameManager>
             {
                 case Level.Easy:
                     player.GetComponent<PlayerMoveMent>().curOxygen = 0.5f;
+                    player.GetComponent<PlayerMoveMent>().oxygenUp = 0.1f;
                     blockMgrs[i].numCol = 7;
                     clearCatch = 10;
                     break;
                 case Level.Nomal:
                     player.GetComponent<PlayerMoveMent>().curOxygen = 0.55f;
+                    player.GetComponent<PlayerMoveMent>().oxygenUp = 0.1f;
                     blockMgrs[i].numCol = 9;
                     clearCatch = 25;
                     break;
                 case Level.Hard:
-                    player.GetComponent<PlayerMoveMent>().curOxygen = 1f;
+                    player.GetComponent<PlayerMoveMent>().curOxygen = 0.75f;
+                    player.GetComponent<PlayerMoveMent>().oxygenUp = 0.12f;
+                    blockMgrs[i].numCol = 11;
+                    clearCatch = 50;
+                    break;
+                case Level.Extra:
+                    player.GetComponent<PlayerMoveMent>().curOxygen = 0.75f;
+                    player.GetComponent<PlayerMoveMent>().oxygenUp = 0.12f;
                     blockMgrs[i].numCol = 11;
                     clearCatch = 50;
                     break;
@@ -90,6 +99,8 @@ public class GameManager : SingleTon<GameManager>
 
         stageLevel = 0;
         blockMgrPos = Vector2.zero;
+
+        UIManager.Instance.FadeOut();
     }
 
     public void SetBlockStage()
@@ -147,7 +158,7 @@ public class GameManager : SingleTon<GameManager>
         if (stageLevel == 0) //첫 시작은 외계인 기지
             ran = 0;
         else
-            ran = Random.Range(0, 5);
+            ran = Random.Range(1, 5);
 
         if (ran == curRan)
             RanValue();

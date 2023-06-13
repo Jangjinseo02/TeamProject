@@ -9,6 +9,7 @@ public class PlayerMoveMent : MonoBehaviour
     public float hp = 100f;
     public float oxygen = 100f;
     public float curOxygen = 0.5f;
+    public float oxygenUp = 0.1f;
 
     Vector2 afpos;
     Vector3 dirvec;
@@ -241,7 +242,7 @@ public class PlayerMoveMent : MonoBehaviour
 
     public void Breathe(int stageLevel)
     {
-        oxygen -= curOxygen + (stageLevel * 0.2f);
+        oxygen -= curOxygen + (stageLevel * oxygenUp);
 
         if (oxygen <= 0)
         {
@@ -337,6 +338,19 @@ public class PlayerMoveMent : MonoBehaviour
         boxCol.enabled = false;
 
         StopCoroutine(BreatheRoutine());
+
+        if (!isBlock)
+        {
+            yield return new WaitForSeconds(0.5f);
+            anim.SetBool("Idle", true);
+
+            isDamaged = false;
+            capCol.enabled = true;
+            boxCol.enabled = true;
+            StartCoroutine(BreatheRoutine());
+
+            yield break;
+        }
 
         yield return new WaitForSeconds(3.5f);
         anim.SetBool("Idle", true);

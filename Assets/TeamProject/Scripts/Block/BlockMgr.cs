@@ -28,6 +28,9 @@ public class BlockMgr : MonoBehaviour
     float[] bfValue = { 50, 30, 15, 5, 0 };
     float[] curValue = { 50, 30, 15, 5, 0 };
 
+    float gravity = 3f;
+    float shakeTime = 1f;
+
     BoxCollider2D breathRoom;
 
     private void Awake()
@@ -43,6 +46,38 @@ public class BlockMgr : MonoBehaviour
     {
         blocks = new GameObject[numRow, numCol];
         types = new int[numRow, numCol];
+
+        switch (GameManager.Instance.level)
+        {
+            case GameManager.Level.Easy:
+                hardPers = 10f;
+                meteorPers = 0.1f;
+                glassPers = 0.1f;
+                gravity = 3f;
+                shakeTime = 1f;
+                break;
+            case GameManager.Level.Nomal:
+                hardPers = 15f;
+                meteorPers = 0.2f;
+                glassPers = 0.2f;
+                gravity = 3.3f;
+                shakeTime = 0.7f;
+                break;
+            case GameManager.Level.Hard:
+                hardPers = 20f;
+                meteorPers = 0.4f;
+                glassPers = 0.3f;
+                gravity = 3.65f;
+                shakeTime = 0.4f;
+                break;
+            case GameManager.Level.Extra:
+                hardPers = 20f;
+                meteorPers = 0.4f;
+                glassPers = 0.3f;
+                gravity = 3.65f;
+                shakeTime = 0.4f;
+                break;
+        }
     }
 
     private void OnEnable()
@@ -102,10 +137,10 @@ public class BlockMgr : MonoBehaviour
             if (firstmember != null)
                 Search(firstmember);
 
-            if (firstmember.group.Count > 3)
+            if (firstmember != null && firstmember.group.Count > 3)
                 foreach (Block member in firstmember.group)
                     member.BlinkStart();
-            else
+            else if(firstmember != null)
             {
                 SetCurTime(firstmember);
                 firstmember.group.CheckGroupUnbalance(firstmember.curTime);
@@ -376,6 +411,9 @@ public class BlockMgr : MonoBehaviour
                 Block block = blocks[i, j].GetComponent<Block>();
                 if(block != null && !block.dropping)
                 {
+                    block.gravity = this.gravity;
+                    block.shakeTime = this.shakeTime;
+
                     Search(blocks[i, j].GetComponent<Block>());
                     blocks[i, j].SetActive(true); //나중에 가장 마지막에 true로 바꾸기
                 }

@@ -217,4 +217,36 @@ public class UIManager : SingleTon<UIManager>
 
         FadeScreen.gameObject.SetActive(false);
     }
+
+    public void FadeOut()
+    {
+        StartCoroutine(FadeOutRoutine());
+    }
+
+    IEnumerator FadeOutRoutine()
+    {
+        Color fadeColor = FadeScreen.color;
+        fadeColor.a = 1f;
+        FadeScreen.color = fadeColor;
+
+        FadeScreen.gameObject.SetActive(true);
+
+        while (fadeColor.a < 1)
+        {
+            fadeColor.a += fadeSpeed * Time.deltaTime;
+            FadeScreen.color = fadeColor;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        while (fadeColor.a > 0)
+        {
+            fadeColor.a -= fadeSpeed * Time.deltaTime;
+            FadeScreen.color = fadeColor;
+            yield return null;
+        }
+
+        FadeScreen.gameObject.SetActive(false);
+    }
 }

@@ -25,6 +25,13 @@ public class Outtro : MonoBehaviour
 
     [SerializeField] private List<Dialoge> dialogue;
 
+    private void Awake()
+    {
+        if(DataManager.Instance != null)
+        {
+            Debug.Log(DataManager.Instance.ReturnLevel());
+        }
+    }
     public void ShowDialogue()
     {
         //sprite_DialogueBar.gameObject.SetActive(true);
