@@ -60,7 +60,6 @@ public class HardBlock : Block
             if (this == member)
                 continue;
             member.RemoveGroup(group.blockManager);
-            member.group.CheckGroupUnbalance();
         }
 
         gameObject.SetActive(false);

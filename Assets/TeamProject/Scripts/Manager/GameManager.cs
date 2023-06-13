@@ -180,6 +180,7 @@ public class GameManager : SingleTon<GameManager>
         target.GetComponent<Animator>().SetBool("Pick", true);
         yield return new WaitForSeconds(0.2f);
         target.transform.parent = pick.transform;
+        target.transform.localPosition = Vector3.zero;
         yield return new WaitForSeconds(0.3f);
 
         //외부 이동

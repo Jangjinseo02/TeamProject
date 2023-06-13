@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Barrier : Block, IItem
 {
+    public bool setting = false;
     public override void Awake()
     {
         base.Awake();
@@ -28,22 +29,40 @@ public class Barrier : Block, IItem
 
         //배리어 블록 매니저 오브젝트에 추가
         BlockMgr blockMgr = GameManager.Instance.stayBlockMgr;
-        //Debug.Log(row.ToString() + " " + col.ToString());
         blockMgr.AddBlock(row, col, (int)BlockMgr.Object.BarrierObj, this.gameObject);
 
-        //재그룹화
-        foreach (Block member in block.group)
-        {
-            member.RemoveGroup(block.group.blockManager);
-            member.group.CheckGroupUnbalance();
-        }
+        StartCoroutine(ReGroupBlocks(block));
 
-        if (group != null)
-            group.CheckGroupUnbalance();
-        StartCoroutine(BarrierRoutine());
+        StartCoroutine(BarrierRoutine(block));
     }
 
-    IEnumerator BarrierRoutine()
+    IEnumerator ReGroupBlocks(Block block)
+    {
+        while (true)
+        {
+            foreach (Block member in block.group)
+            {
+                if (member.dropping)
+                    continue;
+                else
+                {
+                    if (block == member)
+                        continue;
+                    foreach (Block members in block.group)
+                    {
+                        if (block == members)
+                            continue;
+                        members.RemoveGroup(block.group.blockManager);
+                    }
+                    yield break;
+                }                
+            }
+
+            yield return null;
+        }
+    }
+
+    IEnumerator BarrierRoutine(Block target)
     {
         yield return new WaitForSeconds(5f);
         OnDamaged(Mathf.CeilToInt(health));

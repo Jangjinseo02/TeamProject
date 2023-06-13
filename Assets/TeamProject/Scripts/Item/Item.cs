@@ -8,9 +8,6 @@ public class Item : Block
 
     public override void OnEnable()
     {
-        if (group != null)
-            this.group.CheckGroupUnbalance();
-
         isUse = false;
     }
 

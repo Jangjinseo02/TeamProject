@@ -52,19 +52,14 @@ public class Meteor : Item, IItem
                 
                 //재그룹화를 위한 그룹 삭제
                 foreach (Block member in block.group)
+                {
+                    if (member == block)
+                        continue;
                     member.RemoveGroup(block.group.blockManager);
+                }
+                   
             }
-
-            //group.blockManager.AllGrouping();
-
             firstBlock.group.blockManager.AllGrouping();
-
-            //추가
-            if (group != null)
-            {
-                group.blockManager.RemovePos(this);
-            }
-            gameObject.SetActive(false);
         }
     }
 }

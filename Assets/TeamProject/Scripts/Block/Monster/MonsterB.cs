@@ -122,7 +122,11 @@ public class MonsterB : Monster
                     blockmgr.CheckBlock(5, block.row, block.col, (int)BlockMgr.BlocksType.GlassBlock);
 
                     foreach (Block member in block.group)
+                    {
+                        if (member == block)
+                            continue;
                         member.RemoveGroup(blockmgr);
+                    }
                     count++;
                 }
             }

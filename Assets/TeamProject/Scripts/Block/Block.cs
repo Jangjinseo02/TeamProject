@@ -38,18 +38,18 @@ public class Group
         block.group = this;
         return blocks.Add(block);
     }
-    public void CheckGroupUnbalance()
+    public void CheckGroupUnbalance(float curTime)
     {
         HashSet<Group> historyGroup = new HashSet<Group>();
         HashSet<Group> resultGroup = new HashSet<Group>();
 
-        GroupUnbalance(historyGroup, resultGroup);
+        GroupUnbalance(historyGroup, resultGroup, curTime);
 
         blockManager.CheckUnbalanceList(resultGroup);
     }
 
     //여기서 재귀 부분 문제가 발생하는 것 같음. 
-    public void GroupUnbalance(HashSet<Group> history, HashSet<Group> result)
+    public void GroupUnbalance(HashSet<Group> history, HashSet<Group> result, float curTime)
     {
         if (this.unbalance)
             return;
@@ -69,11 +69,12 @@ public class Group
                 this.unbalance = false;
                 return;
             }
+
+            block.curTime = curTime;
         }
         
         this.unbalance = true;
         result.Add(this);
-        //blockManager.CheckUnbalanceList(this);
 
         foreach (Block block in blocks)
         {
@@ -83,7 +84,7 @@ public class Group
                 if (upBlock.group.unbalance)
                     continue;
 
-                upBlock.group.GroupUnbalance(history, result);
+                upBlock.group.GroupUnbalance(history, result, curTime);
             }
         }
     }
@@ -106,6 +107,7 @@ public class Block : MonoBehaviour
     public Group group;
     public float health = 10;
     public bool isCheck = false;
+    public bool destroy = false;
 
     public float gravity = 3f;
     public float shakeTime = 1;
@@ -133,6 +135,8 @@ public class Block : MonoBehaviour
     {
         if(aliveEffect != null)
             SetAlive();
+
+        destroy = false;
     }
 
     void SetAlive()
@@ -310,12 +314,19 @@ public class Block : MonoBehaviour
         if (health <= 0)
         {
             //type = -1;
+            destroy = true;
+
             if(boxCol != null)
                 boxCol.enabled = false;
 
-            if (!group.isSoundPlay)
-                group.FirstMemberSoundPlay(SoundManager.Sfx.BreakNomal);
+            if(group != null)
+            {
+                group.blockManager.RemovePos(this);
 
+                if (!group.isSoundPlay)
+                    group.FirstMemberSoundPlay(SoundManager.Sfx.BreakNomal);
+            }
+                
             if (gameObject.activeInHierarchy)
                 StartCoroutine(DestroyRoutine());
         }
@@ -332,7 +343,6 @@ public class Block : MonoBehaviour
         ObjectManager.Instance.ReturnEffect(effect, (int)ObjectManager.effect.Nomal);
         yield return new WaitForSeconds(0.05f);
 
-        group.blockManager.RemovePos(this);
         gameObject.SetActive(false);
     }
 }

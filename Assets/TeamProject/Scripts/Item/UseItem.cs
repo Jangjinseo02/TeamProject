@@ -27,11 +27,6 @@ public class UseItem : Item, IItem
         base.OnEnable();
 
         circle.enabled = true;
-
-        if (group != null)
-        {
-            group.CheckGroupUnbalance();
-        }
         removePos = false;
     }
 

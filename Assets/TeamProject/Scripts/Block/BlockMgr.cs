@@ -39,6 +39,11 @@ public class BlockMgr : MonoBehaviour
     {
         breathRoom.offset = new Vector2(GameManager.Instance.player.transform.position.x, 100); //박스 콜라이더 위치 이동
     }
+    public void StartSetting()
+    {
+        blocks = new GameObject[numRow, numCol];
+        types = new int[numRow, numCol];
+    }
 
     private void OnEnable()
     {
@@ -52,13 +57,15 @@ public class BlockMgr : MonoBehaviour
 
     void Update()
     {
+        CheckUnbalanceBlocks();
+
         HashSet<Block> unbalanceBlocks = new HashSet<Block>(unbalanceBlockList);
 
         //찾은 unabalance 그룹의 블록의 shake, drop, collision 처리
         foreach (Block member in unbalanceBlocks)
         {
-            Group group = member.group;
-            if (!group.unbalance) continue;
+            //Group group = member.group;
+            //if (!group.unbalance) continue;
 
             if (!member.shaking && !member.dropping)
                 member.ShakeStart();
@@ -78,6 +85,8 @@ public class BlockMgr : MonoBehaviour
             {
                 if (firstmember == null)
                     firstmember = block;
+                if (block.destroy)
+                    continue;
 
                 UpdatePos(block);
                 block.DropEnd();
@@ -98,10 +107,8 @@ public class BlockMgr : MonoBehaviour
                     member.BlinkStart();
             else
             {
-                firstmember.group.CheckGroupUnbalance();
-
-                if (firstmember.group.unbalance)
-                    SetCurTime(firstmember);
+                SetCurTime(firstmember);
+                firstmember.group.CheckGroupUnbalance(firstmember.curTime);
             }
 
         }
@@ -125,10 +132,44 @@ public class BlockMgr : MonoBehaviour
         }
     }
 
-    public void StartSetting()
+    void CheckUnbalanceBlocks()
     {
-        blocks = new GameObject[numRow, numCol];
-        types = new int[numRow, numCol];
+        for (int i = 0; i < numRow; i++)
+        {
+            for (int j = 0; j < numCol; j++)
+            {
+                if (i.Equals(numRow - 1))
+                    continue;
+
+                if (types[i, j].Equals(-1))
+                {
+                    if (blocks[i + 1, j] != null)
+                    {
+                        Block block = blocks[i + 1, j].GetComponent<Block>();
+                        if (unbalanceBlockList.Contains(block) || block.group.unbalance)
+                            continue;
+
+                        if (block.group != null)
+                            block.group.CheckGroupUnbalance(0f); //curTime
+                    }
+                }
+                else if (blocks[i, j] != null)
+                {
+                    Block block = blocks[i, j].GetComponent<Block>();
+                    if (!unbalanceBlockList.Contains(block) || !block.group.unbalance)
+                        continue;
+
+                    if (blocks[i + 1, j] == null)
+                        continue;
+
+                    Block upblock = blocks[i + 1, j].GetComponent<Block>();
+                    if (unbalanceBlockList.Contains(upblock) || upblock.group.unbalance)
+                        continue;
+                    else
+                        upblock.group.CheckGroupUnbalance(block.curTime);
+                }
+            }
+        }
     }
 
     void BlockCreate()
@@ -207,15 +248,7 @@ public class BlockMgr : MonoBehaviour
                 }
 
                 
-                SetBlock(i, j);
-
-                //blocks[i, j].transform.parent = this.transform;
-                //blocks[i, j].transform.localPosition = new Vector3(j, i, 0);
-                //Block block = blocks[i, j].GetComponent<Block>();
-                //types[i, j] = block.type;
-                //block.group = new Group(this);
-                //block.Setting(i, j);
-                
+                SetBlock(i, j);               
             }
         }
     }
@@ -340,15 +373,21 @@ public class BlockMgr : MonoBehaviour
             {
                 if (blocks[i, j] == null)
                     continue;
-                Search(blocks[i, j].GetComponent<Block>());
-                blocks[i, j].SetActive(true); //나중에 가장 마지막에 true로 바꾸기
+                Block block = blocks[i, j].GetComponent<Block>();
+                if(block != null && !block.dropping)
+                {
+                    Search(blocks[i, j].GetComponent<Block>());
+                    blocks[i, j].SetActive(true); //나중에 가장 마지막에 true로 바꾸기
+                }
             }
         }
     }
 
     public void Search(Block block)
     {
-       
+        if (block.dropping)
+            return;
+
         List<Block> block_s = new List<Block>();
         Queue<Block> queue = new Queue<Block>();
 
@@ -441,9 +480,11 @@ public class BlockMgr : MonoBehaviour
             rightBlock = null;
 
         //아래 블록이 체크되지 않음
-        if (underBlock /*&& !underBlock.group.unbalance*/ || (rightBlock != null && block.group != rightBlock.group && block.type == rightBlock.type /*&& !rightBlock.group.unbalance*/)
+        if (underBlock || (rightBlock != null && block.group != rightBlock.group && block.type == rightBlock.type /*&& !rightBlock.group.unbalance*/)
                                                         || (leftBlock != null && block.group != leftBlock.group && block.type == leftBlock.type /*&& !leftBlock.group.unbalance*/))
         {
+            if (block.destroy)
+                return;
             block.DropEnd();
             balanceBlockList.Add(block.group);
         }
@@ -467,10 +508,6 @@ public class BlockMgr : MonoBehaviour
 
         types[block.row, block.col] = -1;
         blocks[block.row, block.col] = null;
-
-        Block upBlock = UpBlock(block.row, block.col);
-        if (upBlock != null)
-            upBlock.group.CheckGroupUnbalance();
     }
 
 
@@ -519,8 +556,6 @@ public class BlockMgr : MonoBehaviour
                 if (!unbalanceBlockList.Contains(member))
                 {
                     unbalanceBlockList.Add(member);
-                    //member.ShakeStart(); //여기서 shake를 시작 시키고 shakeNext메서드를 이용해서 매 프레임 동일한 shake를 만들도록 만든다. 또한 그룹으로 편입된 블록들에 대해서도 더 편하게
-                    //움직임을 만들 수 있다.
                 }
             }
         }

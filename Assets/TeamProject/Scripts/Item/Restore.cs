@@ -40,6 +40,9 @@ public class Restore : Item, IItem
                 SoundManager.Instance.SfxPlay(SoundManager.Sfx.Recovery, false);
             }
 
+            if (group != null)
+                group.blockManager.RemovePos(this);
+
             if (gameObject.activeInHierarchy)
                 StartCoroutine(DestroyRoutine());
         }
@@ -55,9 +58,6 @@ public class Restore : Item, IItem
         ObjectManager.Instance.ReturnEffect(effect, (int)ObjectManager.effect.AirCore);
         yield return new WaitForSeconds(0.05f);
 
-        if (group != null)
-            group.blockManager.RemovePos(this);
-        yield return new WaitForSeconds(0.05f);
         if (type == 11)
             ObjectManager.Instance.ReturnItem(this.gameObject, (int)ObjectManager.item.Restore);
         else

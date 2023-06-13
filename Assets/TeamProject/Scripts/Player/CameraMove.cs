@@ -158,6 +158,8 @@ public class CameraMove : MonoBehaviour
             collision.gameObject.layer.Equals(LayerMask.NameToLayer("Monster")))
         {
             inCamera.Add(collision.GetComponent<Block>());
+
+            Debug.Log(inCamera.Count);
         }
     }
 

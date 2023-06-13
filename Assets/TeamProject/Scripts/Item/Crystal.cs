@@ -35,17 +35,15 @@ public class Crystal : Item, IItem
                 block.group.blockManager.CheckBlock(5, block.row, block.col, (int)BlockMgr.BlocksType.GlassBlock);
 
                 foreach (Block member in block.group)
+                {
+                    if (member == block)
+                        continue;
                     member.RemoveGroup(member.group.blockManager);
+                }
+                    
             }
 
             firstBlock.group.blockManager.AllGrouping();
-
-            //Ãß°¡
-            if (group != null)
-            {
-                group.blockManager.RemovePos(this);
-            }
-            gameObject.SetActive(false);
         }
     }
 }
