@@ -82,8 +82,13 @@ public class BlockMgr : MonoBehaviour
 
     private void OnEnable()
     {
-        BlockCreate();
-        HardBlockSetting();
+        if (GameManager.Instance.level.Equals(GameManager.Level.Tutorial))
+            TutorialCreate();
+        else
+        {
+            BlockCreate();
+            HardBlockSetting();
+        }
         AllGrouping();
     }
 
@@ -287,6 +292,97 @@ public class BlockMgr : MonoBehaviour
             }
         }
     }
+
+    void TutorialCreate()
+    {
+        int tutorialCount = 0;
+
+        for (int i = 0; i < numRow; i++)
+        {
+            for (int j = 0; j < numCol; j++)
+            {
+                if (blocks[i, j] != null)
+                    continue;
+
+                if (i < 6) //클리어 블록 스폰
+                {
+                    blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.ClearBlock);
+                }
+                else if (i < 13)
+                {
+                    if (i >= 12)
+                    {
+                        if (j == 1)
+                            blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.BlockB);
+                        else if (j == 2)
+                            blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.BlockC);
+                        else if (j == 3)
+                            blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.BlockD);
+                        else
+                            blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.HardBlock);
+
+                        SetBlock(i, j);
+                        continue;
+                    }
+                    blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.HardBlock);
+                }
+                else if (i <= 13)
+                {
+                    if (j >= 1 && j <= 2)
+                    {
+                        blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.HardBlock);
+                        SetBlock(i, j);
+                        continue;
+                    }
+                    else if (j == 3)
+                    {
+                        blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.BlockF);
+                        SetBlock(i, j);
+                        continue;
+                    }
+
+                    int ran = Random.Range((int)BlocksType.BlockB, (int)(BlocksType.BlockF + 1));
+                    blocks[i, j] = ObjectManager.Instance.GetBlock(ran);
+                }
+                else if (i <= 22)
+                {
+                    int ran = Random.Range((int)BlocksType.BlockB, (int)(BlocksType.BlockF + 1));
+                    if (j == 3)
+                        tutorialCount = ran;
+                    blocks[i, j] = ObjectManager.Instance.GetBlock(ran);
+                }
+                else if (i <= 23)
+                {
+                    if (j == 3)
+                    {
+                        int ran = RanValue(tutorialCount);
+                        blocks[i, j] = ObjectManager.Instance.GetBlock(ran);
+                        SetBlock(i, j);
+                        continue;
+                    }
+                    blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.HardBlock);
+                }
+                else if (i == 24)
+                {
+                    if (j == 6)
+                        blocks[i, j] = ObjectManager.Instance.GetBlock((int)MonsterType.MonsterB);
+                }
+
+                SetBlock(i, j);
+            }
+        }
+    }
+
+    int RanValue(int target)
+    {
+        int ran = Random.Range((int)BlocksType.BlockB, (int)(BlocksType.BlockF + 1));
+
+        if (ran == target)
+            return RanValue(target);
+        else
+            return ran;
+    }
+
 
     void HardBlockSetting()
     {
@@ -650,6 +746,9 @@ public class BlockMgr : MonoBehaviour
 
     void SetBlock(int row, int col)
     {
+        if (blocks[row, col] == null)
+            return;
+
         blocks[row, col].transform.parent = this.transform;
         blocks[row, col].transform.localPosition = new Vector3(col, row, 0);
         Block newblock = blocks[row, col].GetComponent<Block>();

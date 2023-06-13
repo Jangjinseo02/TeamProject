@@ -14,6 +14,7 @@ public enum BTNType
     Easy_Mode,
     Hard_Mode,
     Infinite_Mode,
+    Extra_Mode,
     Title,
     Title_Option_panel,
     Yes,
@@ -69,13 +70,32 @@ public class BTN : MonoBehaviour
                 DataManager.Instance.level = DataManager.Level.Hard;
                 SceneManager.LoadScene("SampleScene");
                 break;
+            case BTNType.Extra_Mode:
+                DataManager.Instance.level = DataManager.Level.Extra;
+                SceneManager.LoadScene("SampleScene");
+                break;
             case BTNType.Title:
                 if (GameManager.Instance != null && GameManager.Instance.clear)
                 {
                     SceneManager.LoadScene("OuttroScene");
                     Time.timeScale = 1f;
                     break;
-                }  
+                }
+                else if(DataManager.Instance != null && DataManager.Instance.level.Equals(DataManager.Level.Extra))
+                {
+                    //extra모드 클리어 시 레벨 데이터를 변환해서 넘깁니다.
+                    //레벨에 맞는 아웃트로를 플레이 하시면 됩니다.
+                    if(GameManager.Instance != null && GameManager.Instance.curCatch >= 50)
+                        DataManager.Instance.level = DataManager.Level.Hard;
+                    else if (GameManager.Instance != null && GameManager.Instance.curCatch >= 25)
+                        DataManager.Instance.level = DataManager.Level.Nomal;
+                    else if (GameManager.Instance != null && GameManager.Instance.curCatch >= 10)
+                        DataManager.Instance.level = DataManager.Level.Easy;
+
+                    SceneManager.LoadScene("OuttroScene");
+                    Time.timeScale = 1f;
+                    break;
+                }
                 SceneManager.LoadScene("TitleScene");
                 Time.timeScale = 1;
                 break;

@@ -34,24 +34,35 @@ public class UseItem : Item, IItem
     {
         if (isUse)
             return;
-        circle.enabled = false;
 
-        int ran = Random.Range(0, itemObject.Length);
-
-        StartCoroutine(EffectRoutine());
-
-        if (ran <= (int)ObjectManager.item.Bigbang)
+        if (GameManager.Instance.level.Equals(GameManager.Level.Tutorial))
         {
-            item = ObjectManager.Instance.GetItem(ran);
-            item.transform.position = new Vector2(0, 100);
+            target.GetComponent<PlayerMoveMent>().isTutorial = true;
+            InputManager.Instance.isAttack = true;
+
+            //튜토리얼 스크립트 출력
+            //player.isTutorial = false, InputManager.Instance.isAttack = false;
         }
         else
-            item = itemObject[ran];
+        {
+            circle.enabled = false;
 
-        item.SetActive(true);
-        item.GetComponent<IItem>().Use(target);
+            int ran = Random.Range(0, itemObject.Length);
 
+            StartCoroutine(EffectRoutine());
 
+            if (ran <= (int)ObjectManager.item.Bigbang)
+            {
+                item = ObjectManager.Instance.GetItem(ran);
+                item.transform.position = new Vector2(0, 100);
+            }
+            else
+                item = itemObject[ran];
+
+            item.SetActive(true);
+            item.GetComponent<IItem>().Use(target);
+        }
+        
         GameManager.Instance.PickUp(gameObject);
         StartCoroutine(GetRoutine());
     }

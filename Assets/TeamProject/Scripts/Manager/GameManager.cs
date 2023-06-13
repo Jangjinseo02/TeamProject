@@ -44,6 +44,8 @@ public class GameManager : SingleTon<GameManager>
 
     public int resultDepth = 0;
 
+    [SerializeField] GameObject TutorialObject;
+
     public IEnumerator pick;
     private void Awake()
     {
@@ -54,6 +56,8 @@ public class GameManager : SingleTon<GameManager>
     {
         if (DataManager.Instance != null)
             level = (GameManager.Level)DataManager.Instance.ReturnLevel();
+
+        //level = Level.Tutorial;
 
         //목표 깊이 설정
         for (int i = 0; i < blockMgrs.Length; i++)
@@ -82,7 +86,11 @@ public class GameManager : SingleTon<GameManager>
                     player.GetComponent<PlayerMoveMent>().curOxygen = 0.75f;
                     player.GetComponent<PlayerMoveMent>().oxygenUp = 0.12f;
                     blockMgrs[i].numCol = 11;
-                    clearCatch = 50;
+                    break;
+                case Level.Tutorial:
+                    TutorialObject.SetActive(true);
+                    player.GetComponent<PlayerMoveMent>().oxygen = 80f;
+                    clearCatch = 1;
                     break;
             }
 
@@ -98,7 +106,13 @@ public class GameManager : SingleTon<GameManager>
         followCamera.StartSetting();
 
         stageLevel = 0;
-        blockMgrPos = Vector2.zero;
+
+        if (level.Equals(Level.Tutorial))
+        {
+            blockMgrPos = new Vector2(0, 75);
+        }
+        else
+            blockMgrPos = Vector2.zero;
 
         UIManager.Instance.FadeOut();
     }
@@ -127,7 +141,7 @@ public class GameManager : SingleTon<GameManager>
 
         curLevel = stageLevel % 2;
 
-        if (clearCatch <= curCatch)
+        if (clearCatch <= curCatch && !GameManager.Instance.level.Equals(GameManager.Level.Extra))
         {
             clear = true;
             clearObject.transform.position = new Vector2(0, player.transform.position.y + Vector2.down.y);

@@ -48,6 +48,12 @@ public class CameraMove : MonoBehaviour
             case GameManager.Level.Hard:
                 Camera.main.orthographicSize = 7.15f;
                 break;
+            case GameManager.Level.Extra:
+                Camera.main.orthographicSize = 7.15f;
+                break;
+            case GameManager.Level.Tutorial:
+                Camera.main.orthographicSize = 4.5f;
+                break;
         }
 
         pos.x = player.transform.position.x + 0.1f;

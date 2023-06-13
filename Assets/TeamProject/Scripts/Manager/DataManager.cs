@@ -29,7 +29,7 @@ public class DataManager : SingleTon<DataManager>
 
     int score = 30;
 
-    public enum Level { Easy, Nomal, Hard };
+    public enum Level { Easy, Nomal, Hard, Extra, Tutorial};
 
     public Level level { get; set; }
 

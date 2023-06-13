@@ -18,6 +18,7 @@ public class PlayerMoveMent : MonoBehaviour
 
     float jumpTime = 0;
 
+    public bool isTutorial = false;
     public bool isDead = false;
     public bool isDamaged = false;
     public bool isDrop = false;
@@ -169,6 +170,9 @@ public class PlayerMoveMent : MonoBehaviour
 
     private void Move()
     {
+        if (isTutorial)
+            return;
+
         Vector2 curVec = new Vector2(virtualJoystick.Horizontal, virtualJoystick.Vertical).normalized;
         bool filpX = dirvec.x != curVec.x; //방향 전환이 되었는가?
 
