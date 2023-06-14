@@ -16,6 +16,9 @@ public class InputManager : SingleTon<InputManager>
 
     public bool isAttack;
 
+    public bool[] inputBtn;
+    public bool isControl;
+
     private void Awake()
     {
         playeranim = player.GetComponent<Animator>();
@@ -113,49 +116,91 @@ public class InputManager : SingleTon<InputManager>
         isAttack = false;
     }
 
-    public void DragEnter(Vector2 dirvec)
+    //public void DragEnter(Vector2 dirvec)
+    //{
+    //    ExitEnter();
+
+    //    dirVec = dirvec;
+
+    //    if (dirvec.x > 0)
+    //        RightEnter();
+    //    else if (dirvec.x < 0)
+    //        LeftEnter();
+    //    if (dirvec.y > 0)
+    //        UpEnter();
+    //    else if (dirvec.y < 0)
+    //        UnderEnter();
+    //}
+
+    public void PointerEnter(int type)
     {
-        ExitEnter();
+        for(int i = 0; i < inputBtn.Length; i++)
+        {
+            inputBtn[i] = i == type;
+        }
 
-        dirVec = dirvec;
-
-        if (dirvec.x > 0)
-            RightEnter();
-        else if (dirvec.x < 0)
-            LeftEnter();
-        if (dirvec.y > 0)
+        if (inputBtn[0] && isControl)
             UpEnter();
-        else if (dirvec.y < 0)
+        else if (inputBtn[1] && isControl)
+            LeftEnter();
+        else if (inputBtn[2] && isControl)
+            RightEnter();
+        else if (inputBtn[3] && isControl)
             UnderEnter();
+        else
+            ExitEnter();
     }
+
+    public void PointerDown()
+    {
+        isControl = true;
+
+        if (inputBtn[0] && isControl)
+            UpEnter();
+        else if (inputBtn[1] && isControl)
+            LeftEnter();
+        else if (inputBtn[2] && isControl)
+            RightEnter();
+        else if (inputBtn[3] && isControl)
+            UnderEnter();
+        else
+            ExitEnter();
+    }
+
+    public void PointerUp()
+    {
+        isControl = false;
+        ExitEnter();
+    }
+
 
     void RightEnter()
     {
-        //dirVec = Vector3.right;
-        buttonImage[3].color = Color.black;
+        dirVec = Vector3.right;
+        buttonImage[2].color = Color.gray;
     }
 
     void LeftEnter()
     {
-        //dirVec = Vector3.left;
-        buttonImage[2].color = Color.black;
+        dirVec = Vector3.left;
+        buttonImage[1].color = Color.gray;
     }
 
     void UpEnter()
     {
-        //dirVec = Vector3.up;
-        buttonImage[0].color = Color.black;
+        dirVec = Vector3.up;
+        buttonImage[0].color = Color.gray;
     }
 
     void UnderEnter()
     {
-        //dirVec = Vector3.down;
-        buttonImage[1].color = Color.black;
+        dirVec = Vector3.down;
+        buttonImage[3].color = Color.gray;
     }
 
     public void ExitEnter()
     {
-        //dirVec = Vector3.zero;
+        dirVec = Vector3.zero;
         for (int i = 0; i < buttonImage.Length; i++)
         {
             buttonImage[i].color = Color.white;

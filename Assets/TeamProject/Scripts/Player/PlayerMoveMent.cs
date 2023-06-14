@@ -34,7 +34,7 @@ public class PlayerMoveMent : MonoBehaviour
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float jumpPower = 25f;
     [SerializeField] private float dropPower = 5f;
-    [SerializeField] private VirtualJoystick virtualJoystick;
+    //[SerializeField] private VirtualJoystick virtualJoystick;
 
     Animator anim;
     BoxCollider2D boxCol;
@@ -181,12 +181,12 @@ public class PlayerMoveMent : MonoBehaviour
         if (isTutorial)
             return;
 
-        Vector2 curVec = new Vector2(virtualJoystick.Horizontal, virtualJoystick.Vertical).normalized;
+        Vector2 curVec = InputManager.Instance.dirVec;
         bool filpX = dirvec.x != curVec.x; //방향 전환이 되었는가?
 
         if (!isJump)
             dirvec = curVec;
-        InputManager.Instance.DragEnter(dirvec);
+        //InputManager.Instance.DragEnter(dirvec);
         Vector2 horizontal = new Vector2(dirvec.x, 0);
 
         if (horizontal.x != 0)
