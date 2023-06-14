@@ -3915,7 +3915,7 @@ MonoBehaviour:
   level: 0
   clear: 0
   clearObject: {fileID: 1283781680}
-  curCatch: 0
+  curCatch: 50
   clearCatch: 0
   resultDepth: 0
   TutorialObject: {fileID: 743674482}

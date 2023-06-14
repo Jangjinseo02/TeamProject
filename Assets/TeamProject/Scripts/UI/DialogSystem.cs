@@ -117,7 +117,7 @@ public class DialogSystem : MonoBehaviour
 
         // 캐릭터 알파 값 변경
         Color color = speaker.spriteRenderer.color;
-        color.a = visible == true ? 1 : 0.2f;
+        color.a = visible == true ? 1 : 0f;
         speaker.spriteRenderer.color = color;
     }
 
