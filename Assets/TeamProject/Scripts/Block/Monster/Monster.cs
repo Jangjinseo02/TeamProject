@@ -47,6 +47,7 @@ public class Monster : Block
             if (isDead)
                 return;
 
+            SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackMonster, false);
             isDead = true;
             boxCol.enabled = false;
             anim.SetTrigger("Dead");

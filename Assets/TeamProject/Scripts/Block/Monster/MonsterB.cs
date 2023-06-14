@@ -101,6 +101,7 @@ public class MonsterB : Monster
 
         HashSet<Block> checkList = new HashSet<Block>(blocks);
         Debug.Log("active attack");
+        SoundManager.Instance.SfxPlay(SoundManager.Sfx.MagicianAttack, false);
 
         int count = 0;
         int pickCount = Random.Range(5, 9);

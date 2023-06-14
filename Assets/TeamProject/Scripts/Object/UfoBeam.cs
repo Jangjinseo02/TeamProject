@@ -5,6 +5,7 @@ using UnityEngine;
 public class UfoBeam : MonoBehaviour
 {
     float curTime = 0;
+    bool beamSound = false;
 
     Ufo ufo;
 
@@ -29,6 +30,8 @@ public class UfoBeam : MonoBehaviour
         if (rayhit)
         {
             curTime += Time.deltaTime;
+            if (!beamSound)
+                beamSound = SoundManager.Instance.SfxPlay(SoundManager.Sfx.BeamInPlayer, true);
 
             if (curTime >= 0.4f)
             {
@@ -45,6 +48,7 @@ public class UfoBeam : MonoBehaviour
     {
         yield return new WaitForSeconds(8f);
 
+        SoundManager.Instance.SfxStop(SoundManager.Sfx.BeamInPlayer);
         SoundManager.Instance.SfxStop(SoundManager.Sfx.UfoBeam);
 
         Destroy(ufo.gameObject);

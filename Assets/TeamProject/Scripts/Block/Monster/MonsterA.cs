@@ -89,13 +89,9 @@ public class MonsterA : Monster
 
     IEnumerator AttackRoutine()
     {
-        //공격 애니메이션
-        Debug.Log("anim");
-        //대상 체력 감소
-        Debug.Log("hp down");
-
         //공격 범위 활성화
         attackArea.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        SoundManager.Instance.SfxPlay(SoundManager.Sfx.WorrierAttack, false);
 
         yield return new WaitForSecondsRealtime(0.5f);
         //재공격을 위한 다시 탐색(초기화)
@@ -103,7 +99,6 @@ public class MonsterA : Monster
         player = null;
         if (checkTarget != null)
             CameraOut();
-        //StartCoroutine(checkTarget);
     }
 
     IEnumerator CheckTargetPlayer()
@@ -124,6 +119,7 @@ public class MonsterA : Monster
         }
         if (isDead)
             yield break;
+        anim.Play("Monster_A_Idle");
         anim.SetTrigger("CheckTarget");
         Debug.Log("공격 준비");
         AttackReady();

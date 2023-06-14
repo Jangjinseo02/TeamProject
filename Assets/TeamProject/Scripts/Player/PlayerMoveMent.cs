@@ -28,6 +28,9 @@ public class PlayerMoveMent : MonoBehaviour
     bool isWalk = false;
     bool closeDeath = false;
 
+    bool isJumpSound = false;
+    bool isDropSound = false;
+
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float jumpPower = 25f;
     [SerializeField] private float dropPower = 5f;
@@ -115,7 +118,7 @@ public class PlayerMoveMent : MonoBehaviour
                         if (rayhitDown.collider.GetComponent<Monster>())
                             GameManager.Instance.GetScore(GameManager.BreakType.Monster);
 
-                        SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackMonster, false);
+                        //SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackMonster, false);
                         rayhitDown.collider.GetComponent<Block>().OnDamaged(100);
                     }
                 }
@@ -146,6 +149,8 @@ public class PlayerMoveMent : MonoBehaviour
         rigid.velocity = Vector3.zero;
         if (isDrop && !isDamaged)
         {
+            if(!isDropSound && !isJumpSound)
+                isDropSound = SoundManager.Instance.SfxPlay(SoundManager.Sfx.Down, false);
             anim.SetBool("Drop", false);
             anim.SetBool("Idle", true);
             Invoke("DownOff", 0.25f);
@@ -155,10 +160,13 @@ public class PlayerMoveMent : MonoBehaviour
     void DownOff()
     {
         isDrop = false;
+        if (isDropSound)
+            isDropSound = false;
     }
 
     public void PlayerStun()
     {
+        SoundManager.Instance.SfxPlay(SoundManager.Sfx.Stun, false);
         isStun = true;
         Invoke("PlayerAwake", 1f);
     }
@@ -220,6 +228,9 @@ public class PlayerMoveMent : MonoBehaviour
             {
                 isJump = true;
                 anim.SetBool("Jump", isJump);
+
+                if(!isJumpSound)
+                    isJumpSound = SoundManager.Instance.SfxPlay(SoundManager.Sfx.Jump, false);
                 Jump();
                 jumpTime = 0;
             }
@@ -241,6 +252,11 @@ public class PlayerMoveMent : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         isJump = false;
         anim.SetBool("Jump", isJump);
+
+        yield return new WaitForSeconds(0.3f);
+
+        if (isJumpSound)
+            isJumpSound = false;
     }
 
 
@@ -321,6 +337,11 @@ public class PlayerMoveMent : MonoBehaviour
             hp = 0;
             isDead = true;
             GameManager.Instance.GameExit();
+
+            if(isBlock)
+                SoundManager.Instance.SfxPlay(SoundManager.Sfx.BlockDamaged, false);
+            else
+                SoundManager.Instance.SfxPlay(SoundManager.Sfx.MonsterDamaged, false);
             anim.SetTrigger("Die");
         }
         else
@@ -345,6 +366,7 @@ public class PlayerMoveMent : MonoBehaviour
 
         if (!isBlock)
         {
+            SoundManager.Instance.SfxPlay(SoundManager.Sfx.MonsterDamaged, false);
             yield return new WaitForSeconds(0.5f);
             anim.SetBool("Idle", true);
 
@@ -355,6 +377,7 @@ public class PlayerMoveMent : MonoBehaviour
 
             yield break;
         }
+        SoundManager.Instance.SfxPlay(SoundManager.Sfx.BlockDamaged, false);
 
         yield return new WaitForSeconds(3.5f);
         anim.SetBool("Idle", true);
@@ -459,6 +482,8 @@ public class PlayerMoveMent : MonoBehaviour
 
         if (collision.CompareTag("Block") && !isDamaged && !isDead)
         {
+            anim.SetBool("Drop", false);
+
             Barrier barrier = GetComponentInChildren<Barrier>();
             if(barrier != null)
             {

@@ -14,6 +14,9 @@ public class SceneMgr : SingleTon<SceneMgr>
     [SerializeField] Button hardScorebtn;
     [SerializeField] Button extraScorebtn;
 
+    [SerializeField] Slider mainbgmSlider;
+    [SerializeField] Slider mainsfxSlider;
+
     [SerializeField] GameObject leaderBoard;
 
     string level = "easy";
@@ -39,6 +42,12 @@ public class SceneMgr : SingleTon<SceneMgr>
         {
             setName.onClick.AddListener(() => DataManager.Instance.CreateEmail(setNameField));
         }
+
+        mainbgmSlider.value = SoundManager.Instance.bgmValue;
+        mainsfxSlider.value = SoundManager.Instance.sfxValue;
+
+        mainbgmSlider.onValueChanged.AddListener(SoundManager.Instance.BGMVolume);
+        mainsfxSlider.onValueChanged.AddListener(SoundManager.Instance.SfxVolume);
     }
 
     public void CloseTab()

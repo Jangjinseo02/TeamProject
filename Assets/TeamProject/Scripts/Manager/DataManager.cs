@@ -213,6 +213,9 @@ public class DataManager : SingleTon<DataManager>
 
     public async void GetScore(string level)
     {
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.SfxPlay(SoundManager.UISfx.OtherButton);
+
         string playername = "playerName is Null ";
         string playerScore = "playerScore is Null ";
 

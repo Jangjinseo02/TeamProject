@@ -40,11 +40,27 @@ public class UIManager : SingleTon<UIManager>
     [SerializeField] Image hpImage;
     [SerializeField] Image oxygenImage;
 
+    [Header("---------------------Slider")]
+    [SerializeField] Slider sfxslider;
+    [SerializeField] Slider bgmslider;
+
     float fadeSpeed = 2f;
 
     private void Awake()
     {
         player = GameManager.Instance.player.GetComponent<PlayerMoveMent>();
+    }
+
+    private void Start()
+    {
+        if(SoundManager.Instance != null)
+        {
+            bgmslider.value = SoundManager.Instance.bgmValue;
+            sfxslider.value = SoundManager.Instance.sfxValue;
+
+            bgmslider.onValueChanged.AddListener(SoundManager.Instance.BGMVolume);
+            sfxslider.onValueChanged.AddListener(SoundManager.Instance.SfxVolume);
+        }
     }
 
     private void LateUpdate()
@@ -82,6 +98,9 @@ public class UIManager : SingleTon<UIManager>
 
     public void ResultScreenPopup()
     {
+        
+        SoundManager.Instance.Fade();
+
         Text depth = resultScreen.transform.GetChild(0).GetComponent<Text>();
         depth.text = depthText.text;
         Text score = resultScreen.transform.GetChild(1).GetComponent<Text>();
@@ -195,12 +214,20 @@ public class UIManager : SingleTon<UIManager>
 
     IEnumerator FadeRoutine()
     {
+        float value = SoundManager.Instance.bgmValue;
+        float curvalue = SoundManager.Instance.bgmValue;
         Color fadeColor = FadeScreen.color;
 
         FadeScreen.gameObject.SetActive(true);
 
         while (fadeColor.a < 1)
         {
+            if(curvalue > 0)
+            {
+                curvalue -= fadeSpeed * Time.deltaTime;
+                SoundManager.Instance.BGMVolume(curvalue);
+            }
+
             fadeColor.a += fadeSpeed * Time.deltaTime;
             FadeScreen.color = fadeColor;
             yield return null;
@@ -210,12 +237,19 @@ public class UIManager : SingleTon<UIManager>
 
         while (fadeColor.a > 0)
         {
+            if (curvalue <= value)
+            {
+                curvalue += fadeSpeed * Time.deltaTime;
+                SoundManager.Instance.BGMVolume(curvalue);
+            }
+
             fadeColor.a -= fadeSpeed * Time.deltaTime;
             FadeScreen.color = fadeColor;
             yield return null;
         }
 
         FadeScreen.gameObject.SetActive(false);
+        SoundManager.Instance.BGMVolume(value);
     }
 
     public void FadeOut()

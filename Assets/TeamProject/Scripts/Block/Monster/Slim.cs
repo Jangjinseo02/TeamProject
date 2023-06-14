@@ -33,6 +33,8 @@ public class Slim : Block
 
         if (health <= 0)
         {
+            SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackMonster, false);
+
             isDeadRoutine = true;
             boxCol.enabled = false;
             anim.SetTrigger("IsDead");

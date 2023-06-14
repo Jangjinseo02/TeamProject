@@ -31,6 +31,8 @@ public class BTN : MonoBehaviour
     public BTNType currentType;
     public void OnBtnClick()
     {
+        BtnSound();
+
         switch (currentType)
         {
             case BTNType.Start:
@@ -86,15 +88,26 @@ public class BTN : MonoBehaviour
                     //extra모드 클리어 시 레벨 데이터를 변환해서 넘깁니다.
                     //레벨에 맞는 아웃트로를 플레이 하시면 됩니다.
                     if(GameManager.Instance != null && GameManager.Instance.curCatch >= 50)
+                    {
                         DataManager.Instance.level = DataManager.Level.Hard;
+                        SceneManager.LoadScene("OuttroScene");
+                        Time.timeScale = 1f;
+                        break;
+                    }
                     else if (GameManager.Instance != null && GameManager.Instance.curCatch >= 25)
+                    {
                         DataManager.Instance.level = DataManager.Level.Nomal;
+                        SceneManager.LoadScene("OuttroScene");
+                        Time.timeScale = 1f;
+                        break;
+                    }
                     else if (GameManager.Instance != null && GameManager.Instance.curCatch >= 10)
+                    {
                         DataManager.Instance.level = DataManager.Level.Easy;
-
-                    SceneManager.LoadScene("OuttroScene");
-                    Time.timeScale = 1f;
-                    break;
+                        SceneManager.LoadScene("OuttroScene");
+                        Time.timeScale = 1f;
+                        break;
+                    }
                 }
                 SceneManager.LoadScene("TitleScene");
                 Time.timeScale = 1;
@@ -112,6 +125,10 @@ public class BTN : MonoBehaviour
                     GameManager.Instance.GameExit(); //playerDead실행 이후 loadScene("title")이 실행
 
                     Option_pannel.SetActive(false); //옵션 창 끈 후 플레이어 애니메이션 출력
+
+                    if (SoundManager.Instance != null)
+                        SoundManager.Instance.SfxPlay(SoundManager.UISfx.GiveUpYes);
+
                     //사운드 다시 재생
                     if (SoundManager.Instance != null)
                         SoundManager.Instance.SoundPlay();
@@ -126,6 +143,41 @@ public class BTN : MonoBehaviour
                 Option_pannel.SetActive(false);
                 SceneManager.LoadScene("SampleScene");
                 Time.timeScale = 1;
+                break;
+        }
+    }
+
+    void BtnSound()
+    {
+        switch (currentType)
+        {
+            case BTNType.Start:
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.SfxPlay(SoundManager.UISfx.GameStart);
+                break;
+            case BTNType.Option:
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.SfxPlay(SoundManager.UISfx.Pause);
+                break;
+            case BTNType.Title:
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.SfxPlay(SoundManager.UISfx.GiveUpSelect);
+                break;
+            //case BTNType.Yes:
+            //    if (SoundManager.Instance != null)
+            //        SoundManager.Instance.SfxPlay(SoundManager.UISfx.GiveUpYes);
+            //    break;
+            case BTNType.No:
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.SfxPlay(SoundManager.UISfx.GiveUpNo);
+                break;
+            case BTNType.Option_Back:
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.SfxPlay(SoundManager.UISfx.PauseClose);
+                break;
+            default:
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.SfxPlay(SoundManager.UISfx.OtherButton);
                 break;
         }
     }

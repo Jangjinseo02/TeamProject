@@ -72,10 +72,10 @@ public class InputManager : SingleTon<InputManager>
             //Attack 사운드 출력
             if (hard)
                 SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackHard, false);
-            else if (monster || slim)
-                SoundManager.Instance.SfxPlay(SoundManager.Sfx.AttackMonster, false);
             else if (block)
                 SoundManager.Instance.SfxPlay(SoundManager.Sfx.Attack, false);
+            else if (clear)
+                SoundManager.Instance.SfxPlay(SoundManager.Sfx.LevelClear, false);
 
 
             if (hard)

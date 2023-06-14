@@ -24,6 +24,7 @@ public class GameManager : SingleTon<GameManager>
     [SerializeField] Sprite[] backGroundSprites;
     public int ran = 0;
     int curRan = -1;
+    int bgmRan = 2;
 
     public bool giveUp = false;
 
@@ -158,6 +159,13 @@ public class GameManager : SingleTon<GameManager>
         {
             UIManager.Instance.Fade();
         }
+
+        if (stageLevel % 3 == 0) {
+
+            bgmRan = BgmRanValue();
+
+            SoundManager.Instance.BgmPlay((SoundManager.BGM)bgmRan);
+        }
     }
 
     public void StageSetting()
@@ -165,6 +173,16 @@ public class GameManager : SingleTon<GameManager>
         RanValue();
 
         backGroundObject.sprite = backGroundSprites[ran];
+    }
+
+    int BgmRanValue()
+    {
+        int ran = Random.Range((int)SoundManager.BGM.TutorialAndInGame_1, (int)SoundManager.BGM.InGame_3 + 1);
+
+        if (ran == bgmRan)
+            return BgmRanValue();
+        else
+            return ran;
     }
 
     void RanValue()
@@ -204,6 +222,7 @@ public class GameManager : SingleTon<GameManager>
 
         target.GetComponent<Animator>().SetBool("Pick", true);
         yield return new WaitForSeconds(0.2f);
+        SoundManager.Instance.SfxPlay(SoundManager.Sfx.Loose, false);
         target.transform.parent = pick.transform;
         target.transform.localPosition = Vector3.zero;
         yield return new WaitForSeconds(0.3f);

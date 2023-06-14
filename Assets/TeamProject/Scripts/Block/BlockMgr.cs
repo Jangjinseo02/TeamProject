@@ -139,7 +139,7 @@ public class BlockMgr : MonoBehaviour
                 }
             }
 
-            if (firstmember != null)
+            if (firstmember != null && !firstmember.transform.CompareTag("Item") && !firstmember.transform.CompareTag("Monster"))
                 Search(firstmember);
 
             if (firstmember != null && firstmember.group.Count > 3)
