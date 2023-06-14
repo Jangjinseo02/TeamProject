@@ -58,6 +58,9 @@ public class DataManager : SingleTon<DataManager>
 
         if (!string.IsNullOrEmpty(PlayerPrefs.GetString("userID")))
         {
+            if (SceneMgr.Instance != null)
+                SceneMgr.Instance.outPut.transform.parent.parent.gameObject.SetActive(false);
+
             userID = PlayerPrefs.GetString("userID");
 
             Debug.Log("Sign in " + PlayerPrefs.GetString("userID"));
@@ -109,11 +112,21 @@ public class DataManager : SingleTon<DataManager>
             if (task.IsCanceled)
             {
                 Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
+                UnityMainThreadDispatcher.RunOnMainThread(() =>
+                {
+                    if (SceneMgr.Instance != null)
+                        SceneMgr.Instance.outPut.text = "계정 생성 실패";
+                });
                 return;
             }
             if (task.IsFaulted)
             {
                 Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                UnityMainThreadDispatcher.RunOnMainThread(() =>
+                {
+                    if (SceneMgr.Instance != null)
+                        SceneMgr.Instance.outPut.text = "계정 생성 실패 (새로운 닉네임을 사용해보세요)";
+                });
                 return;
             }
 
@@ -122,9 +135,13 @@ public class DataManager : SingleTon<DataManager>
             Debug.LogFormat("User created and signed in successfully: {0} ({1})", user.DisplayName, user.UserId);
             UnityMainThreadDispatcher.RunOnMainThread(() =>
             {
+                if (SceneMgr.Instance != null)
+                    SceneMgr.Instance.outPut.text = "계정 생성 성공";
                 userID = this.InputField.text;
                 PlayerPrefs.SetString("userID", userID);
-                this.InputField.gameObject.SetActive(false);
+                if (SceneMgr.Instance != null)
+                    SceneMgr.Instance.outPut.transform.parent.parent.gameObject.SetActive(false);
+                //this.InputField.gameObject.SetActive(false);
             });
         });
     }

@@ -7,6 +7,7 @@ using TMPro;
 public class SceneMgr : SingleTon<SceneMgr>
 {
     [SerializeField] TMP_InputField setNameField;
+    public TMP_Text outPut;
     [SerializeField] Button setName;
 
     [SerializeField] Button easyScorebtn;
