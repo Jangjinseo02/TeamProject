@@ -78,6 +78,11 @@ public class SoundManager : SingleTon<SoundManager>
                 BgmPlay(BGM.Ending);
                 break;
         }
+
+        for(int i = 0; i < SFX_Player.Length; i++)
+        {
+            SFX_Player[i].clip = null;
+        }
     }
 
     public void BgmPlay(BGM cliptype)

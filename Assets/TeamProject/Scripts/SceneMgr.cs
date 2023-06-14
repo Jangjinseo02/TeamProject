@@ -52,23 +52,26 @@ public class SceneMgr : SingleTon<SceneMgr>
 
     public void CloseTab()
     {
-        for (int i = 0; i < 10; i++)
-        {
-            if (i < 5)
-            {
-                leaderBoard.transform.GetChild(0).transform.GetChild(0).transform.GetChild(i).GetComponent<Text>().text = null;
-                leaderBoard.transform.GetChild(0).transform.GetChild(1).transform.GetChild(i).GetComponent<Text>().text = null;
-            }
-            else
-            {
-                leaderBoard.transform.GetChild(1).transform.GetChild(0).transform.GetChild(i).GetComponent<Text>().text = null;
-                leaderBoard.transform.GetChild(1).transform.GetChild(1).transform.GetChild(i).GetComponent<Text>().text = null;
-            }
-        }
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    leaderBoard.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(i).GetComponent<Text>().text = null;
+        //    leaderBoard.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(i).GetComponent<Text>().text = null;
+        //    //if (i < 5)
+        //    //{
+        //    //    leaderBoard.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(i).GetComponent<Text>().text = null;
+        //    //    leaderBoard.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(i).GetComponent<Text>().text = null;
+        //    //}
+        //    //else
+        //    //{
+        //    //    leaderBoard.transform.GetChild(1).transform.GetChild(0).transform.GetChild(i).GetComponent<Text>().text = null;
+        //    //    leaderBoard.transform.GetChild(1).transform.GetChild(1).transform.GetChild(i).GetComponent<Text>().text = null;
+        //    //}
+        //}
 
-        leaderBoard.transform.GetChild(0).gameObject.SetActive(true);
-        leaderBoard.transform.GetChild(1).gameObject.SetActive(false);
+        //leaderBoard.transform.GetChild(0).gameObject.SetActive(true);
+        //leaderBoard.transform.GetChild(1).gameObject.SetActive(false);
 
+        leaderBoard.transform.GetChild(0).GetChild(1).GetComponent<Scrollbar>().value = 1f;
         leaderBoard.SetActive(false);
     }
 

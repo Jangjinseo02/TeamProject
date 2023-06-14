@@ -313,10 +313,10 @@ public class DataManager : SingleTon<DataManager>
         leaderboardKey.Clear();
 
 
-        GameObject pgOneName = leaderBoard.transform.GetChild(0).Find("Name").gameObject;
-        GameObject pgTwoName = leaderBoard.transform.GetChild(1).Find("Name").gameObject;
-        GameObject pgOneScore = leaderBoard.transform.GetChild(0).Find("Score").gameObject;
-        GameObject pgTwoScore = leaderBoard.transform.GetChild(1).Find("Score").gameObject;
+        GameObject pgOneName = leaderBoard.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).Find("Name").gameObject;
+       // GameObject pgTwoName = leaderBoard.transform.GetChild(1).Find("Name").gameObject;
+        GameObject pgOneScore = leaderBoard.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).Find("Score").gameObject;
+       // GameObject pgTwoScore = leaderBoard.transform.GetChild(1).Find("Score").gameObject;
 
         string emptyScore = "기록없음";
 
@@ -324,29 +324,33 @@ public class DataManager : SingleTon<DataManager>
         {
             if (leaderboardName.Length > i)
             {
-                if(i < 5)
-                {
-                    pgOneName.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardName[i];
-                    pgOneScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardScore[i];
-                }
-                else
-                {
-                    pgTwoName.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardName[i];
-                    pgTwoScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardScore[i];
-                }
+                pgOneName.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardName[i];
+                pgOneScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardScore[i];
+                //if(i < 5)
+                //{
+                //    pgOneName.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardName[i];
+                //    pgOneScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardScore[i];
+                //}
+                //else
+                //{
+                //    pgTwoName.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardName[i];
+                //    pgTwoScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = leaderboardScore[i];
+                //}
             }
             else
             {
-                if (i < 5)
-                {
-                    pgOneName.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
-                    pgOneScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
-                }
-                else
-                {
-                    pgTwoName.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
-                    pgTwoScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
-                }
+                pgOneName.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
+                pgOneScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
+                //if (i < 5)
+                //{
+                //    pgOneName.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
+                //    pgOneScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
+                //}
+                //else
+                //{
+                //    pgTwoName.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
+                //    pgTwoScore.transform.GetChild(i).gameObject.GetComponent<Text>().text = emptyScore;
+                //}
             }
                 //Debug.Log(i.ToString() + "번째 : " + "기록없음");
         }
