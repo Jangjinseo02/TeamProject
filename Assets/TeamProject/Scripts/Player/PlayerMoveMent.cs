@@ -406,12 +406,12 @@ public class PlayerMoveMent : MonoBehaviour
 
                 block.OnDamaged(100);
 
-                foreach (Block member in block.group)
-                {
-                    if (member == block)
-                        continue;
-                    member.RemoveGroup(block.group.blockManager);
-                }
+                //foreach (Block member in block.group)
+                //{
+                //    if (member == block)
+                //        continue;
+                //    member.RemoveGroup(block.group.blockManager);
+                //}
             }
         }
         if (leftrayhits != null)
@@ -421,12 +421,12 @@ public class PlayerMoveMent : MonoBehaviour
                 Block leftBlock = leftrayhits[i].collider.GetComponent<Block>();
 
                 leftBlock.OnDamaged(100);
-                foreach (Block member in leftBlock.group)
-                {
-                    if (member == leftBlock)
-                        continue;
-                    member.RemoveGroup(leftBlock.group.blockManager);
-                }
+                //foreach (Block member in leftBlock.group)
+                //{
+                //    if (member == leftBlock)
+                //        continue;
+                //    member.RemoveGroup(leftBlock.group.blockManager);
+                //}
             }
         }
         if (rightrayhits != null)
@@ -436,12 +436,12 @@ public class PlayerMoveMent : MonoBehaviour
                 Block rightBlock = rightrayhits[i].collider.GetComponent<Block>();
 
                 rightBlock.OnDamaged(100);
-                foreach (Block member in rightBlock.group)
-                {
-                    if (member == rightBlock)
-                        continue;
-                    member.RemoveGroup(rightBlock.group.blockManager);
-                }
+                //foreach (Block member in rightBlock.group)
+                //{
+                //    if (member == rightBlock)
+                //        continue;
+                //    member.RemoveGroup(rightBlock.group.blockManager);
+                //}
             }
         }
     }

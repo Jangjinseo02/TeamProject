@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SceneMgr : SingleTon<SceneMgr>
 {
@@ -32,6 +33,18 @@ public class SceneMgr : SingleTon<SceneMgr>
 
     private void Start()
     {
+        //if (DataManager.Instance.level.Equals(DataManager.Level.Tutorial) && !string.IsNullOrEmpty(PlayerPrefs.GetString("Tuto")))
+        //{
+        //    //PlayerPrefs.SetString("Tutorial", "play");
+        //    DataManager.Instance.level = DataManager.Level.Easy;
+        //    SceneManager.LoadScene("sampleScene");
+        //    return;
+        //}
+
+        PlayerPrefs.DeleteKey("Intro");
+        PlayerPrefs.DeleteKey("Tuto");
+
+
         DataManager.Instance.StartSetting();
 
         easyScorebtn.onClick.AddListener(() => DataManager.Instance.GetScore("Easy"));

@@ -58,7 +58,22 @@ public class GameManager : SingleTon<GameManager>
         if (DataManager.Instance != null)
             level = (GameManager.Level)DataManager.Instance.ReturnLevel();
 
-        //level = Level.Tutorial;
+        UIManager.Instance.FadeOut();
+
+        if (level.Equals(Level.Easy) && string.IsNullOrEmpty(PlayerPrefs.GetString("Intro")))
+        {
+            PlayerPrefs.SetString("Intro", "play");
+            //Debug.Log(PlayerPrefs.GetString("Intro"));
+            SceneManager.LoadScene("IntroScene");
+            return;
+        }
+
+        if (level.Equals(Level.Easy) && string.IsNullOrEmpty(PlayerPrefs.GetString("Tuto")))
+        {
+            PlayerPrefs.SetString("Tuto", "play");
+            //Debug.Log(PlayerPrefs.GetString("Tuto"));
+            level = Level.Tutorial;
+        }
 
         //목표 깊이 설정
         for (int i = 0; i < blockMgrs.Length; i++)
@@ -115,7 +130,7 @@ public class GameManager : SingleTon<GameManager>
         else
             blockMgrPos = Vector2.zero;
 
-        UIManager.Instance.FadeOut();
+        //SoundManager.Instance.BgmPlay(SoundManager.BGM.TutorialAndInGame_1);
     }
 
     public void SetBlockStage()

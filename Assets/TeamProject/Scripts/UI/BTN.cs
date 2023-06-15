@@ -77,7 +77,7 @@ public class BTN : MonoBehaviour
                 SceneManager.LoadScene("SampleScene");
                 break;
             case BTNType.Title:
-                if (GameManager.Instance != null && GameManager.Instance.clear)
+                if (GameManager.Instance != null && GameManager.Instance.clear && !GameManager.Instance.level.Equals(GameManager.Level.Tutorial))
                 {
                     SceneManager.LoadScene("OuttroScene");
                     Time.timeScale = 1f;
@@ -108,6 +108,12 @@ public class BTN : MonoBehaviour
                         Time.timeScale = 1f;
                         break;
                     }
+                }else if (GameManager.Instance != null && GameManager.Instance.level.Equals(GameManager.Level.Tutorial))
+                {
+                    DataManager.Instance.level = DataManager.Level.Easy;
+                    SceneManager.LoadScene("SampleScene");
+                    Time.timeScale = 1;
+                    break;
                 }
                 SceneManager.LoadScene("TitleScene");
                 Time.timeScale = 1;

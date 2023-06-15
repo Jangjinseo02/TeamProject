@@ -33,6 +33,11 @@ public class SoundManager : SingleTon<SoundManager>
         }
     }
 
+    private void Start()
+    {
+
+    }
+
     public enum BGM
     {
         Title, Intro, TutorialAndInGame_1, InGame_2, InGame_3, Result, Ending
@@ -83,13 +88,16 @@ public class SoundManager : SingleTon<SoundManager>
         {
             SFX_Player[i].clip = null;
         }
+
+        BGMVolume(bgmValue);
+        SfxVolume(sfxValue);
     }
 
     public void BgmPlay(BGM cliptype)
     {
         BGM_Player.clip = bgm[(int)cliptype];
         BGM_Player.loop = true;
-        BGM_Player.volume = 0.1f;
+        BGM_Player.volume = 1f;
 
         BGM_Player.Play();
     }
@@ -124,6 +132,21 @@ public class SoundManager : SingleTon<SoundManager>
 
         SFX_Player[sfxCursor].Play();
         sfxCursor = (sfxCursor + 1) % SFX_Player.Length;
+    }
+
+    public bool SfxPlay(IntroSfx cliptype)
+    {
+        if (SFX_Player[sfxCursor].loop)
+            return false;
+        //sfxCursor = (sfxCursor + 1) % SFX_Player.Length; //Player를 간섭하면 play중인 clip이 강제 종료됨
+
+        SFX_Player[sfxCursor].clip = uiSfx[(int)cliptype];
+        //SFX_Player[sfxCursor].loop = true;
+
+        SFX_Player[sfxCursor].Play();
+        //sfxCursor = (sfxCursor + 1) % SFX_Player.Length;
+
+        return true;
     }
 
     public void SfxStop(Sfx cliptype)
@@ -209,6 +232,8 @@ public class SoundManager : SingleTon<SoundManager>
         float value = SoundManager.Instance.bgmValue;
         float curvalue = SoundManager.Instance.bgmValue;
 
+        SoundManager.Instance.BgmPlay(SoundManager.BGM.Result);
+
         while (curvalue > 0)
         {
             curvalue -= fadeSpeed * Time.deltaTime;
@@ -217,16 +242,21 @@ public class SoundManager : SingleTon<SoundManager>
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.1f);
 
-        SoundManager.Instance.BgmPlay(SoundManager.BGM.Result);
-        while (curvalue < value)
-        {
-            curvalue += fadeSpeed * Time.deltaTime;
-            SoundManager.Instance.BGMVolume(curvalue);
-            yield return null;
-        }
+        yield return new WaitForSeconds(0.5f);
 
         SoundManager.Instance.BGMVolume(value);
+
+        //yield return new WaitForSeconds(0.1f);
+
+
+        //while (curvalue < value)
+        //{
+        //    curvalue += fadeSpeed * Time.deltaTime;
+        //    SoundManager.Instance.BGMVolume(curvalue);
+        //    yield return null;
+        //}
+
+        //SoundManager.Instance.BGMVolume(value);
     }
 }

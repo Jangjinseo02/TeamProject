@@ -113,7 +113,8 @@ public class InputManager : SingleTon<InputManager>
         }
 
         yield return new WaitForSeconds(0.1f);
-        isAttack = false;
+        if (!player.isTutorial)
+            isAttack = false;
     }
 
     //public void DragEnter(Vector2 dirvec)

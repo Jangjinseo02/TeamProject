@@ -289,43 +289,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speakers:
   - spriteRenderer: {fileID: 1548948169}
-    SpriteRenderer: {fileID: 1822719118}
     imageDialog: {fileID: 2136210212}
     textName: {fileID: 1751780509}
     textDialogue: {fileID: 792854773}
     objectArrow: {fileID: 2077591155}
   - spriteRenderer: {fileID: 1580153151}
-    SpriteRenderer: {fileID: 1822719118}
     imageDialog: {fileID: 2136210212}
     textName: {fileID: 1751780509}
     textDialogue: {fileID: 792854773}
     objectArrow: {fileID: 2077591155}
   - spriteRenderer: {fileID: 1383271119}
-    SpriteRenderer: {fileID: 1822719118}
     imageDialog: {fileID: 2136210212}
     textName: {fileID: 1751780509}
     textDialogue: {fileID: 792854773}
     objectArrow: {fileID: 2077591155}
   - spriteRenderer: {fileID: 1687993310}
-    SpriteRenderer: {fileID: 1822719118}
     imageDialog: {fileID: 2136210212}
     textName: {fileID: 1751780509}
     textDialogue: {fileID: 792854773}
     objectArrow: {fileID: 2077591155}
   - spriteRenderer: {fileID: 1672070103}
-    SpriteRenderer: {fileID: 1822719118}
     imageDialog: {fileID: 2092770202}
     textName: {fileID: 558151885}
     textDialogue: {fileID: 1187558315}
     objectArrow: {fileID: 376588559}
   - spriteRenderer: {fileID: 1553169907}
-    SpriteRenderer: {fileID: 1822719118}
     imageDialog: {fileID: 2092770202}
     textName: {fileID: 558151885}
     textDialogue: {fileID: 1187558315}
     objectArrow: {fileID: 376588559}
   - spriteRenderer: {fileID: 1822719118}
-    SpriteRenderer: {fileID: 1822719118}
     imageDialog: {fileID: 804433784}
     textName: {fileID: 1380745905}
     textDialogue: {fileID: 22261132}
@@ -411,59 +404,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &236260734
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 236260736}
-  - component: {fileID: 236260735}
-  m_Layer: 0
-  m_Name: SoundSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &236260735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236260734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f64db1baf18ec5a4db4051353d64513b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 0}
-  BGM_Player: {fileID: 0}
-  SFX_Player: []
-  bgm: []
-  sfx: []
-  uiSfx: []
-  introSfx: []
-  bgmValue: 1
-  sfxValue: 1
---- !u!4 &236260736
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236260734}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.1305647, y: -0.25550514, z: 0.07937553}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &376588559
 GameObject:
@@ -971,13 +911,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speakers:
   - spriteRenderer: {fileID: 1822719118}
-    SpriteRenderer: {fileID: 0}
     imageDialog: {fileID: 2136210212}
     textName: {fileID: 1751780509}
     textDialogue: {fileID: 792854773}
     objectArrow: {fileID: 2077591155}
   - spriteRenderer: {fileID: 1548948169}
-    SpriteRenderer: {fileID: 0}
     imageDialog: {fileID: 2136210212}
     textName: {fileID: 1751780509}
     textDialogue: {fileID: 792854773}

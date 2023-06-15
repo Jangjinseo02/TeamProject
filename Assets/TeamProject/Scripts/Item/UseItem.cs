@@ -11,6 +11,7 @@ public class UseItem : Item, IItem
     
     CircleCollider2D circle;
     Animator anim;
+    Tutorial tutorial;
 
     bool removePos = false;
 
@@ -20,6 +21,11 @@ public class UseItem : Item, IItem
 
         anim = GetComponent<Animator>();
         circle = GetComponent<CircleCollider2D>();
+        
+        if (GameManager.Instance.level.Equals(GameManager.Level.Tutorial))
+        {
+            tutorial = GameObject.Find("Tutorial").transform.GetChild(0).GetComponent<Tutorial>();
+        }
     }
 
     public override void OnEnable()
@@ -42,6 +48,7 @@ public class UseItem : Item, IItem
 
             //튜토리얼 스크립트 출력
             //player.isTutorial = false, InputManager.Instance.isAttack = false;
+            tutorial.SetTextAndStartRoutine(Tutorial.TutorialType.Three);
         }
         else
         {
