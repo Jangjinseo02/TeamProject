@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "61170008022",
+    "firebase_url": "https://drilheroproject-default-rtdb.firebaseio.com",
+    "project_id": "drilheroproject",
+    "storage_bucket": "drilheroproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61170008022:android:9b43e5585a703572a2ae77",
+        "android_client_info": {
+          "package_name": "com.DrilCompany.DrilHero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "61170008022-ajjfv8bfreqgok1ahdabh7hk3pgtl14e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUzpb0XAocQ8m02AD44h22gmeSt7Orzfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "61170008022-ajjfv8bfreqgok1ahdabh7hk3pgtl14e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

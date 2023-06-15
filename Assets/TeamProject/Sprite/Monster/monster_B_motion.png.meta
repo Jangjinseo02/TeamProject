@@ -1,0 +1,755 @@
+fileFormatVersion: 2
+guid: 9a86a28d5335bee4f93e25e8d7d167f0
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 350
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: monster_B_motion_0
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 1771
+        width: 351
+        height: 323
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8260278ffa6308741946acdf227e3583
+      internalID: -1185901760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_1
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 1771
+        width: 348
+        height: 314
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2150cdc554364240a9882dba3d08dd6
+      internalID: -30217653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_2
+      rect:
+        serializedVersion: 2
+        x: 806
+        y: 1771
+        width: 350
+        height: 323
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0670856d01e6e254196940498a0ecf2e
+      internalID: -378551291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_3
+      rect:
+        serializedVersion: 2
+        x: 1216
+        y: 1771
+        width: 347
+        height: 330
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 795c966ac71fa5d40805c419f1230a8e
+      internalID: -461291536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_4
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 1376
+        width: 351
+        height: 323
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fde02236ad0924459b7f6e52cb7a620
+      internalID: 1042838984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_5
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 1376
+        width: 344
+        height: 316
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cad87a8e2116ae42bf29b5641c7fcd6
+      internalID: -1619255799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_6
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 1376
+        width: 342
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68c0e42e36f55ca4f82be0015e061953
+      internalID: -866505237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_7
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 1376
+        width: 353
+        height: 323
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60f22d8cc87933542806ed4360c990e8
+      internalID: -930378882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_8
+      rect:
+        serializedVersion: 2
+        x: 1524
+        y: 1377
+        width: 354
+        height: 334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c8ad0edc706521409374b85d24c97ef
+      internalID: -1440513047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_9
+      rect:
+        serializedVersion: 2
+        x: 1906
+        y: 1376
+        width: 352
+        height: 323
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 050e961769be9b74c8035801d3067898
+      internalID: 716236903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_10
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 957
+        width: 348
+        height: 323
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fa16e52c7d3b274c9b5095d17bd079c
+      internalID: -2031471552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_11
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 957
+        width: 295
+        height: 317
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d395a01069ebb3c4ca7e2fcfdf59c72d
+      internalID: -1770968994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_12
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 957
+        width: 294
+        height: 313
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b08535bbef474544a7a80a702e014a5
+      internalID: -191159606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_13
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 957
+        width: 303
+        height: 313
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d535dc50c6df8674785e1c1a7cd71dbd
+      internalID: 92874905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_14
+      rect:
+        serializedVersion: 2
+        x: 1443
+        y: 957
+        width: 295
+        height: 313
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2f8f58cadc338e46b89a3c2c9250ef9
+      internalID: -963987804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_15
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 507
+        width: 295
+        height: 316
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a64108c1adbc4a74994e5318d9e88d75
+      internalID: 2004411856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_16
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 507
+        width: 353
+        height: 321
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e785ba95cf204c04aaaea05ccb95c21e
+      internalID: -2035366236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_17
+      rect:
+        serializedVersion: 2
+        x: 823
+        y: 507
+        width: 333
+        height: 321
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89275c10f8ac90e4ca7a76c1814b0961
+      internalID: -299123421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_18
+      rect:
+        serializedVersion: 2
+        x: 1197
+        y: 507
+        width: 333
+        height: 334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a51dc87d2aab3c04eb978565acd5e143
+      internalID: -1519782468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_19
+      rect:
+        serializedVersion: 2
+        x: 1573
+        y: 507
+        width: 329
+        height: 334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2e99caf537ebb94daa1712f534ad8af
+      internalID: 1766965325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_20
+      rect:
+        serializedVersion: 2
+        x: 1947
+        y: 507
+        width: 333
+        height: 334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a785e90636159df418d6160bcb483aec
+      internalID: -425888816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_21
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 96
+        width: 321
+        height: 329
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b38cfca0ffdd3e48875a3bf2e40422f
+      internalID: 1021665546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_22
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 96
+        width: 314
+        height: 319
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76967a58651d566459671fe58e5c375e
+      internalID: 499899524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_23
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 94
+        width: 313
+        height: 309
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58c813a2b5b2c0c40a28a90673920de3
+      internalID: 866888573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_24
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 94
+        width: 321
+        height: 154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1baf16727fff0b04a806c2894d38456a
+      internalID: 356548668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_25
+      rect:
+        serializedVersion: 2
+        x: 1516
+        y: 94
+        width: 321
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 583631f0c2914214ab0cbc6ee4e0ca90
+      internalID: -1572595495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_B_motion_26
+      rect:
+        serializedVersion: 2
+        x: 1888
+        y: 94
+        width: 321
+        height: 154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfcda62e35c5f034c91011497f21fa13
+      internalID: 1291801268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      monster_B_motion_0: -1185901760
+      monster_B_motion_1: -30217653
+      monster_B_motion_10: -2031471552
+      monster_B_motion_11: -1770968994
+      monster_B_motion_12: -191159606
+      monster_B_motion_13: 92874905
+      monster_B_motion_14: -963987804
+      monster_B_motion_15: 2004411856
+      monster_B_motion_16: -2035366236
+      monster_B_motion_17: -299123421
+      monster_B_motion_18: -1519782468
+      monster_B_motion_19: 1766965325
+      monster_B_motion_2: -378551291
+      monster_B_motion_20: -425888816
+      monster_B_motion_21: 1021665546
+      monster_B_motion_22: 499899524
+      monster_B_motion_23: 866888573
+      monster_B_motion_24: 356548668
+      monster_B_motion_25: -1572595495
+      monster_B_motion_26: 1291801268
+      monster_B_motion_3: -461291536
+      monster_B_motion_32: -1200173248
+      monster_B_motion_33: 1251232659
+      monster_B_motion_34: -1205456128
+      monster_B_motion_35: 227521064
+      monster_B_motion_36: -2080747921
+      monster_B_motion_37: -1825121352
+      monster_B_motion_38: -1967363020
+      monster_B_motion_39: 1522181183
+      monster_B_motion_4: 1042838984
+      monster_B_motion_40: -543858410
+      monster_B_motion_41: -749378114
+      monster_B_motion_42: -928315659
+      monster_B_motion_43: -1811271108
+      monster_B_motion_44: 885261428
+      monster_B_motion_45: 429642548
+      monster_B_motion_46: 414659994
+      monster_B_motion_47: 950159209
+      monster_B_motion_48: 1735755275
+      monster_B_motion_49: -1437041122
+      monster_B_motion_5: -1619255799
+      monster_B_motion_50: 1350881209
+      monster_B_motion_51: -1211032483
+      monster_B_motion_52: 662194047
+      monster_B_motion_53: 340091411
+      monster_B_motion_54: -1992444745
+      monster_B_motion_55: 1753334922
+      monster_B_motion_57: 1772801772
+      monster_B_motion_6: -866505237
+      monster_B_motion_65: 383294525
+      monster_B_motion_7: -930378882
+      monster_B_motion_8: -1440513047
+      monster_B_motion_9: 716236903
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
