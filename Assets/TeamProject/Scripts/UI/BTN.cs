@@ -61,6 +61,13 @@ public class BTN : MonoBehaviour
                 Second_UI.SetActive(false);
                 break;
             case BTNType.Easy_Mode:
+                if (string.IsNullOrEmpty(PlayerPrefs.GetString("Intro")))
+                {
+                    PlayerPrefs.SetString("Intro", "play");
+                    SceneManager.LoadScene("IntroScene");
+                    DataManager.Instance.level = DataManager.Level.Tutorial;
+                    return;
+                }
                 DataManager.Instance.level = DataManager.Level.Easy;
                 SceneManager.LoadScene("SampleScene");
                 break;
@@ -110,8 +117,8 @@ public class BTN : MonoBehaviour
                     }
                 }else if (GameManager.Instance != null && GameManager.Instance.level.Equals(GameManager.Level.Tutorial))
                 {
-                    DataManager.Instance.level = DataManager.Level.Easy;
                     SceneManager.LoadScene("SampleScene");
+                    DataManager.Instance.level = DataManager.Level.Easy;
                     Time.timeScale = 1;
                     break;
                 }

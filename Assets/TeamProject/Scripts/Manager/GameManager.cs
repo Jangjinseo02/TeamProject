@@ -60,18 +60,10 @@ public class GameManager : SingleTon<GameManager>
 
         UIManager.Instance.FadeOut();
 
-        if (level.Equals(Level.Easy) && string.IsNullOrEmpty(PlayerPrefs.GetString("Intro")))
-        {
-            PlayerPrefs.SetString("Intro", "play");
-            //Debug.Log(PlayerPrefs.GetString("Intro"));
-            SceneManager.LoadScene("IntroScene");
-            return;
-        }
-
-        if (level.Equals(Level.Easy) && string.IsNullOrEmpty(PlayerPrefs.GetString("Tuto")))
+        if (level.Equals(Level.Tutorial) && string.IsNullOrEmpty(PlayerPrefs.GetString("Tuto")))
         {
             PlayerPrefs.SetString("Tuto", "play");
-            //Debug.Log(PlayerPrefs.GetString("Tuto"));
+            Debug.Log(PlayerPrefs.GetString("Tuto"));
             level = Level.Tutorial;
         }
 
@@ -85,23 +77,27 @@ public class GameManager : SingleTon<GameManager>
                     player.GetComponent<PlayerMoveMent>().oxygenUp = 0.1f;
                     blockMgrs[i].numCol = 7;
                     clearCatch = 10;
+                    TutorialObject.SetActive(false);
                     break;
                 case Level.Nomal:
                     player.GetComponent<PlayerMoveMent>().curOxygen = 0.55f;
                     player.GetComponent<PlayerMoveMent>().oxygenUp = 0.1f;
                     blockMgrs[i].numCol = 9;
                     clearCatch = 25;
+                    TutorialObject.SetActive(false);
                     break;
                 case Level.Hard:
                     player.GetComponent<PlayerMoveMent>().curOxygen = 0.75f;
                     player.GetComponent<PlayerMoveMent>().oxygenUp = 0.12f;
                     blockMgrs[i].numCol = 11;
                     clearCatch = 50;
+                    TutorialObject.SetActive(false);
                     break;
                 case Level.Extra:
                     player.GetComponent<PlayerMoveMent>().curOxygen = 0.75f;
                     player.GetComponent<PlayerMoveMent>().oxygenUp = 0.12f;
                     blockMgrs[i].numCol = 11;
+                    TutorialObject.SetActive(false);
                     break;
                 case Level.Tutorial:
                     TutorialObject.SetActive(true);

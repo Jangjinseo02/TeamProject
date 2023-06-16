@@ -57,7 +57,7 @@ public class HardBlock : Block
 
         foreach (Block member in this.group)
         {
-            if (this == member)
+            if (this == member || member.dropping || member.shaking)
                 continue;
             member.RemoveGroup(group.blockManager);
         }
