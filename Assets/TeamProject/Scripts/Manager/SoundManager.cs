@@ -140,7 +140,7 @@ public class SoundManager : SingleTon<SoundManager>
             return false;
         //sfxCursor = (sfxCursor + 1) % SFX_Player.Length; //Player를 간섭하면 play중인 clip이 강제 종료됨
 
-        SFX_Player[sfxCursor].clip = uiSfx[(int)cliptype];
+        SFX_Player[sfxCursor].clip = introSfx[(int)cliptype];
         //SFX_Player[sfxCursor].loop = true;
 
         SFX_Player[sfxCursor].Play();

@@ -239,7 +239,7 @@ public class Tutorial : MonoBehaviour
     IEnumerator TextRoutine(int index)
     {
         int textIndex = 0;
-        float typingSpeed = 0.1f;
+        float typingSpeed = 0.02f;
 
         this.index = index;
         typing = false;

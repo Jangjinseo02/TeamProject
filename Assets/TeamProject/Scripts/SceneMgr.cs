@@ -25,6 +25,8 @@ public class SceneMgr : SingleTon<SceneMgr>
 
     private void Awake()
     {
+        //PlayerPrefs.DeleteAll();
+
         if (string.IsNullOrEmpty(PlayerPrefs.GetString("userID")))
         {
             setNameField.gameObject.SetActive(true);
