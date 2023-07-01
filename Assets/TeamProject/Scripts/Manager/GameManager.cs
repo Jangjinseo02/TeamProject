@@ -51,6 +51,7 @@ public class GameManager : SingleTon<GameManager>
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
+
     }
 
     void Start()
@@ -125,8 +126,6 @@ public class GameManager : SingleTon<GameManager>
         }
         else
             blockMgrPos = Vector2.zero;
-
-        //SoundManager.Instance.BgmPlay(SoundManager.BGM.TutorialAndInGame_1);
     }
 
     public void SetBlockStage()
@@ -258,6 +257,19 @@ public class GameManager : SingleTon<GameManager>
 
         if (clear)
         {
+            if(level == Level.Easy)
+            {
+                PlayerPrefs.SetString("Easy_Clear", "1");
+            }
+            else if(level == Level.Nomal)
+            {
+                PlayerPrefs.SetString("Nomal_Clear", "1");
+            }
+            else if(level == Level.Hard)
+            {
+                PlayerPrefs.SetString("Hard_Clear", "1");
+            }
+
             player.GetComponent<PlayerMoveMent>().ClearPos();
         }
         else

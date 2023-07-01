@@ -26,12 +26,14 @@ public class DataManager : SingleTon<DataManager>
 
     bool signedIn = false;
     bool login = false;
+    //bool replay = false;
 
     int score = 30;
 
     public enum Level { Easy, Nomal, Hard, Extra, Tutorial};
 
     public Level level { get; set; }
+    public bool replay { get; set; }
 
     GameObject leaderBoard = null;
 

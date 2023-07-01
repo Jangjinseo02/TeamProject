@@ -49,7 +49,13 @@ public class DialogTest : MonoBehaviour
 
         //UnityEditor.EditorApplication.ExitPlaymode();
 
-        SceneManager.LoadScene("SampleScene");
+        if (DataManager.Instance.replay)
+        {
+            DataManager.Instance.replay = false;
+            SceneManager.LoadScene("TitleScene");
+        }
+        else
+            SceneManager.LoadScene("SampleScene");
     }
 }
 

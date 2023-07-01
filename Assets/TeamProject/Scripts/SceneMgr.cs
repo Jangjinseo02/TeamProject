@@ -19,9 +19,10 @@ public class SceneMgr : SingleTon<SceneMgr>
     [SerializeField] Slider mainbgmSlider;
     [SerializeField] Slider mainsfxSlider;
 
+    [SerializeField] GameObject OuttroPanel;
     [SerializeField] GameObject leaderBoard;
 
-    string level = "easy";
+    //string level = "easy";
 
     private void Awake()
     {
@@ -31,6 +32,16 @@ public class SceneMgr : SingleTon<SceneMgr>
         {
             setNameField.gameObject.SetActive(true);
         }
+
+        Debug.Log(PlayerPrefs.GetString("Easy_Clear"));
+
+        Debug.Log(PlayerPrefs.GetString("Nomal_Clear"));
+        Debug.Log(PlayerPrefs.GetString("Hard_Clear"));
+        //Debug.Log(DataManager.Instance.level.ToString());
+        //Debug.Log(level.ToString());
+
+        //Debug.Log(PlayerPrefs.GetString(DataManager.Instance.level.ToString()));
+        //Debug.Log(PlayerPrefs.GetString(level.ToString()));
     }
 
     private void Start()
@@ -91,11 +102,74 @@ public class SceneMgr : SingleTon<SceneMgr>
         leaderBoard.SetActive(false);
     }
 
-    public void NextTab()
+    //public void NextTab()
+    //{
+    //    if (leaderBoard.transform.GetChild(1).gameObject.activeInHierarchy)
+    //        leaderBoard.transform.GetChild(1).gameObject.SetActive(false);
+    //    else if (leaderBoard.transform.GetChild(0).gameObject.activeInHierarchy)
+    //        leaderBoard.transform.GetChild(1).gameObject.SetActive(true);
+    //}
+
+    public void Replay(int type)
     {
-        if (leaderBoard.transform.GetChild(1).gameObject.activeInHierarchy)
-            leaderBoard.transform.GetChild(1).gameObject.SetActive(false);
-        else if (leaderBoard.transform.GetChild(0).gameObject.activeInHierarchy)
-            leaderBoard.transform.GetChild(1).gameObject.SetActive(true);
+        //type 0 : Tutorial, type 1 : Intro, type 2 : Outtro
+
+        DataManager.Instance.replay = true;
+
+        switch (type)
+        {
+            case 0:
+                DataManager.Instance.level = DataManager.Level.Tutorial;
+                SceneManager.LoadScene("SampleScene");
+                break;
+            case 1:
+                SceneManager.LoadScene("IntroScene");
+                break;
+            case 2:
+                //easy outtro
+                if(OuttroPanel.transform.GetChild(0).GetChild(1).gameObject.activeInHierarchy)
+                {
+                    DataManager.Instance.level = DataManager.Level.Easy;
+                    SceneManager.LoadScene("OuttroScene");
+                }
+                break;
+            case 3:
+                //nomal outtro
+                if (OuttroPanel.transform.GetChild(1).GetChild(1).gameObject.activeInHierarchy)
+                {
+                    DataManager.Instance.level = DataManager.Level.Nomal;
+                    SceneManager.LoadScene("OuttroScene");
+                }
+                break;
+            case 4:
+                //hard outtro
+                if (OuttroPanel.transform.GetChild(2).GetChild(1).gameObject.activeInHierarchy)
+                {
+                    DataManager.Instance.level = DataManager.Level.Hard;
+                    SceneManager.LoadScene("OuttroScene");
+                }
+                break;
+        }
+    }
+
+    public void OuttroPanelSet()
+    {
+        if (!string.IsNullOrEmpty(PlayerPrefs.GetString("Easy_Clear")))
+        {
+            //이미지 활성화
+            OuttroPanel.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        }
+        if (!string.IsNullOrEmpty(PlayerPrefs.GetString("Nomal_Clear")))
+        {
+            //이미지 활성화
+            OuttroPanel.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
+        }
+        if (!string.IsNullOrEmpty(PlayerPrefs.GetString("Hard_Clear")))
+        {
+            //이미지 활성화
+            OuttroPanel.transform.GetChild(2).GetChild(1).gameObject.SetActive(true);
+        }
+        OuttroPanel.SetActive(true);
+        Debug.Log("달성 엔딩 활성화");
     }
 }

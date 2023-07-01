@@ -84,44 +84,49 @@ public class BTN : MonoBehaviour
                 SceneManager.LoadScene("SampleScene");
                 break;
             case BTNType.Title:
-                if (GameManager.Instance != null && GameManager.Instance.clear && !GameManager.Instance.level.Equals(GameManager.Level.Tutorial))
+                if (!DataManager.Instance.replay)
                 {
-                    SceneManager.LoadScene("OuttroScene");
-                    Time.timeScale = 1f;
-                    break;
-                }
-                else if(DataManager.Instance != null && DataManager.Instance.level.Equals(DataManager.Level.Extra))
-                {
-                    //extra모드 클리어 시 레벨 데이터를 변환해서 넘깁니다.
-                    //레벨에 맞는 아웃트로를 플레이 하시면 됩니다.
-                    if(GameManager.Instance != null && GameManager.Instance.curCatch >= 50)
+                    if (GameManager.Instance != null && GameManager.Instance.clear && !GameManager.Instance.level.Equals(GameManager.Level.Tutorial))
                     {
-                        DataManager.Instance.level = DataManager.Level.Hard;
                         SceneManager.LoadScene("OuttroScene");
                         Time.timeScale = 1f;
                         break;
                     }
-                    else if (GameManager.Instance != null && GameManager.Instance.curCatch >= 25)
+                    else if (DataManager.Instance != null && DataManager.Instance.level.Equals(DataManager.Level.Extra))
                     {
-                        DataManager.Instance.level = DataManager.Level.Nomal;
-                        SceneManager.LoadScene("OuttroScene");
-                        Time.timeScale = 1f;
-                        break;
+                        //extra모드 클리어 시 레벨 데이터를 변환해서 넘깁니다.
+                        //레벨에 맞는 아웃트로를 플레이 하시면 됩니다.
+                        if (GameManager.Instance != null && GameManager.Instance.curCatch >= 50)
+                        {
+                            DataManager.Instance.level = DataManager.Level.Hard;
+                            SceneManager.LoadScene("OuttroScene");
+                            Time.timeScale = 1f;
+                            break;
+                        }
+                        else if (GameManager.Instance != null && GameManager.Instance.curCatch >= 25)
+                        {
+                            DataManager.Instance.level = DataManager.Level.Nomal;
+                            SceneManager.LoadScene("OuttroScene");
+                            Time.timeScale = 1f;
+                            break;
+                        }
+                        else if (GameManager.Instance != null && GameManager.Instance.curCatch >= 10)
+                        {
+                            DataManager.Instance.level = DataManager.Level.Easy;
+                            SceneManager.LoadScene("OuttroScene");
+                            Time.timeScale = 1f;
+                            break;
+                        }
                     }
-                    else if (GameManager.Instance != null && GameManager.Instance.curCatch >= 10)
+                    else if (GameManager.Instance != null && GameManager.Instance.level.Equals(GameManager.Level.Tutorial))
                     {
+                        SceneManager.LoadScene("SampleScene");
                         DataManager.Instance.level = DataManager.Level.Easy;
-                        SceneManager.LoadScene("OuttroScene");
-                        Time.timeScale = 1f;
+                        Time.timeScale = 1;
                         break;
                     }
-                }else if (GameManager.Instance != null && GameManager.Instance.level.Equals(GameManager.Level.Tutorial))
-                {
-                    SceneManager.LoadScene("SampleScene");
-                    DataManager.Instance.level = DataManager.Level.Easy;
-                    Time.timeScale = 1;
-                    break;
                 }
+                DataManager.Instance.replay = false;
                 SceneManager.LoadScene("TitleScene");
                 Time.timeScale = 1;
                 break;
