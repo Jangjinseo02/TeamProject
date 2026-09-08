@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,7 +40,7 @@ public class BlockMgr : MonoBehaviour
 
     private void Start()
     {
-        breathRoom.offset = new Vector2(GameManager.Instance.player.transform.position.x, 100); //¹Ú½º Äİ¶óÀÌ´õ À§Ä¡ ÀÌµ¿
+        breathRoom.offset = new Vector2(GameManager.Instance.player.transform.position.x, 100); //ë°•ìŠ¤ ì½œë¼ì´ë” ìœ„ì¹˜ ì´ë™
     }
     public void StartSetting()
     {
@@ -92,8 +92,8 @@ public class BlockMgr : MonoBehaviour
         AllGrouping();
     }
 
-    //±×·ì¿¡ ´ëÇØ¼­´Â Ãæµ¹ Ã¼Å© ¾ÈÇÏ°í
-    //±×·ì Áß ÇÏ³ª¶óµµ ¸ØÃß¸é ±×·ì ³» ºí·ÏµéÀ» ¸ğµÎ °»½ÅÇÑ´Ù.
+    //ê·¸ë£¹ì— ëŒ€í•´ì„œëŠ” ì¶©ëŒ ì²´í¬ ì•ˆí•˜ê³ 
+    //ê·¸ë£¹ ì¤‘ í•˜ë‚˜ë¼ë„ ë©ˆì¶”ë©´ ê·¸ë£¹ ë‚´ ë¸”ë¡ë“¤ì„ ëª¨ë‘ ê°±ì‹ í•œë‹¤.
 
     void Update()
     {
@@ -101,7 +101,7 @@ public class BlockMgr : MonoBehaviour
 
         HashSet<Block> unbalanceBlocks = new HashSet<Block>(unbalanceBlockList);
 
-        //Ã£Àº unabalance ±×·ìÀÇ ºí·ÏÀÇ shake, drop, collision Ã³¸®
+        //ì°¾ì€ unabalance ê·¸ë£¹ì˜ ë¸”ë¡ì˜ shake, drop, collision ì²˜ë¦¬
         foreach (Block member in unbalanceBlocks)
         {
             //Group group = member.group;
@@ -117,7 +117,7 @@ public class BlockMgr : MonoBehaviour
             }
         }
 
-        //Ãæµ¹µÇ¾î ¸ØÃá ºí·Ïµé¿¡ ´ëÇØ¼­ Ã³¸®
+        //ì¶©ëŒë˜ì–´ ë©ˆì¶˜ ë¸”ë¡ë“¤ì— ëŒ€í•´ì„œ ì²˜ë¦¬
         foreach (Group group in balanceBlockList)
         {
             Block firstmember = null;
@@ -214,13 +214,13 @@ public class BlockMgr : MonoBehaviour
 
     void BlockCreate()
     {
-        //½½¶óÀÓ ½ºÆù
+        //ìŠ¬ë¼ì„ ìŠ¤í°
         int SlimCount = 8;
         int afslimRow = 0;
         bool spawnSlim = false;
         Vector2[] spawnPoint = new Vector2[8];
 
-        //¸ó½ºÅÍ ½ºÆù
+        //ëª¬ìŠ¤í„° ìŠ¤í°
         int MonsterCount = 3;
         int afMonsterRoW = 0;
         bool spawnMonster = false;
@@ -242,14 +242,14 @@ public class BlockMgr : MonoBehaviour
                 spawnSlim = spawnRand == j ? true : false;
                 spawnMonster = spawnRand == j ? true : false;
 
-                if (i < 6) //Å¬¸®¾î ºí·Ï ½ºÆù
+                if (i < 6) //í´ë¦¬ì–´ ë¸”ë¡ ìŠ¤í°
                 {
                     blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.ClearBlock);
                 }
                 else if (!(i > 94 && i < numRow) && SlimCount > 0 && afslimRow >= 10 && spawnSlim)
                 {
-                    //½½¶óÀÓ ¸ó½ºÅÍ ½ºÆù
-                    //MosterA == ½½¶óÀÓ.  
+                    //ìŠ¬ë¼ì„ ëª¬ìŠ¤í„° ìŠ¤í°
+                    //MosterA == ìŠ¬ë¼ì„.  
                     blocks[i, j] = ObjectManager.Instance.GetBlock((int)MonsterType.Slim);
                     SlimCount -= 1;
                     spawnPoint[SlimCount] = new Vector2(j, i);
@@ -257,7 +257,7 @@ public class BlockMgr : MonoBehaviour
                 }
                 else if (!(i > 94 && i < numRow) && MonsterCount > 0 && afMonsterRoW >= 29 && spawnMonster)
                 {
-                    //¸ó½ºÅÍ ½ºÆù
+                    //ëª¬ìŠ¤í„° ìŠ¤í°
                     int ran = Random.Range((int)MonsterType.MonsterB, (int)(MonsterType.MonsterC + 1));
                     blocks[i, j] = ObjectManager.Instance.GetBlock(ran);
                     MonsterCount -= 1;
@@ -265,7 +265,7 @@ public class BlockMgr : MonoBehaviour
                 }
                 else
                 {
-                    //³ª¸ÓÁö °ø°£Àº random ±âº» ºí·Ï ½ºÆù, Æ¯¼ö ºí·Ï ½ºÆù
+                    //ë‚˜ë¨¸ì§€ ê³µê°„ì€ random ê¸°ë³¸ ë¸”ë¡ ìŠ¤í°, íŠ¹ìˆ˜ ë¸”ë¡ ìŠ¤í°
                     float blockRan = Random.Range(0f, allPers);
 
                     if (i < 95 && blockRan <= glassPers) //0.5f
@@ -304,7 +304,7 @@ public class BlockMgr : MonoBehaviour
                 if (blocks[i, j] != null)
                     continue;
 
-                if (i < 6) //Å¬¸®¾î ºí·Ï ½ºÆù
+                if (i < 6) //í´ë¦¬ì–´ ë¸”ë¡ ìŠ¤í°
                 {
                     blocks[i, j] = ObjectManager.Instance.GetBlock((int)BlocksType.ClearBlock);
                 }
@@ -407,20 +407,20 @@ public class BlockMgr : MonoBehaviour
 
                     if (ran <= curValue[0])
                     {
-                        //0°³
-                        Debug.Log(i.ToString() + " , " + j.ToString() + ": 0°³ " + curValue[0].ToString());
+                        //0ê°œ
+                        Debug.Log(i.ToString() + " , " + j.ToString() + ": 0ê°œ " + curValue[0].ToString());
                     }
                     else if (ran > curValue[0] && ran <= curValue[0] + curValue[1])
                     {
-                        //ÇÑ°³
-                        Debug.Log(i.ToString() + " , " + j.ToString() + ": 1°³ " + curValue[1].ToString());
+                        //í•œê°œ
+                        Debug.Log(i.ToString() + " , " + j.ToString() + ": 1ê°œ " + curValue[1].ToString());
                         int ranDir = Random.Range(0, 4);
                         CheckBlock(ranDir, i, j, type);
                     }
                     else if (ran > curValue[0] + curValue[1] && ran <= curValue[0] + curValue[1] + curValue[2])
                     {
-                        //µÎ°³
-                        Debug.Log(i.ToString() + " , " + j.ToString() + ": 2°³ " + curValue[2].ToString());
+                        //ë‘ê°œ
+                        Debug.Log(i.ToString() + " , " + j.ToString() + ": 2ê°œ " + curValue[2].ToString());
                         for(int k = 0; k < 2; k++)
                         {
                             int ranDir = Random.Range(0, 4);
@@ -429,8 +429,8 @@ public class BlockMgr : MonoBehaviour
                     }
                     else if (ran > curValue[0] + curValue[1] + curValue[2] && ran <= curValue[0] + curValue[1] + curValue[2] + curValue[3])
                     {
-                        //¼¼°³
-                        Debug.Log(i.ToString() + " , " + j.ToString() + ": 3°³ " + curValue[3].ToString());
+                        //ì„¸ê°œ
+                        Debug.Log(i.ToString() + " , " + j.ToString() + ": 3ê°œ " + curValue[3].ToString());
                         for (int k = 0; k < 3; k++)
                         {
                             int ranDir = Random.Range(0, 4);
@@ -439,8 +439,8 @@ public class BlockMgr : MonoBehaviour
                     }
                     else if (ran > curValue[0] + curValue[1] + curValue[2] + curValue[3] && ran <= curValue[0] + curValue[1] + curValue[2] + curValue[3] + curValue[4])
                     {
-                        //4°³
-                        Debug.Log(i.ToString() + " , " + j.ToString() + ": 4°³ " + curValue[4].ToString());
+                        //4ê°œ
+                        Debug.Log(i.ToString() + " , " + j.ToString() + ": 4ê°œ " + curValue[4].ToString());
                         for (int k = 0; k < 4; k++)
                         {
                             int ranDir = Random.Range(0, 4);
@@ -452,7 +452,7 @@ public class BlockMgr : MonoBehaviour
         }
     }
 
-    //¹æÇâ Ã¼Å©
+    //ë°©í–¥ ì²´í¬
     public void CheckBlock(int ranDir, int i, int j, int type)
     {
         if (ranDir == 0)
@@ -467,7 +467,7 @@ public class BlockMgr : MonoBehaviour
             ChangeBlock(BlockCheck(i, j), i, j, type);
     }
 
-    //±³Ã¼
+    //êµì²´
     void ChangeBlock(GameObject block, int row, int col, int type)
     {
         if (block == null)
@@ -479,7 +479,7 @@ public class BlockMgr : MonoBehaviour
         SetBlock(row, col);
     }
 
-    //±³Ã¼°¡ ¾Æ´Ñ Ãß°¡
+    //êµì²´ê°€ ì•„ë‹Œ ì¶”ê°€
     public void AddBlock(int row, int col, int type, GameObject obj)
     {
         if (BlockCheck(row, col) == null)
@@ -511,7 +511,7 @@ public class BlockMgr : MonoBehaviour
                     block.shakeTime = this.shakeTime;
 
                     Search(blocks[i, j].GetComponent<Block>());
-                    blocks[i, j].SetActive(true); //³ªÁß¿¡ °¡Àå ¸¶Áö¸·¿¡ true·Î ¹Ù²Ù±â
+                    blocks[i, j].SetActive(true); //ë‚˜ì¤‘ì— ê°€ì¥ ë§ˆì§€ë§‰ì— trueë¡œ ë°”ê¾¸ê¸°
                 }
             }
         }
@@ -525,7 +525,7 @@ public class BlockMgr : MonoBehaviour
         List<Block> block_s = new List<Block>();
         Queue<Block> queue = new Queue<Block>();
 
-        //¿î¼® ºí·ÏÀÇ °æ¿ì ±×·ì ³»¿¡ È¥ÀÚ Á¸Àç
+        //ìš´ì„ ë¸”ë¡ì˜ ê²½ìš° ê·¸ë£¹ ë‚´ì— í˜¼ì ì¡´ì¬
         if (block.type == (int)BlocksType.MeteorBlcok)
         {
             block.GetComponent<MeteorBlock>().OnlyOne();
@@ -549,7 +549,7 @@ public class BlockMgr : MonoBehaviour
             //if (block.type == (int)BlocksType.SpeBlock1)
             //    continue;
 
-            //À­ ¹æÇâ Ã¼Å©
+            //ìœ— ë°©í–¥ ì²´í¬
             if (row + 1 < numRow)
             {
                 GameObject upBlock = BlockCheck(row + 1, col);
@@ -557,7 +557,7 @@ public class BlockMgr : MonoBehaviour
                     queue.Enqueue(upBlock.GetComponent<Block>());
             }
 
-            //¾Æ·¡ ¹æÇâ Ã¼Å©
+            //ì•„ë˜ ë°©í–¥ ì²´í¬
             if (row - 1 >= 0)
             {
                 GameObject downBlock = BlockCheck(row - 1, col);
@@ -565,7 +565,7 @@ public class BlockMgr : MonoBehaviour
                     queue.Enqueue(downBlock.GetComponent<Block>());
             }
 
-            //¿À¸¥ ¹æÇâ Ã¼Å©
+            //ì˜¤ë¥¸ ë°©í–¥ ì²´í¬
             if (col + 1 < numCol)
             {
                 GameObject rightBlock = BlockCheck(row, col + 1);
@@ -573,7 +573,7 @@ public class BlockMgr : MonoBehaviour
                     queue.Enqueue(blocks[row, col + 1].GetComponent<Block>());
             }
 
-            //¿Ş ¹æÇâ Ã¼Å©
+            //ì™¼ ë°©í–¥ ì²´í¬
             if (col - 1 >= 0)
             {
                 GameObject leftBlock = BlockCheck(row, col - 1);
@@ -607,13 +607,13 @@ public class BlockMgr : MonoBehaviour
         Block leftBlock = leftblockObj != null ? leftblockObj.GetComponent<Block>() : null;
         Block underBlock = underblockObj != null ? underblockObj.GetComponent<Block>() : null;
 
-        //¿î¼® ºí·Ï ¾ç¿· Ãæµ¹ ±İÁö
+        //ìš´ì„ ë¸”ë¡ ì–‘ì˜† ì¶©ëŒ ê¸ˆì§€
         if (leftBlock != null && leftBlock.GetComponent<MeteorBlock>())
             leftBlock = null;
         if (rightBlock != null && rightBlock.GetComponent<MeteorBlock>())
             rightBlock = null;
 
-        //¾Æ·¡ ºí·ÏÀÌ Ã¼Å©µÇÁö ¾ÊÀ½
+        //ì•„ë˜ ë¸”ë¡ì´ ì²´í¬ë˜ì§€ ì•ŠìŒ
         if (underBlock || (rightBlock != null && block.group != rightBlock.group && block.type == rightBlock.type /*&& !rightBlock.group.unbalance*/)
                                                         || (leftBlock != null && block.group != leftBlock.group && block.type == leftBlock.type /*&& !leftBlock.group.unbalance*/))
         {
@@ -761,7 +761,7 @@ public class BlockMgr : MonoBehaviour
     {
         blocks[row, col].SetActive(false);
         blocks[row, col].gameObject.transform.parent = blockPool.transform;
-        //blocks[i,j]¿¡ ¾ø´Â °ªÀÌ ÀÖÀ½, ¹İÈ¯ÇÒ ¸®½ºÆ®¸¦ ÇÏ³ª ¸¸µé¾î¾ß ÇÒ µí?
+        //blocks[i,j]ì— ì—†ëŠ” ê°’ì´ ìˆìŒ, ë°˜í™˜í•  ë¦¬ìŠ¤íŠ¸ë¥¼ í•˜ë‚˜ ë§Œë“¤ì–´ì•¼ í•  ë“¯?
         ObjectManager.Instance.ReturnBlock(blocks[row, col]);
         blocks[row, col] = null;
         types[row, col] = -1;
